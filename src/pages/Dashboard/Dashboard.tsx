@@ -100,7 +100,7 @@ export const DashboardStat = () => {
           <Stat key={index}>
             {level.semesters.map((semester, index) => {
               return (
-                <StatCell key={index} title={`${level.level} level`} value={`${semester.name}`} desc="" icon={<div className="radial-progress" style={{ "--value": "40", "--size": "3rem", "--thickness": "2px" }}>{semester.progess.toString()}</div>
+                <StatCell key={index} title={`${level.level} level`} value={`${semester.name}`} desc="" icon={<div className="radial-progress cs-progress">{semester.progess.toString()}</div>
                 } />
               )
             })}
