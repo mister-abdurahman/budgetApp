@@ -94,13 +94,13 @@ export const DashboardStat = () => {
   ]
 
   return (
-    <div className='col-span-9 lg:space-x-4 space-y-4'>
+    <div className='col-span-9 space-y-4 lg:space-x-4'>
       {levels.map((level, index) => {
         return (
           <Stat key={index}>
             {level.semesters.map((semester, index) => {
               return (
-                <StatCell key={index} title={`${level.level} level`} value={`${semester.name}`} desc="" icon={<div className="radial-progress" style={{ "--value": `${semester.progess.toString()}`, "--size": "3rem", "--thickness": "2px" }}>{semester.progess.toString()}</div>
+                <StatCell key={index} title={`${level.level} level`} value={`${semester.name}`} desc="" icon={<div className="radial-progress" style={{ "--value": "40", "--size": "3rem", "--thickness": "2px" }}>{semester.progess.toString()}</div>
                 } />
               )
             })}
@@ -114,7 +114,7 @@ export const DashboardStat = () => {
 export const DashboardProfile = () => {
   return (
     <div className='col-span-3'>
-      <div className='flex flex-col items-center bg-gray-100 shadow-md w-full p-10 gap-3 rounded-3xl'>
+      <div className='flex flex-col items-center w-full gap-3 p-10 bg-gray-100 shadow-md rounded-3xl'>
         <div>
           <Avatar size='lg' />
         </div>
