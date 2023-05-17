@@ -42,51 +42,6 @@ export interface IProgram {
     description: string,
 }
 
-const colleges = atom<ICollege[]>([
-    {
-        id: 1,
-        name: "science and technology",
-        description: "science and technology"
-    },
-    {
-        id: 2,
-        name: "engineering",
-        description: "engineering"
-    },
-])
-
-const departments = atom<IDepartment[]>([
-    {
-        id: 1,
-        collegeId: 1,
-        name: "computer science",
-        description: "computer science"
-    },
-    {
-        id: 2,
-        collegeId: 2,
-        name: "computer engineering",
-        description: "computer engineering"
-    },
-    {
-        id: 3,
-        name: "mathematics",
-        collegeId: 1,
-        description: "mathematics"
-    },
-    {
-        id: 4,
-        collegeId: 2,
-        name: "electrical engineering",
-        description: "electrical engineering"
-    },
-
-])
-
-const programs = atom<IProgram[]>([
-
-])
-
 const users = atom<IUser[]>([
     {
         firstName: "Jim",

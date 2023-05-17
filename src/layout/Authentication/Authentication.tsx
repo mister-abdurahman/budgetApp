@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useState } from "react"
-import { Field, Form, Formik, FormikHelpers, useFormik } from 'formik'
+import React, { useState } from "react"
+import { Form, Formik, FormikHelpers, useFormik } from 'formik'
 import { useStore } from "../../stores/store"
 import { ISignIn, IUser } from '../../stores/authStore';
 import { HiUserCircle } from 'react-icons/hi';
@@ -28,7 +28,7 @@ export default Authentication
 
 export const SignIn = observer(({ handleSetSignUp }: { handleSetSignUp: (isSignUp: boolean) => void }) => {
     const { authStore } = useStore()
-    const { cookie, handleUserSignIn } = authStore
+    const { handleUserSignIn } = authStore
 
     const [signIn, setSignIn] = useState<ISignIn>({
         username: "",
@@ -121,31 +121,16 @@ export const SignIn = observer(({ handleSetSignUp }: { handleSetSignUp: (isSignU
                     </form>
                 </div>
             </div>
-
-            {/* <Form onSubmit={handleSignIn}>
-                <TextInput
-                    onChange={(e) => setSignIn({ ...signIn, username: e.target.value })}
-                    type="text"
-                    placeholder="enter username"
-                    label="" />
-                <TextInput
-                    onChange={(e) => setSignIn({ ...signIn, password: e.target.value })}
-                    type="password"
-                    placeholder="enter password"
-                    label="" />
-                <button className="btn" type="submit">submit</button>
-            </Form>
-            <p>{cookie}</p> */}
         </>
     )
 })
 
 export const SignUp = observer(({ handleSetSignUp }: { handleSetSignUp: (isSignUp: boolean) => void }) => {
     const {
-        collegeStore: { loadColleges, collegeArrays },
-        department: { loadDepartments, departmentArrays },
-        program: { loadPrograms, programArrays },
-        authStore: { handleUserSignUp }
+        collegeStore: { collegeArrays },
+        department: { departmentArrays },
+        program: { programArrays },
+        // authStore: { handleUserSignUp }
     } = useStore()
 
     const formik = useFormik({

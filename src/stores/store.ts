@@ -1,8 +1,8 @@
 import { createContext, useContext } from "react";
 import AuthStore from "./authStore";
 import CollegeStore from "./collegeStore";
-import DepartmentStore from "./DepartmentStore";
 import ProgramStore from "./programStore";
+import DepartmentStore from "./departmentStore";
 
 interface IStore{
     authStore: AuthStore;
