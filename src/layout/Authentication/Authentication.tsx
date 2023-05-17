@@ -17,7 +17,7 @@ function Authentication({ children }: { children: JSX.Element[] | JSX.Element })
 
     return (
         <>
-            {cookie !== null || signUp ? <SignUp handleSetSignUp={setSignUp} /> : <SignIn handleSetSignUp={setSignUp} />}
+            {cookie !== null || (signUp ? <SignUp handleSetSignUp={setSignUp} /> : <SignIn handleSetSignUp={setSignUp} />)}
             {cookie === null || children}
         </>
     )
