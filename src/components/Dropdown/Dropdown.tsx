@@ -12,7 +12,7 @@ function Dropdown({ children, buttonStyle, dropDownStyle, icon, title, isButton 
   return (
     <div className={`dropdown ${dropDownStyle}`}>
       {isButton ? <Button buttonStyle={buttonStyle} title={title} icon={icon} /> : <Label title={title} icon={icon} />}
-      <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+      <ul tabIndex={0} className="p-2 shadow dropdown-content menu bg-base-100 rounded-box w-52">
         {children}
       </ul>
     </div>

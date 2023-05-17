@@ -2,16 +2,20 @@ import { MdArrowDropDown, MdNotifications, MdUploadFile } from 'react-icons/md';
 import './style.css'
 import Drawer from '../../components/Drawer/Drawer';
 import Navbar, { NavbarCenterMenu, NavbarMenu } from '../Navbar/Navbar';
-import { HiDocumentReport, HiPlus } from 'react-icons/hi';
+import { HiDocumentReport, HiLogout, HiPlus } from 'react-icons/hi';
 import Avatar from '../../components/Avatar/Avatar';
 import Dropdown from '../../components/Dropdown/Dropdown';
 import './style.css';
 import LogoImage from '../../assets/covenant-university-logo-desktop.png'
 import { Link } from 'react-router-dom';
+import { useStore } from '../../stores/store';
+import React from 'react';
 
 
 
-function Home({ children }: { children: JSX.Element[] | JSX.Element | any }) {
+function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
+    const { authStore } = useStore()
+    const { signOut, user } = authStore
     return (
         <>
             <Drawer>
@@ -32,9 +36,10 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element | any }) {
                         </Dropdown>
                         <Dropdown
                             dropDownStyle="dropdown-end"
-                            icon={<Avatar size='xs' />}
+                            icon={<Avatar size='xs' imageUrl={user?.imageUrl} />}
                             isButton={false}
                         >
+                            <li onClick={() => signOut()}><a><HiLogout /> Sign out</a></li>
                         </Dropdown>
                     </NavbarMenu>
                 </Navbar>
@@ -48,18 +53,23 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element | any }) {
 
 export default Home;
 
-export const Logo = () => {
+interface ILogoProps extends React.AllHTMLAttributes<HTMLDivElement> {
+    children?: JSX.Element[] | JSX.Element
+}
+
+export const Logo = (props: ILogoProps) => {
+    
     return (
-        <div className='flex items-center'>
+        <div {...props} className={`flex items-center w-fit ${props.className}`}>
             <img className='h-8' src={LogoImage} />
-            <h1 className='font-bold capitalize text-3xl lg:flex-1 lg:px-2 lg:mx-2'>SRMS</h1>
+            <h1 className='text-3xl font-bold capitalize w-fit lg:px-2 lg:mx-2'>SRMS</h1>
         </div>
     )
 }
 
 export const NavAddIcon = () => {
     return (
-        <div className='flex justify-center items-center'>
+        <div className='flex items-center justify-center'>
             <HiPlus size={20} />
             <MdArrowDropDown />
         </div>

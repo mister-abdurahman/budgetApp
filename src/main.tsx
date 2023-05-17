@@ -5,6 +5,7 @@ import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Dashboard from './pages/Dashboard/Dashboard.tsx'
 import Upload from './pages/Upload/Upload.tsx'
+import { StoreContext, store } from './stores/store.ts'
 
 
 const router = createBrowserRouter([
@@ -30,6 +31,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <StoreContext.Provider value={store}>
+      <RouterProvider router={router} />
+    </StoreContext.Provider>
   </React.StrictMode>,
 )
