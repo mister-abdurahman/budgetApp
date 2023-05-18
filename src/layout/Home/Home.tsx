@@ -1,8 +1,9 @@
-import { MdArrowDropDown, MdNotifications, MdUploadFile } from 'react-icons/md';
+import { MdArrowDropDown, MdNotifications } from 'react-icons/md';
 import './style.css'
 import Drawer from '../../components/Drawer/Drawer';
 import Navbar, { NavbarCenterMenu, NavbarMenu } from '../Navbar/Navbar';
-import { HiDocumentReport, HiLogout, HiPlus } from 'react-icons/hi';
+import { HiCog, HiLogout, HiPlus } from 'react-icons/hi';
+import { BsGearWide } from 'react-icons/bs';
 import Avatar from '../../components/Avatar/Avatar';
 import Dropdown from '../../components/Dropdown/Dropdown';
 import './style.css';
@@ -23,14 +24,14 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
                     <Logo />
                     <MdNotifications className='text-3xl lg:hidden' />
                     <NavbarCenterMenu>
-                        <li className='font-semibold'><Link to="/dashboard"><HiDocumentReport /> Dashboard</Link></li>
-                        <li className='font-semibold'><Link to="/upload"><MdUploadFile />  Upload</Link></li>
+                        <button className='font-semibold btn btn-md btn-ghost'><Link to="/dashboard">Dashboard</Link></button>
+                        <button className='font-semibold btn btn-md'><Link to="/upload">  Upload</Link></button>
                     </NavbarCenterMenu>
                     <NavbarMenu>
                         {/* <MdNotifications size={25} /> */}
                         <Dropdown
                             dropDownStyle="dropdown-end"
-                            icon={<NavAddIcon />}
+                            icon={<BsGearWide size={25} />}
                             isButton={false}
                         >
                         </Dropdown>
@@ -61,8 +62,8 @@ export const Logo = (props: ILogoProps) => {
     
     return (
         <div {...props} className={`flex items-center w-fit ${props.className}`}>
-            <img className='h-8' src={LogoImage} />
-            <h1 className='text-3xl font-bold capitalize w-fit lg:px-2 lg:mx-2'>SRMS</h1>
+            <img className='h-7' src={LogoImage} />
+            <h1 className='text-xl font-bold capitalize w-fit lg:px-2 lg:mx-2'>SRMS</h1>
         </div>
     )
 }

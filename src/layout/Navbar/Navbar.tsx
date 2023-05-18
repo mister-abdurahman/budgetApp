@@ -2,7 +2,7 @@ import { HiMenuAlt2 } from 'react-icons/hi'
 
 function Navbar({ children }: { children: JSX.Element[] | JSX.Element }) {
     return (
-        <div className="w-full bg-white navbar h-2 shadow-sm justify-between items-center">
+        <div className="items-center justify-between h-2 gap-3 bg-white shadow-sm w-ful navbar">
             <div className="flex-none lg:hidden">
                 <label htmlFor="my-drawer-3" className="btn btn-square btn-ghost">
                     <HiMenuAlt2 size={30} />
@@ -18,7 +18,7 @@ export default Navbar
 export const NavbarMenu = ({ children }: { children: JSX.Element[] | JSX.Element }) => {
     return (
         <div className="flex-none hidden lg:block">
-            <ul className="menu menu-horizontal flex justify-between items-center gap-1">
+            <ul className="flex items-center justify-between gap-1 menu menu-horizontal">
                 {/* <!-- Navbar menu content here --> */}
                 {children}
             </ul>
@@ -28,9 +28,9 @@ export const NavbarMenu = ({ children }: { children: JSX.Element[] | JSX.Element
 
 export const NavbarCenterMenu = ({ children }: { children: JSX.Element[] | JSX.Element }) => {
     return (
-        <div className="navbar-center hidden lg:flex">
-            <ul className="menu menu-horizontal gap-1 px-1">
+        <div className="flex-1 hidden gap-2 navbar-start lg:flex">
                 {children}
+            <ul className="gap-1 px-1 menu menu-horizontal">
             </ul>
         </div>
     )
