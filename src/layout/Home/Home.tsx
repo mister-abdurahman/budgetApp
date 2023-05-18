@@ -2,9 +2,8 @@ import { MdArrowDropDown, MdNotifications } from 'react-icons/md';
 import './style.css'
 import Drawer from '../../components/Drawer/Drawer';
 import Navbar, { NavbarCenterMenu, NavbarMenu } from '../Navbar/Navbar';
-import { HiCog, HiLogout, HiPlus } from 'react-icons/hi';
+import { HiLogout, HiPlus } from 'react-icons/hi';
 import { BsGearWide } from 'react-icons/bs';
-import Avatar from '../../components/Avatar/Avatar';
 import Dropdown from '../../components/Dropdown/Dropdown';
 import './style.css';
 import LogoImage from '../../assets/covenant-university-logo-desktop.png'
@@ -34,10 +33,10 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
                             icon={<BsGearWide size={25} />}
                             isButton={false}
                         >
-                        </Dropdown>
+                        </Dropdown>                        
                         <Dropdown
                             dropDownStyle="dropdown-end"
-                            icon={<Avatar size='xs' imageUrl={user?.imageUrl} />}
+                            icon={<UserInfo />}
                             isButton={false}
                         >
                             <li onClick={() => signOut()}><a><HiLogout /> Sign out</a></li>
@@ -74,5 +73,43 @@ export const NavAddIcon = () => {
             <HiPlus size={20} />
             <MdArrowDropDown />
         </div>
+    )
+}
+
+export const UserInfo = () => {
+    const { authStore } = useStore()
+    const { user } = authStore
+
+    return (
+        <button
+          type="button"
+          className="flex items-center transition rounded-lg group shrink-0"
+        >
+          <span className="sr-only">Menu</span>
+          <img
+            alt="Man"
+            src={user?.imageUrl}
+            className="object-cover w-10 h-10 rounded-full"
+          />
+
+          <p className="hidden text-xs text-left ms-2 sm:block">
+            <strong className="block font-medium">{user?.lastName} {user?.firstName}</strong>
+
+            <span className="text-gray-500"> {user?.username} </span>
+          </p>
+
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="hidden w-5 h-5 text-gray-500 transition ms-4 group-hover:text-gray-700 sm:block"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </button>
     )
 }

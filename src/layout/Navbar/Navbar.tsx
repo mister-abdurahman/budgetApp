@@ -18,7 +18,7 @@ export default Navbar
 export const NavbarMenu = ({ children }: { children: JSX.Element[] | JSX.Element }) => {
     return (
         <div className="flex-none hidden lg:block">
-            <ul className="flex items-center justify-between gap-1 menu menu-horizontal">
+            <ul className="flex items-center justify-between gap-3 menu menu-horizontal">
                 {/* <!-- Navbar menu content here --> */}
                 {children}
             </ul>
