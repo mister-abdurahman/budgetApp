@@ -1,8 +1,8 @@
-function Drawer({ children }: { children: JSX.Element[] }) {
+function Drawer({ children }: { children: JSX.Element[] | JSX.Element }) {
     return (
         <div className="drawer">
             <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
-            <div className="drawer-content overflow-y-hidden" style={{overflowX: "clip"}}>
+            <div className="h-screen w-screen drawer-content overflow-y-hidden" style={{overflowX: "clip"}}>
                 {children}
             </div>
             <DrawerSideBar>

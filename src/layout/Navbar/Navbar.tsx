@@ -1,8 +1,13 @@
 import { HiMenuAlt2 } from 'react-icons/hi'
 
-function Navbar({ children }: { children: JSX.Element[] | JSX.Element }) {
+interface INavbarProps extends React.HTMLAttributes<HTMLDivElement> {
+    children: JSX.Element[] | JSX.Element
+}
+
+function Navbar(props: INavbarProps) {
+    const { children } = props
     return (
-        <div className="items-center justify-between h-2 gap-3 bg-white shadow-sm w-ful navbar">
+        <div {...props} className={`sticky z-50 inset-x-0 top-0 items-center justify-between h-2 gap-3 bg-white shadow-sm w-ful navbar ${props.className}`}>
             <div className="flex-none lg:hidden">
                 <label htmlFor="my-drawer-3" className="btn btn-square btn-ghost">
                     <HiMenuAlt2 size={30} />
@@ -29,7 +34,7 @@ export const NavbarMenu = ({ children }: { children: JSX.Element[] | JSX.Element
 export const NavbarCenterMenu = ({ children }: { children: JSX.Element[] | JSX.Element }) => {
     return (
         <div className="flex-1 hidden gap-2 navbar-start lg:flex">
-                {children}
+            {children}
             <ul className="gap-1 px-1 menu menu-horizontal">
             </ul>
         </div>
