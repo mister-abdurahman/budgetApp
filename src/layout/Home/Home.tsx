@@ -18,7 +18,7 @@ import React from 'react';
 
 function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
     const { authStore } = useStore()
-    const { signOut, user } = authStore
+    const { signOut } = authStore
     return (
         <>
             <Drawer>
@@ -196,8 +196,8 @@ interface ISideNav extends React.HTMLAttributes<HTMLDivElement> {
 
 export const SideNav = (props: ISideNav) => {
     const { children, className } = props
-    const { authStore } = useStore()
-    const { user } = authStore
+    // const { authStore } = useStore()
+    // const { user } = authStore
 
     return (
         <div {...props} className={`flex h-screen flex-col justify-between border-e bg-white ${className}`}>

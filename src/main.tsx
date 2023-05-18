@@ -6,6 +6,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Dashboard from './pages/Dashboard/Dashboard.tsx'
 import Upload from './pages/Upload/Upload.tsx'
 import { StoreContext, store } from './stores/store.ts'
+import Student from './pages/Student/Student.tsx'
 
 
 const router = createBrowserRouter([
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: "/upload",
         element: <Upload />
+      },
+      {
+        path: "/student",
+        element: <Student />
       }
     ]
   }
