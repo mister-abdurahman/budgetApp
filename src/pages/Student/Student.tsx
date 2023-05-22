@@ -1,4 +1,4 @@
-import { HiDotsVertical, HiSortDescending } from "react-icons/hi"
+import { HiSortDescending } from "react-icons/hi"
 import Avatar from "../../components/Avatar"
 import Dropdown from "../../components/Dropdown"
 import List, { ListRow } from "../../components/List/List"
@@ -6,32 +6,13 @@ import { useStore } from "../../stores/store"
 import TextInput from "../../components/Form/TextInput"
 import { Form, Formik } from "formik"
 import { BiDetail, BiSearch } from "react-icons/bi"
-import { BsCheck2Circle } from "react-icons/bs"
 import { Link } from "react-router-dom"
+import CheckboxGroup from "../../components/CheckboxGroup/CheckboxGroup"
 
 function Student() {
     const { authStore } = useStore()
     const { userArrays } = authStore
-
-    const header = [
-        {
-            name: "Avatar",
-            value: "text",
-        },
-        {
-            name: "Name",
-            value: "subjectCategory"
-        },
-        {
-            name: "Registration Number",
-            value: "registrationNumber"
-        },
-        {
-            name: "Program",
-            value: "questionCategory"
-        },
-    ]
-
+    
     return (
         <div className="">
             <div className="space-y-2">
@@ -54,65 +35,7 @@ function Student() {
                         <div className="flex items-center gap-3">
                             <HiSortDescending size={20} />
                             <Dropdown title="Status" dropDownStyle="dropdown-end" className="capitalize rounded-sm btn-sm">
-                                <fieldset className="block space-y-2">
-                                    <legend className="sr-only">Status</legend>
-
-                                    <div>
-                                        <input
-                                            type="checkbox"
-                                            name="Status"
-                                            value="All"
-                                            id="All"
-                                            className="peer hidden [&:checked_+_label_svg]:block"
-                                        />
-
-                                        <label
-                                            htmlFor="All"
-                                            className="flex items-center justify-center gap-2 px-3 py-2 text-gray-900 bg-white border border-gray-100 rounded-md cursor-pointer hover:border-gray-200 peer-checked:border-gray-500 peer-checked:bg-gray-500 peer-checked:text-white"
-                                        >
-                                            <BsCheck2Circle className="hidden w-5 h-5" />
-
-                                            <p className="text-sm font-medium">All</p>
-                                        </label>
-                                    </div>
-
-                                    <div>
-                                        <input
-                                            type="checkbox"
-                                            name="Status"
-                                            value="Completed"
-                                            id="Completed"
-                                            className="peer hidden [&:checked_+_label_svg]:block"
-                                        />
-
-                                        <label
-                                            htmlFor="Completed"
-                                            className="flex items-center justify-center gap-2 px-3 py-2 text-gray-900 bg-white border border-gray-100 rounded-md cursor-pointer hover:border-gray-200 peer-checked:border-gray-500 peer-checked:bg-gray-500 peer-checked:text-white"
-                                        >
-                                            <BsCheck2Circle className="hidden w-5 h-5" />
-
-                                            <p className="text-sm font-medium">Completed</p>
-                                        </label>
-                                    </div>
-
-                                    <div>
-                                        <input
-                                            type="checkbox"
-                                            name="Status"
-                                            value="Uncompleted"
-                                            id="Uncompleted"
-                                            className="peer hidden [&:checked_+_label_svg]:block"
-                                        />
-
-                                        <label
-                                            htmlFor="Uncompleted"
-                                            className="flex items-center justify-center gap-2 px-3 py-2 text-gray-900 bg-white border border-gray-100 rounded-md cursor-pointer hover:border-gray-200 peer-checked:border-gray-500 peer-checked:bg-gray-500 peer-checked:text-white"
-                                        >
-                                            <BsCheck2Circle className="hidden w-5 h-5" />
-                                            <p className="text-sm font-medium">Uncompleted</p>
-                                        </label>
-                                    </div>
-                                </fieldset>
+                                <CheckboxGroup name="Status" data={["all","Completed","Uncompleted"]} />                                
                             </Dropdown>
                         </div>
 

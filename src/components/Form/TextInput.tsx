@@ -1,6 +1,5 @@
 import { Field } from 'formik';
 import React from 'react';
-import { BiAt } from 'react-icons/bi';
 
 export interface ITextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     label: string,
