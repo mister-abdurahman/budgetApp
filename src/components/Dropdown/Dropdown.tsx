@@ -1,6 +1,6 @@
 import { MdArrowDropDown } from "react-icons/md"
 
-interface IDropdown {
+interface IDropdown extends React.HTMLAttributes<HTMLDivElement> {
   children?: JSX.Element[] | JSX.Element,
   title?: string,
   buttonStyle?: string,
@@ -8,10 +8,11 @@ interface IDropdown {
   icon?: JSX.Element
   isButton?: boolean
 }
-function Dropdown({ children, buttonStyle, dropDownStyle, icon, title, isButton = true }: IDropdown) {
+function Dropdown(props: IDropdown) {
+  const { children, buttonStyle, dropDownStyle, icon, title, isButton = true } = props
   return (
     <div className={`dropdown ${dropDownStyle}`}>
-      {isButton ? <Button buttonStyle={buttonStyle} title={title} icon={icon} /> : <Label title={title} icon={icon} />}
+      {isButton ? <Button className={props.className} buttonStyle={buttonStyle} title={title} icon={icon} /> : <Label title={title} icon={icon} />}
       <ul tabIndex={0} className="p-2 shadow dropdown-content menu bg-base-100 rounded-box w-52">
         {children}
       </ul>
@@ -22,9 +23,17 @@ function Dropdown({ children, buttonStyle, dropDownStyle, icon, title, isButton 
 export default Dropdown
 
 
-const Button = ({ buttonStyle, title, icon }: IDropdown) => {
+const Button = ({ className, buttonStyle = "", title = "", icon, ...restProps }: IDropdown) => {
   return (
-    <label tabIndex={0} className={`btn m-1 ${buttonStyle}`}>{title}<span>{icon ? icon : <MdArrowDropDown />}</span></label>
+    // <div {...restProps} tabIndex={0} className={`btn m-1 ${className} ${buttonStyle}`}>{title}<span>{icon ? icon : <MdArrowDropDown />}</span></div>
+    <div
+      {...restProps}
+      className={`inline-flex items-center gap-2 px-4 py-1 text-white capitalize bg-gray-700 border border-gray-600 rounded cursor-pointer hover:bg-transparent hover:text-gray-600 focus:outline-none focus:ring active:text-gray-500 ${className} ${buttonStyle}`}
+      tabIndex={0}
+    >
+      <span className="text-sm font-medium"> {title} </span>
+      {icon ? icon : <MdArrowDropDown />}
+    </div>
   )
 }
 

@@ -1,5 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import { atom } from "nanostores";
+import { store } from "./store";
 
 export interface ISignIn {
     username: string;
@@ -7,6 +8,7 @@ export interface ISignIn {
 }
 
 export interface IUser {
+    id: string
     firstName: string;
     lastName: string;
     imageUrl: string;
@@ -42,11 +44,12 @@ export interface IProgram {
     description: string,
 }
 
-const users = atom<IUser[]>([
+export const users: IUser[] = [
     {
+        id: "Code-1",
         firstName: "Jim",
         lastName: "Parson",
-        imageUrl: "https://media.licdn.com/dms/image/C4D03AQHKNmB-w7WlGg/profile-displayphoto-shrink_800_800/0/1658915297053?e=1689206400&v=beta&t=SrF-hl453awu9qzOx5i0gC0I354qHH_gHQESnbQD_Ushttps://media.licdn.com/dms/image/C4D03AQHKNmB-w7WlGg/profile-displayphoto-shrink_800_800/0/1658915297053?e=1689206400&v=beta&t=SrF-hl453awu9qzOx5i0gC0I354qHH_gHQESnbQD_Us",
+        imageUrl: "https://assets.gqindia.com/photos/5ec3a504d3f083a3607079f6/4:3/w_1440,h_1080,c_limit/Jim%20Parsons.jpg",
         registrationNumber: "123-456-789",
         matriculationNumber: "CU-234-00001",
         collegeId: 1,
@@ -59,6 +62,7 @@ const users = atom<IUser[]>([
         password: "password"
     },
     {
+        id: "Code-2",
         firstName: "Blessing",
         lastName: "Awogo",
         imageUrl: "https://avatars.githubusercontent.com/u/108867759?v=4",
@@ -73,7 +77,7 @@ const users = atom<IUser[]>([
         username: "blessco",
         password: "password"
     }
-])
+]
 
 
 export const cookie = atom(localStorage.getItem("cookie"))
@@ -88,42 +92,19 @@ function getUser() {
     return JSON.parse(cookie.get()!)?.user || null
 }
 
-export const handleUserSignIn = (signIn: ISignIn) => {
-    const user = users.get().find(x => x.username === signIn.username && x.password === signIn.password)
-    if (user) {
-
-        localStorage.setItem("cookie", JSON.stringify({ user, token: Math.random().toString(36).substring(2, 20) }))
-    }
-    console.log(token.get());
-}
-
 export const signOut = () => localStorage.removeItem("cookie")
-
-console.log(token.get());
-
-
 
 //Mobx
 export default class AuthStore {
     user: IUser | null = JSON.parse(localStorage.getItem("cookie")!)?.user
-    signUp: IUser = {
-        firstName: "",
-        lastName: "",
-        imageUrl: "",
-        registrationNumber: "",
-        matriculationNumber: "",
-        collegeId: 0,
-        college: "",
-        departmentId: 0,
-        department: "",
-        programId: 0,
-        program: "",
-        username: "",
-        password: ""
-    }
+    users = new Map<string, IUser>();
 
     constructor() {
         makeAutoObservable(this)
+    }
+
+    get userArrays() {
+        return Array.from(users.values());
     }
 
     get cookie() {
@@ -131,17 +112,25 @@ export default class AuthStore {
     }
 
     handleUserSignIn = async (signIn: ISignIn) => {
-        const user = users.get().find(x => x.username === signIn.username && x.password === signIn.password)
+        const user = users.find(x => x.username === signIn.username.toLowerCase() && x.password === signIn.password.toLowerCase())
         if (user) {
-            localStorage.setItem("cookie", JSON.stringify({ user, token: Math.random().toString(36).substring(2, 20) }))
+            localStorage.setItem("cookie", JSON.stringify({ user, token: store.commonStore.randomString() }))
+        }else{
+            store.commonStore.setAlert({message: "invalid username or password", type: "error"})   
         }
         return user;
     }
 
+    loadPrograms = async () => {
+        users.forEach(user => {
+            this.users.set(user.id!, user)
+        });
+    }
+
     handleUserSignUp = async (user: IUser) => {
-        users.set([...users.get(),user])
-        console.log(users.get());
-        
+        this.users.set(Math.random().toString(36).substring(2, 20), user)
+        console.log(users);
+
         return user;
     }
 

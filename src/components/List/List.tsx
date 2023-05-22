@@ -9,6 +9,6 @@ export default List
 
 export const ListRow = ({ children }: { children: JSX.Element[] | JSX.Element }) => {
     return (
-        <div className="p-4 shadow-md flex justify-between gap-2 items-center bg-white">{children}</div>
+        <div className="flex items-center justify-between gap-4 px-4 py-2 bg-white rounded-sm shadow-md">{children}</div>
     )
 }

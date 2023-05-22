@@ -12,6 +12,7 @@
   "dependencies": {
     "@nanostores/react": "^0.6.0",
     "@types/react-icons": "^3.0.0",
+    "@types/react-router-dom": "^5.3.3",
     "autoprefixer": "^10.4.14",
     "daisyui": "^2.51.6",
     "formik": "^2.2.9",

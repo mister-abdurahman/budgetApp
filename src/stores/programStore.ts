@@ -19,7 +19,7 @@ export default class ProgramStore {
     }
 
     get programArrays(){
-        return Array.from(programs.values());
+        return Array.from(this.programs.values());
     }
 
     loadPrograms = async () => {

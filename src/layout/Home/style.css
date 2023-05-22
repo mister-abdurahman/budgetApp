@@ -17,3 +17,35 @@
   ::-webkit-scrollbar-thumb:hover {
     background: #555; 
   }
+
+
+  .cs-grid{
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(11, 1fr);
+    grid-auto-rows: fit-content(100%) auto fit-content(100%);
+    grid-template-areas:
+        "hd hd hd hd hd hd hd hd hd hd hd hd"
+        "sd sd main main main main main main main main main main"
+        "ft ft ft ft ft ft ft ft ft ft ft ft";
+  }
+
+  header{
+    grid-area: hd;
+    /* background-color: red */
+  }
+
+  aside{
+    grid-area: sd;
+    /* background-color: violet */
+  
+  }
+  main{
+    grid-area: main;
+    /* background-color: green */
+  }
+  
+  footer{
+    grid-area: ft;
+    /* background-color: yellow */
+  }

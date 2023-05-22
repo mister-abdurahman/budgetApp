@@ -7,6 +7,8 @@ import Dashboard from './pages/Dashboard/Dashboard.tsx'
 import Upload from './pages/Upload/Upload.tsx'
 import { StoreContext, store } from './stores/store.ts'
 import Student from './pages/Student/Student.tsx'
+import StudentEdit from './pages/Student/StudentEdit.tsx'
+import User from './pages/User/User.tsx'
 
 
 const router = createBrowserRouter([
@@ -27,8 +29,16 @@ const router = createBrowserRouter([
         element: <Upload />
       },
       {
-        path: "/student",
+        path: "/students",
         element: <Student />
+      },
+      {
+        path: "/students/:studentId",
+        element: <StudentEdit />
+      },
+      {
+        path: "/users",
+        element: <User />
       }
     ]
   }
@@ -36,7 +46,7 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <StoreContext.Provider value={store}>
+    <StoreContext.Provider value={store}>      
       <RouterProvider router={router} />
     </StoreContext.Provider>
   </React.StrictMode>,

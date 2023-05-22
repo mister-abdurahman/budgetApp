@@ -5,7 +5,7 @@ type IStat = {
 
 function Stat({ children }: IStat) {
     return (
-        <div className="stats stats-vertical flex-1 shadow-md">
+        <div className="shadow-md stats stats-vertical">
             {children}
         </div>
     )

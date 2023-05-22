@@ -7,14 +7,14 @@ interface INavbarProps extends React.HTMLAttributes<HTMLDivElement> {
 function Navbar(props: INavbarProps) {
     const { children } = props
     return (
-        <div {...props} className={`sticky z-50 inset-x-0 top-0 items-center justify-between h-2 gap-3 bg-white shadow-sm w-ful navbar ${props.className}`}>
+        <header {...props} className={`sticky z-50 inset-x-0 top-0 items-center justify-between h-2 gap-3 bg-white shadow-sm w-ful navbar ${props.className}`}>
             <div className="flex-none lg:hidden">
                 <label htmlFor="my-drawer-3" className="btn btn-square btn-ghost">
                     <HiMenuAlt2 size={30} />
                 </label>
             </div>
             {children}
-        </div>
+        </header>
     )
 }
 

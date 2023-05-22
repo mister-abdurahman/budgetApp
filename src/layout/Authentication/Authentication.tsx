@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React, { useState } from "react"
-import { Form, Formik, FormikHelpers, useFormik } from 'formik'
+import { Form, Formik, FormikHelpers } from 'formik'
 import { useStore } from "../../stores/store"
 import { ISignIn, IUser } from '../../stores/authStore';
 import { HiUserCircle } from 'react-icons/hi';
@@ -37,10 +37,8 @@ export const SignIn = observer(({ handleSetSignUp }: { handleSetSignUp: (isSignU
 
     const handleSignIn = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log(signIn);
 
         handleUserSignIn(signIn).then(user => {
-            console.log("handleUserSignIn");
             if (user) window.location.reload();
         });
 
@@ -133,27 +131,6 @@ export const SignUp = observer(({ handleSetSignUp }: { handleSetSignUp: (isSignU
         // authStore: { handleUserSignUp }
     } = useStore()
 
-    const formik = useFormik({
-        initialValues: {
-            firstName: "",
-            lastName: "",
-            imageUrl: "",
-            registrationNumber: "",
-            matriculationNumber: "",
-            collegeId: 0,
-            college: "",
-            departmentId: 0,
-            department: "",
-            programId: 0,
-            program: "",
-            username: "",
-            password: ""
-        },
-        onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
-        },
-    });
-
     return (
         <>
             <div className="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
@@ -165,15 +142,9 @@ export const SignUp = observer(({ handleSetSignUp }: { handleSetSignUp: (isSignU
                         Welcome to the convenant university <span className='font-bold'>school record management system</span>
                     </p>
 
-                    {/* <form
-                        onSubmit={formik.handleSubmit}
-                        className="p-4 mt-6 mb-0 space-y-4 rounded-lg shadow-lg sm:p-6 lg:p-8"
-                    >
-
-                    </form> */}
-
                     <Formik
                         initialValues={{
+                            id: "",
                             firstName: "",
                             lastName: "",
                             imageUrl: "",
@@ -231,7 +202,6 @@ export const SignUp = observer(({ handleSetSignUp }: { handleSetSignUp: (isSignU
                             <Select
                                 id='programId'
                                 name='programId'
-                                value={formik.values.programId}
                                 options={programArrays}
                                 optionSetter={(data) => data.name}
                                 valueSetter={(data) => data.id}

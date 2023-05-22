@@ -1,4 +1,4 @@
-import { HiDotsVertical, HiSortDescending } from "react-icons/hi"
+import { HiSortDescending } from "react-icons/hi"
 import Avatar from "../../components/Avatar"
 import Dropdown from "../../components/Dropdown"
 import List, { ListRow } from "../../components/List/List"
@@ -9,7 +9,7 @@ import { BiDetail, BiSearch } from "react-icons/bi"
 import { BsCheck2Circle } from "react-icons/bs"
 import { Link } from "react-router-dom"
 
-function Student() {
+function User() {
     const { authStore } = useStore()
     const { userArrays } = authStore
 
@@ -49,9 +49,89 @@ function Student() {
                 >
                     <Form className="flex items-center justify-between gap-2"
                     >
+                        <div className="flex items-center gap-5">
+                            <TextInput label='' id='search' name='search' placeholder="search" type="TextIconInput" icon={<BiSearch />} />
+                            <Dropdown title="Users" dropDownStyle="dropdown-end" className="capitalize rounded-sm btn-sm">
+                                <fieldset className="block space-y-2">
+                                    <legend className="sr-only">Users</legend>
 
-                        <TextInput label='' id='search' name='search' placeholder="search" type="TextIconInput" icon={<BiSearch />} />
+                                    <div>
+                                        <input
+                                            type="checkbox"
+                                            name="Status"
+                                            value="All"
+                                            id="All"
+                                            className="peer hidden [&:checked_+_label_svg]:block"
+                                        />
+
+                                        <label
+                                            htmlFor="All"
+                                            className="flex items-center justify-center gap-2 px-3 py-2 text-gray-900 bg-white border border-gray-100 rounded-md cursor-pointer hover:border-gray-200 peer-checked:border-gray-500 peer-checked:bg-gray-500 peer-checked:text-white"
+                                        >
+                                            <BsCheck2Circle className="hidden w-5 h-5" />
+
+                                            <p className="text-sm font-medium">All</p>
+                                        </label>
+                                    </div>
+
+                                    <div>
+                                        <input
+                                            type="checkbox"
+                                            name="Status"
+                                            value="Admin"
+                                            id="Admin"
+                                            className="peer hidden [&:checked_+_label_svg]:block"
+                                        />
+
+                                        <label
+                                            htmlFor="Admin"
+                                            className="flex items-center justify-center gap-2 px-3 py-2 text-gray-900 bg-white border border-gray-100 rounded-md cursor-pointer hover:border-gray-200 peer-checked:border-gray-500 peer-checked:bg-gray-500 peer-checked:text-white"
+                                        >
+                                            <BsCheck2Circle className="hidden w-5 h-5" />
+
+                                            <p className="text-sm font-medium">Admin</p>
+                                        </label>
+                                    </div>
+
+                                    <div>
+                                        <input
+                                            type="checkbox"
+                                            name="Status"
+                                            value="Adviser"
+                                            id="Adviser"
+                                            className="peer hidden [&:checked_+_label_svg]:block"
+                                        />
+
+                                        <label
+                                            htmlFor="Adviser"
+                                            className="flex items-center justify-center gap-2 px-3 py-2 text-gray-900 bg-white border border-gray-100 rounded-md cursor-pointer hover:border-gray-200 peer-checked:border-gray-500 peer-checked:bg-gray-500 peer-checked:text-white"
+                                        >
+                                            <BsCheck2Circle className="hidden w-5 h-5" />
+                                            <p className="text-sm font-medium">Adviser</p>
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <input
+                                            type="checkbox"
+                                            name="Status"
+                                            value="Student"
+                                            id="Student"
+                                            className="peer hidden [&:checked_+_label_svg]:block"
+                                        />
+
+                                        <label
+                                            htmlFor="Student"
+                                            className="flex items-center justify-center gap-2 px-3 py-2 text-gray-900 bg-white border border-gray-100 rounded-md cursor-pointer hover:border-gray-200 peer-checked:border-gray-500 peer-checked:bg-gray-500 peer-checked:text-white"
+                                        >
+                                            <BsCheck2Circle className="hidden w-5 h-5" />
+                                            <p className="text-sm font-medium">Student</p>
+                                        </label>
+                                    </div>
+                                </fieldset>
+                            </Dropdown>
+                        </div>
                         <div className="flex items-center gap-3">
+
                             <HiSortDescending size={20} />
                             <Dropdown title="Status" dropDownStyle="dropdown-end" className="capitalize rounded-sm btn-sm">
                                 <fieldset className="block space-y-2">
@@ -125,19 +205,15 @@ function Student() {
                         return (
                             <ListRow key={index}>
                                 <Avatar imageUrl={user.imageUrl} size="xs" />
-                                <div className="flex items-center flex-1 gap-6 my-auto">
-                                    <div className="w-40">
+                                <div className="flex items-center flex-1 gap-4 my-auto">
+                                    <div>
                                         <h1 className="text-sm font-semibold text-gray-800 capitalize">{user.firstName} {user.lastName}</h1>
                                         <h1 className="text-sm text-gray-400-100">{user.username}</h1>
                                     </div>
-                                    <h1 className="text-sm font-semibold text-gray-800 capitalize">{user.matriculationNumber}</h1>
-                                    <h1 className="text-sm font-semibold text-gray-800 capitalize">{user.college}</h1>
-                                    <div className="text-xs badge badge-success">completed</div>
-
                                     {/* <div className="text-xs badge badge-error">uncompleted</div> */}
                                 </div>
                                 <Link
-                                    to={`/students/${user.id}`}
+                                    to={`/student/${user.id}`}
                                     className="flex items-center justify-center gap-2 px-3 py-2 text-white bg-gray-500 rounded-md cursor-pointer borderborder-gray-500 hover:border-gray-200"
                                 >
                                     <BiDetail className="w-5 h-5" />
@@ -164,4 +240,4 @@ function Student() {
     )
 }
 
-export default Student
+export default User

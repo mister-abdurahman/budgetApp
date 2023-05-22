@@ -22,7 +22,7 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
     return (
         <>
             <Drawer>
-                <div className='h-full w-full grid grid-cols-12'>
+                <div className='w-screen h-screen cs-grid'>
                     <Navbar className='col-span-12'>
                         <Logo />
                         <MdNotifications className='text-3xl lg:hidden' />
@@ -47,11 +47,11 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
                             </Dropdown>
                         </NavbarMenu>
                     </Navbar>
-                    <SideNav className='col-span-2 sticky self-start'>
-                        <div className='bg-gray-600 p-3 rounded-xl space-y-2'>
+                    <SideNav className='sticky self-start'>
+                        <div className='p-3 space-y-2 bg-gray-600 rounded-xl'>
                             <a
                                 href="#"
-                                className="flex items-center gap-2 rounded-lg bg-gray-100 px-4 py-2 text-gray-700"
+                                className="flex items-center gap-2 px-4 py-2 text-gray-700 bg-gray-100 rounded-lg"
                             >
                                 <RiDashboardLine />
 
@@ -59,43 +59,50 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
                             </a>
 
                             <Link
-                                to='/student'
-                                className="flex items-center gap-2 rounded-lg px-4 py-2 text-white hover:bg-gray-100 hover:text-gray-700"
+                                to='/students'
+                                className="flex items-center gap-2 px-4 py-2 text-white rounded-lg hover:bg-gray-100 hover:text-gray-700"
                             >
                                 <FaUserGraduate />
+                                <span className="text-sm font-medium"> Students </span>
+                            </Link>
 
-                                <span className="text-sm font-medium"> Student </span>
+                            <Link
+                                to='/users'
+                                className="flex items-center gap-2 px-4 py-2 text-white rounded-lg hover:bg-gray-100 hover:text-gray-700"
+                            >
+                                <HiUserGroup />
+                                <span className="text-sm font-medium"> Users </span>
                             </Link>
 
                             <details className="group [&_summary::-webkit-details-marker]:hidden text-white">
                                 <summary
-                                    className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2  hover:bg-gray-100 hover:text-gray-700"
+                                    className="flex items-center justify-between px-4 py-2 rounded-lg cursor-pointer hover:bg-gray-100 hover:text-gray-700"
                                 >
                                     <div className="flex items-center gap-2">
                                         <HiUserGroup />
                                         <span className="text-sm font-medium"> Teams </span>
                                     </div>
 
-                                    <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                                    <span className="transition duration-300 shrink-0 group-open:-rotate-180">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
-                                            className="h-5 w-5"
+                                            className="w-5 h-5"
                                             viewBox="0 0 20 20"
                                             fill="currentColor"
                                         >
                                             <path
-                                                fill-rule="evenodd"
+                                                fillRule="evenodd"
                                                 d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                clip-rule="evenodd"
+                                                clipRule="evenodd"
                                             />
                                         </svg>
                                     </span>
                                 </summary>
 
-                                <nav aria-label="Teams Nav" className="mt-2 flex flex-col px-4">
+                                <nav aria-label="Teams Nav" className="flex flex-col px-4 mt-2">
                                     <a
                                         href="#"
-                                        className="flex items-center gap-2 rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                                        className="flex items-center gap-2 px-4 py-2 text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700"
                                     >
                                         <MdCancel />
                                         <span className="text-sm font-medium"> Banned Users </span>
@@ -103,7 +110,7 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
 
                                     <a
                                         href="#"
-                                        className="flex items-center gap-2 rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                                        className="flex items-center gap-2 px-4 py-2 text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700"
                                     >
                                         <BiCalendar />
                                         <span className="text-sm font-medium"> Calendar </span>
@@ -111,15 +118,15 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
                                 </nav>
                             </details>
 
-                            
+
                         </div>
 
 
 
                     </SideNav>
-                    <div className='m-6 mx-12 col-span-10 overflow-y-auto'>
+                    <main className='p-6 overflow-y-auto '>
                         {children}
-                    </div>
+                    </main>
                     <Footer />
                 </div>
             </Drawer>
@@ -181,9 +188,9 @@ export const UserInfo = () => {
                 fill="currentColor"
             >
                 <path
-                    fill-rule="evenodd"
+                    fillRule="evenodd"
                     d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                    clip-rule="evenodd"
+                    clipRule="evenodd"
                 />
             </svg>
         </button>
@@ -200,24 +207,24 @@ export const SideNav = (props: ISideNav) => {
     // const { user } = authStore
 
     return (
-        <div {...props} className={`flex h-screen flex-col justify-between border-e bg-white ${className}`}>
+        <aside {...props} className={`flex h-full flex-col justify-between border-e bg-white ${className}`}>
             <div className="px-4 py-6">
 
-                <nav aria-label="Main Nav" className="mt-6 flex flex-col space-y-1">
+                <nav aria-label="Main Nav" className="flex flex-col mt-6 space-y-1">
                     {children}
                 </nav>
             </div>
-        </div>
+        </aside>
     )
 }
 
 export const Footer = () => {
     return (
-        <div className="sticky bg-gray-700 text-white inset-x-0 bottom-0 border-t border-gray-100 grid place-items-center p-1 col-span-12">
+        <footer className="sticky inset-x-0 bottom-0 grid col-span-12 p-1 text-white bg-gray-700 border-t border-gray-100 place-items-center">
             <p className="hidden text-xs text-left ms-2 sm:grid sm:place-items-center">
                 <strong className="block font-medium">Developed by Holutahyour</strong>
-                <span className="text-gray-300 flex items-end gap-1"><BiCopyright />copyright 2023 - {new Date().getFullYear()}</span>
+                <span className="flex items-end gap-1 text-gray-300"><BiCopyright />copyright 2023 - {new Date().getFullYear()}</span>
             </p>
-        </div>
+        </footer>
     )
 }
