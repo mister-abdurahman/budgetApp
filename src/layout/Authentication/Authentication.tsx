@@ -1,8 +1,8 @@
 import { observer } from 'mobx-react-lite';
 import React, { useState } from "react"
 import { Form, Formik, FormikHelpers } from 'formik'
-import { useStore } from "../../stores/store"
-import { ISignIn, IUser } from '../../stores/authStore';
+import { useStore } from "../../data/stores/store"
+import { ISignIn, IUser } from '../../data/stores/authStore';
 import { HiUserCircle } from 'react-icons/hi';
 import { MdPassword } from 'react-icons/md';
 import { Logo } from '../Home/Home';

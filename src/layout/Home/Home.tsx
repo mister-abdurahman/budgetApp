@@ -10,8 +10,8 @@ import { BsGearWide } from 'react-icons/bs';
 import Dropdown from '../../components/Dropdown/Dropdown';
 import './style.css';
 import LogoImage from '../../assets/covenant-university-logo-desktop.png'
-import { Link } from 'react-router-dom';
-import { useStore } from '../../stores/store';
+import { Link, NavLink } from 'react-router-dom';
+import { useStore } from '../../data/stores/store';
 import React from 'react';
 
 
@@ -19,6 +19,7 @@ import React from 'react';
 function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
     const { authStore } = useStore()
     const { signOut } = authStore
+
     return (
         <>
             <Drawer>
@@ -49,30 +50,34 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
                     </Navbar>
                     <SideNav className='sticky self-start'>
                         <div className='p-3 space-y-2 bg-gray-600 rounded-xl'>
-                            <a
-                                href="#"
-                                className="flex items-center gap-2 px-4 py-2 text-gray-700 bg-gray-100 rounded-lg"
+                            <NavLink
+                                to="/dashboard"
+                                className={({ isActive }) =>
+                                    isActive ? "flex items-center gap-2 px-4 py-2 text-gray-700 bg-gray-100 rounded-lg"  : "flex items-center gap-2 px-4 py-2 text-white rounded-lg hover:bg-gray-100 hover:text-gray-700"
+                                }
                             >
                                 <RiDashboardLine />
 
                                 <span className="text-sm font-medium"> Dashboard </span>
-                            </a>
+                            </NavLink>
 
-                            <Link
+                            <NavLink
                                 to='/students'
-                                className="flex items-center gap-2 px-4 py-2 text-white rounded-lg hover:bg-gray-100 hover:text-gray-700"
-                            >
+                                className={({ isActive }) =>
+                                isActive ? "flex items-center gap-2 px-4 py-2 text-gray-700 bg-gray-100 rounded-lg"  : "flex items-center gap-2 px-4 py-2 text-white rounded-lg hover:bg-gray-100 hover:text-gray-700"
+                            }                            >
                                 <FaUserGraduate />
                                 <span className="text-sm font-medium"> Students </span>
-                            </Link>
+                            </NavLink>
 
-                            <Link
+                            <NavLink
                                 to='/users'
-                                className="flex items-center gap-2 px-4 py-2 text-white rounded-lg hover:bg-gray-100 hover:text-gray-700"
-                            >
+                                className={({ isActive }) =>
+                                isActive ? "flex items-center gap-2 px-4 py-2 text-gray-700 bg-gray-100 rounded-lg"  : "flex items-center gap-2 px-4 py-2 text-white rounded-lg hover:bg-gray-100 hover:text-gray-700"
+                            }                            >
                                 <HiUserGroup />
                                 <span className="text-sm font-medium"> Users </span>
-                            </Link>
+                            </NavLink>
 
                             <details className="group [&_summary::-webkit-details-marker]:hidden text-white">
                                 <summary

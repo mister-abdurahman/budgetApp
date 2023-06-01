@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useStore } from "../../stores/store"
+import { useStore } from "../../data/stores/store"
 import { observer } from "mobx-react-lite"
 import { useParams } from "react-router-dom";
 import { DashboardProfile } from "../Dashboard/DashboardProfile";

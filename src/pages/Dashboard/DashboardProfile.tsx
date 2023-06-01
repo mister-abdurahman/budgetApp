@@ -1,5 +1,5 @@
 import Avatar from "../../components/Avatar"
-import { IUser } from "../../stores/authStore"
+import { IUser } from "../../data/stores/authStore"
 
 interface DashboardProfileProps {
     user: IUser | null

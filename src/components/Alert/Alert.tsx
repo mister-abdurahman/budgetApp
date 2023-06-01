@@ -1,6 +1,6 @@
 import { BiCheckCircle, BiError } from "react-icons/bi"
 import { MdCancel, MdWarning } from "react-icons/md";
-import { useStore } from "../../stores/store";
+import { useStore } from "../../data/stores/store";
 
 interface IAlertProps {
     message: string;

@@ -9,6 +9,7 @@ interface IAlert{
 //Mobx
 export default class CommonStore {
     alerts = new Map<string, IAlert>();
+    offline = false
 
     constructor() {
         makeAutoObservable(this)

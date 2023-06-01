@@ -1,8 +1,8 @@
 import Stat, { StatCell } from '../../components/Stat/Stat'
 import './style.css'
-import { useStore } from '../../stores/store'
+import { useStore } from '../../data/stores/store'
 import { DashboardProfile } from './DashboardProfile'
-import { IUser } from '../../stores/authStore'
+import { IUser } from '../../data/stores/authStore'
 
 function Dashboard() {
   const { authStore } = useStore()

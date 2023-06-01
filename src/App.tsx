@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom"
 import Home from "./layout/Home/Home"
 import Authentication from "./layout/Authentication/Authentication"
-import { useStore } from "./stores/store"
+import { useStore } from "./data/stores/store"
 import Alert from "./components/Alert"
 import { observer } from "mobx-react-lite"
 
