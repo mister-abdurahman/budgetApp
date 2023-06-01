@@ -9,7 +9,7 @@ function Dashboard() {
   const { user } = authStore
 
   return (
-      <div className='flex flex-col-reverse gap-3 lg:grid lg:grid-cols-12'>
+      <div className='flex flex-col-reverse gap-3 lg:grid lg:grid-cols-[repeat(14,minmax(0,1fr))]'>
         <DashboardStat user={user} />
         <DashboardProfile user={user} />
       </div>
@@ -92,7 +92,7 @@ export const DashboardStat = ({ user }: IDashboardStatProps) => {
   ]
 
   return (
-    <div className='col-span-9 space-y-4 lg:space-x-4'>
+    <div className='col-span-10 space-y-4 lg:space-x-4'>
       <div className='space-y-2'>
           <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
             Welcome Back, {user?.firstName} {user?.lastName}!

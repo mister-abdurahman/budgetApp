@@ -8,11 +8,27 @@ import { Form, Formik } from "formik"
 import { BiDetail, BiSearch } from "react-icons/bi"
 import { Link } from "react-router-dom"
 import CheckboxGroup from "../../components/CheckboxGroup"
+import { useEffect } from "react"
+import { observer } from "mobx-react-lite"
+import Button from "../../components/Button"
 
 function User() {
-    const { authStore } = useStore()
-    const { userArrays } = authStore
-   
+    const { userStore } = useStore()
+    const { userArrays, load_users } = userStore
+
+    useEffect(() => {
+        let isCurrent = true
+
+        if (isCurrent) {
+            load_users()
+        }
+
+        return () => {
+            isCurrent = false;
+        }
+    }, [load_users])
+
+
     return (
         <div className="">
             <div className="space-y-2">
@@ -31,12 +47,12 @@ function User() {
                     <Form className="flex items-center justify-between gap-2"
                     >
                         <div className="flex items-center gap-5">
-                            <TextInput label='' id='search' name='search' placeholder="search" type="TextIconInput" icon={<BiSearch />} />                            
+                            <TextInput label='' id='search' name='search' placeholder="search" type="TextIconInput" icon={<BiSearch />} />
                         </div>
                         <div className="flex items-center gap-3">
                             <HiSortDescending size={20} />
                             <Dropdown title="Users" dropDownStyle="dropdown-end" className="capitalize rounded-sm btn-sm">
-                                <CheckboxGroup name="Status" data={["All", "Admin", "Adviser", "Student"]} />                               
+                                <CheckboxGroup name="users" data={["All", "Admin", "Adviser", "Student"]} />
                             </Dropdown>
                         </div>
                     </Form>
@@ -55,23 +71,9 @@ function User() {
                                 </div>
                                 <Link
                                     to={`/students/${user.id}`}
-                                    className="flex items-center justify-center gap-2 px-3 py-2 text-white bg-gray-500 rounded-md cursor-pointer borderborder-gray-500 hover:border-gray-200"
                                 >
-                                    <BiDetail className="w-5 h-5" />
-                                    <p className="text-sm font-medium">View</p>
+                                    <Button icon={<BiDetail className="w-5 h-5" />}>View</Button>
                                 </Link>
-                                {/* <Dropdown
-                                        buttonStyle="btn-ghost btn-circle"
-                                        dropDownStyle="dropdown-end" icon={<HiDotsVertical size={20}
-                                        />}>
-                                        <div
-                                            className="flex items-center justify-center gap-2 px-3 py-2 text-white bg-gray-500 rounded-md cursor-pointer borderborder-gray-500 hover:border-gray-200"
-                                        >
-                                            <BiDetail className="w-5 h-5" />
-
-                                            <p className="text-sm font-medium">View</p>
-                                        </div>
-                                    </Dropdown> */}
                             </ListRow>
                         )
                     })}
@@ -81,4 +83,4 @@ function User() {
     )
 }
 
-export default User
+export default observer(User)

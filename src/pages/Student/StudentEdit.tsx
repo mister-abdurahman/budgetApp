@@ -21,20 +21,14 @@ function StudentEdit() {
 
   return (
     <div className="space-y-5">
-      <CheckboxGroup name="Level" data={uploads.map(x => `${x.level}`)} position="horizontal" type="radio" action={setLevel} />
-      <div className='flex flex-col-reverse gap-3 lg:grid lg:grid-cols-12'>
-        <div className="flex flex-wrap col-span-9 gap-3">
+      <CheckboxGroup header="Level" name="Level" data={uploads.map(x => `${x.level}`)} position="horizontal" type="radio" action={setLevel} />
+      <div className='flex flex-col-reverse gap-3 lg:grid lg:grid-cols-[repeat(14,minmax(0,1fr))]'>
+        <div className="flex flex-wrap col-span-10 gap-4 justify-around">
           {uploads.map((upload) => {
             if (upload["level"] === level) {
               return upload.documents.map((x, index) => <Card key={index} header={x.header} details={x.details} />)
             }
-          })}
-          {/* <Card header="Jamb Result" details="Dowload student jamb result " />
-          <Card header="Jamb Acceptance Letter" details="Dowload student jamb acceptance letter " />
-          <Card header="Convenant University Acceptance letter" details="Dowload student o level result " />
-          <Card header="Birth certificate" details="Dowload student o level result " />
-          <Card header="Academic reference letter" details="Dowload student o level result " />
-          <Card header="matriculation oath" details="Dowload student o level result " /> */}
+          })}          
         </div>
         <DashboardProfile user={user} />
       </div>

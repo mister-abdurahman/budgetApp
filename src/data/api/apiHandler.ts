@@ -1,8 +1,11 @@
 import axios, { AxiosResponse } from "axios";
-import { ICollege, IDepartment, IProgram, IUser } from "../stores/authStore";
+import { ICollege } from "../stores/collegeStore";
+import { IDepartment } from "../stores/departmentStore";
+import { IProgram } from "../stores/programStore";
+import { IUser } from "../stores/authStore";
 
 
-axios.defaults.baseURL = "https://localhost:7151";
+axios.defaults.baseURL = "https://localhost:7151/api";
 
 const responseBody = (res: AxiosResponse) => res.data
 
@@ -31,7 +34,7 @@ const Users = {
 /////////////////////
 const Colleges = {
     list: (param?: string) => request.get<ICollege[]>(`/colleges?${param || ""}`),
-    detail: (id: string) => request.get<ICollege>(`/colleges/${id}`),
+    detail: (id: number) => request.get<ICollege>(`/colleges/${id}`),
     create: (college: ICollege) => request.post<ICollege>(`/colleges`, college),
     update: (id: string, college: ICollege) => request.post<ICollege>(`/colleges/${id}`, college),
     delete: (id: string) => request.delete<ICollege>(`/colleges/${id}`),
@@ -42,7 +45,7 @@ const Colleges = {
 ////////////////////////
 const Departments = {
     list: (param?: string) => request.get<IDepartment[]>(`/departments?${param || ""}`),
-    detail: (id: string) => request.get<IDepartment>(`/departments/${id}`),
+    detail: (id: number) => request.get<IDepartment>(`/departments/${id}`),
     create: (department: IDepartment) => request.post<IDepartment>(`/departments`, department),
     update: (id: string, department: IDepartment) => request.post<IDepartment>(`/departments/${id}`, department),
     delete: (id: string) => request.delete<IDepartment>(`/departments/${id}`),
@@ -53,7 +56,7 @@ const Departments = {
 /////////////////////
 const Programs = {
     list: (param?: string) => request.get<IProgram[]>(`/programs?${param || ""}`),
-    detail: (id: string) => request.get<IProgram>(`/programs/${id}`),
+    detail: (id: number) => request.get<IProgram>(`/programs/${id}`),
     create: (program: IProgram) => request.post<IProgram>(`/programs`, program),
     update: (id: string, program: IProgram) => request.post<IProgram>(`/programs/${id}`, program),
     delete: (id: string) => request.delete<IProgram>(`/programs/${id}`),

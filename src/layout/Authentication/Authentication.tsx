@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Form, Formik, FormikHelpers } from 'formik'
 import { useStore } from "../../data/stores/store"
 import { ISignIn, IUser } from '../../data/stores/authStore';
@@ -8,12 +8,23 @@ import { MdPassword } from 'react-icons/md';
 import { Logo } from '../Home/Home';
 import Select from '../../components/Form/Select';
 import TextInput from '../../components/Form/TextInput';
+import CheckboxGroup from '../../components/CheckboxGroup';
 
 function Authentication({ children }: { children: JSX.Element[] | JSX.Element }) {
-    const { authStore } = useStore()
+    const { authStore, collegeStore, departmentStore, programStore } = useStore()
     const { cookie } = authStore
 
     const [signUp, setSignUp] = useState(false);
+    const {load_colleges} = collegeStore;
+    const {load_departments} = departmentStore;
+    const {load_programs} = programStore;
+
+    useEffect(() => {
+        load_colleges();
+        load_departments();
+        load_programs();
+    }, [load_colleges,load_departments,load_programs])
+    
 
     return (
         <>
@@ -66,7 +77,7 @@ export const SignIn = observer(({ handleSetSignUp }: { handleSetSignUp: (isSignU
 
                     <form
                         onSubmit={handleSignIn}
-                        className="p-4 mt-6 mb-0 space-y-4 rounded-lg shadow-lg sm:p-6 lg:p-8"
+                        className="p-4 mt-6 mb-0 space-y-4 rounded-lg shadow-lg sm:p-6 lg:p-8 bg-white"
                     >
                         <p className="text-lg font-medium text-center">Sign in to your account</p>
 
@@ -126,8 +137,8 @@ export const SignIn = observer(({ handleSetSignUp }: { handleSetSignUp: (isSignU
 export const SignUp = observer(({ handleSetSignUp }: { handleSetSignUp: (isSignUp: boolean) => void }) => {
     const {
         collegeStore: { collegeArrays },
-        department: { departmentArrays },
-        program: { programArrays },
+        departmentStore: { departmentArrays },
+        programStore: { programArrays },
         // authStore: { handleUserSignUp }
     } = useStore()
 
@@ -173,6 +184,7 @@ export const SignUp = observer(({ handleSetSignUp }: { handleSetSignUp: (isSignU
                         >
                             <p className="text-lg font-medium text-center">Sign up to your account</p>
 
+                        <CheckboxGroup name="Level" data={["Fresher","Stalite"]} position="horizontal" type="radio" />
                             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                                 <TextInput type='text' label='First Name' id='firstName' name='firstName' />
                                 <TextInput type='text' label='Last Name' id='lastName' name='lastName' />
@@ -183,6 +195,7 @@ export const SignUp = observer(({ handleSetSignUp }: { handleSetSignUp: (isSignU
                                 <TextInput type='password' label='Password' id='password' name='password' />
                                 <TextInput type='password' label='Confirm Password' id='confirmPassword' name='confirmPassword' />
                             </div>
+
 
                             <Select
                                 id='collegeId'

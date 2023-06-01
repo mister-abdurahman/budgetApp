@@ -2,6 +2,7 @@ import { makeAutoObservable, runInAction } from "mobx";
 import apiHandler from "../api/apiHandler";
 import { IUser, users } from "./authStore";
 import { store } from "./store";
+import axios from "axios";
 
 export class UserStore {
     user: IUser | null = null;
@@ -12,7 +13,11 @@ export class UserStore {
     }
 
     get userArrays() {
-        return Array.from(this.users.values());
+        if (store.commonStore.offline) {            
+            return users;
+        }else{
+            return Array.from(this.users.values());
+        }
     }
 
     load_users = async () => {
@@ -21,11 +26,16 @@ export class UserStore {
             const users = await apiHandler.Users.list();
 
             users.forEach((user: IUser) => {
-                this.users.set(user.id, user)
+                runInAction(() =>{
+                    this.users.set(user.id, user)
+                })
             })
 
         } catch (error) {
-            console.log(error);
+            if (axios.isAxiosError(error) && error.response) {
+                store.commonStore.setAlert({ type: "error", message: error.message });
+                console.log(error.message);                
+            }
         }
 
     }

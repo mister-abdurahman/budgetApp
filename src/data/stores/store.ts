@@ -11,8 +11,8 @@ interface IStore{
     authStore: AuthStore;
     userStore: UserStore;
     collegeStore: CollegeStore;
-    department: DepartmentStore;
-    program: ProgramStore;
+    departmentStore: DepartmentStore;
+    programStore: ProgramStore;
 
 }
 
@@ -21,8 +21,8 @@ export const store: IStore = {
     authStore: new AuthStore(),
     userStore: new UserStore(),
     collegeStore: new CollegeStore(),
-    department: new DepartmentStore(),
-    program: new ProgramStore(),
+    departmentStore: new DepartmentStore(),
+    programStore: new ProgramStore(),
 } 
 
 export const StoreContext = createContext(store)

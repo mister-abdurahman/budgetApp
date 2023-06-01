@@ -45,9 +45,9 @@ const router = createBrowserRouter([
 ])
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <StoreContext.Provider value={store}>      
       <RouterProvider router={router} />
     </StoreContext.Provider>
-  </React.StrictMode>,
+  // </React.StrictMode>,
 )

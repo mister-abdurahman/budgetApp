@@ -6,9 +6,10 @@ interface ICheckboxGroupProps {
     data: string[];
     position?: string;
     type?: string;
+    header?: string;
     action?: (arg: string) => void
 }
-function CheckboxGroup({ name, data, position, type, action }: ICheckboxGroupProps) {
+function CheckboxGroup({ header, name, data, position, type, action }: ICheckboxGroupProps) {
     switch (position) {
         case "horizontal":
             position = "flex flex-wrap gap-3"
@@ -25,13 +26,13 @@ function CheckboxGroup({ name, data, position, type, action }: ICheckboxGroupPro
     return (
         <fieldset className={position}>
             <legend className="sr-only">{name || "name"}</legend>
-            <h1
+            {header && (<h1
                 className="flex items-center justify-center gap-2 px-3 py-2 text-gray-900 bg-white border border-gray-100 rounded-md cursor-pointer hover:border-gray-200 peer-checked:border-gray-500 peer-checked:bg-gray-500 peer-checked:text-white"
             >
                 <BiHomeAlt className="w-5 h-5 " />
 
                 <p className="text-sm font-medium capitalize">{name || "name"}</p>
-            </h1>
+            </h1>)}
 
             {data.map((check, index) => {
                 return (
