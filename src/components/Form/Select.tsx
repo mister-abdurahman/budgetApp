@@ -11,7 +11,7 @@ import { MdWarning } from 'react-icons/md'
 
 function Select(props: ISelectProps) {
     const { label, options, optionSetter, valueSetter, ...restProps } = props
-    const [field, meta] = useField(restProps.name || "")
+    const [meta] = useField(restProps.name || "")
 
 
     return (

@@ -14,8 +14,8 @@ export const DashboardProfile = ({ user }: DashboardProfileProps) => {
                 </div>
                 <div className='space-y-2'>
                     <h1 className='text-3xl text-[1.8rem] font-bold capitalize'>{user?.firstName} {user?.lastName}</h1>
-                    <h3 className='text-xl font-semibold'>{user?.matriculationNumber}</h3>
-                    <p className='capitalize'>{user?.college}</p>
+                    {/* <h3 className='text-xl font-semibold'>{user?.matriculationNumber}</h3>
+                    <p className='capitalize'>{user?.college}</p> */}
                 </div>
                 <button className='btn btn-sm btn-block'>edit</button>
             </div>

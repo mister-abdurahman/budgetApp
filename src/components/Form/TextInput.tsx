@@ -11,7 +11,7 @@ export interface ITextInputProps extends React.InputHTMLAttributes<HTMLInputElem
 
 function TextInput(props: ITextInputProps) {
     const { label, type, name } = props;
-    const [field, meta] = useField(name || "")
+    const [meta] = useField(name || "")
 
 
     switch (type) {

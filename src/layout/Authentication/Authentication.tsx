@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from "react"
 import { Form, Formik, FormikHelpers } from 'formik'
 import { useStore } from "../../data/stores/store"
-import { ISignIn, IUser } from '../../data/stores/authStore';
+import { ISignIn } from '../../data/stores/authStore';
 import { HiUserCircle } from 'react-icons/hi';
 import { MdPassword } from 'react-icons/md';
 import { Logo } from '../Home/Home';
@@ -10,7 +10,7 @@ import Select from '../../components/Form/Select';
 import TextInput from '../../components/Form/TextInput';
 import { IStudent } from '../../data/stores/studentStore';
 import * as Yup from 'yup'
-import { useNavigate, useNavigation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Authentication({ children }: { children: JSX.Element[] | JSX.Element }) {
     const { authStore, collegeStore, departmentStore, programStore } = useStore()
