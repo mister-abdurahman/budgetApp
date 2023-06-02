@@ -11,7 +11,7 @@ import { MdWarning } from 'react-icons/md'
 
 function Select(props: ISelectProps) {
     const { label, options, optionSetter, valueSetter, ...restProps } = props
-    const [meta] = useField(restProps.name || "")
+    const [field, meta] = useField(restProps.name || "")
 
 
     return (
@@ -20,7 +20,8 @@ function Select(props: ISelectProps) {
                 <span className="label-text">{label}</span>
                 {/* <span className="label-text-alt"></span> */}
             </label>
-            <Field as={'select'} {...restProps} className={`select capitalize w-full select-bordered ${props.className}`} >
+            <Field as={'select'} {...restProps} className={`select capitalize w-full select-bordered ${props.className}`} {...field}
+            >
                 <option defaultValue={0}>select {label.toLowerCase()}</option>
                 {options.map((option, index) => {
                     return <option key={index} value={valueSetter ? valueSetter(option) : option.id}>{optionSetter && optionSetter(option)}</option>

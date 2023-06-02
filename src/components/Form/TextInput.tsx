@@ -11,7 +11,7 @@ export interface ITextInputProps extends React.InputHTMLAttributes<HTMLInputElem
 
 function TextInput(props: ITextInputProps) {
     const { label, type, name } = props;
-    const [meta] = useField(name || "")
+    const [field, meta] = useField(name || "")
 
 
     switch (type) {
@@ -26,7 +26,7 @@ function TextInput(props: ITextInputProps) {
                         <span className="label-text">{label}</span>
                         {/* <span className="label-text-alt"></span> */}
                     </label>
-                    <Field {...props} className="w-full input input-bordered" />
+                    <Field {...props} className="w-full input input-bordered" {...field}/>
                     {meta.touched && meta.error ? (<label className="label">
                         {/* <span className="label-text-alt"></span> */}
                         <span className="text-xs leading-3 text-rose-700 flex gap-2 items-center">{meta.error}<MdWarning /></span>
