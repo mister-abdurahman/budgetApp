@@ -12,16 +12,8 @@ export interface IUser {
     firstName: string;
     lastName: string;
     imageUrl: string;
-    registrationNumber: string;
-    matriculationNumber: string;
-    collegeId: number;
-    college: string;
-    departmentId: number;
-    department: string;
-    programId: number;
-    program: string;
     username: string;
-    password: string;
+    password?: string;
 }
 
 export interface ICollege {
@@ -50,32 +42,15 @@ export const users: IUser[] = [
         firstName: "Jim",
         lastName: "Parson",
         imageUrl: "https://assets.gqindia.com/photos/5ec3a504d3f083a3607079f6/4:3/w_1440,h_1080,c_limit/Jim%20Parsons.jpg",
-        registrationNumber: "123-456-789",
-        matriculationNumber: "CU-234-00001",
-        collegeId: 1,
-        college: "science and technology",
-        departmentId: 1,
-        department: "",
-        programId: 1,
-        program: "",
         username: "jimparson",
-        password: "password"
     },
     {
         id: "Code-2",
         firstName: "Blessing",
         lastName: "Awogo",
         imageUrl: "https://avatars.githubusercontent.com/u/108867759?v=4",
-        registrationNumber: "123-456-710",
-        matriculationNumber: "CU-234-00002",
-        collegeId: 1,
-        college: "engineering",
-        departmentId: 1,
-        department: "",
-        programId: 1,
-        program: "",
         username: "blessco",
-        password: "password"
+
     }
 ]
 
@@ -112,12 +87,28 @@ export default class AuthStore {
     }
 
     handleUserSignIn = async (signIn: ISignIn) => {
-        const user = users.find(x => x.username === signIn.username.toLowerCase() && x.password === signIn.password.toLowerCase())
-        if (user) {
-            localStorage.setItem("cookie", JSON.stringify({ user, token: store.commonStore.randomString() }))
-        }else{
-            store.commonStore.setAlert({message: "invalid username or password", type: "error"})   
+        let user: IUser | null = null
+        if (store.commonStore.offline) {
+            user = users.find(x => x.username === signIn.username.toLowerCase() && x.password === signIn.password.toLowerCase())!
+            if (user) {
+                localStorage.setItem("cookie", JSON.stringify({ user, token: store.commonStore.randomString() }))
+            } else {
+                store.commonStore.setAlert({ message: "invalid username or password", type: "error" })
+            }
+        } else {
+            store.userStore.login(signIn.username, signIn.password)
+                .then((user) => {
+                    if (user) {
+                        localStorage.setItem("cookie", JSON.stringify({ user, token: store.commonStore.randomString() }))
+                    } else {
+                        store.commonStore.setAlert({ message: "invalid username or password", type: "error" })
+                    }
+                });
         }
+        
+        console.log(this.user);
+        
+
         return user;
     }
 
@@ -125,13 +116,6 @@ export default class AuthStore {
         users.forEach(user => {
             this.users.set(user.id!, user)
         });
-    }
-
-    handleUserSignUp = async (user: IUser) => {
-        this.users.set(Math.random().toString(36).substring(2, 20), user)
-        console.log(users);
-
-        return user;
     }
 
     signOut = async () => {

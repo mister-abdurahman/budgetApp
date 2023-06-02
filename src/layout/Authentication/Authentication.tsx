@@ -8,23 +8,25 @@ import { MdPassword } from 'react-icons/md';
 import { Logo } from '../Home/Home';
 import Select from '../../components/Form/Select';
 import TextInput from '../../components/Form/TextInput';
-import CheckboxGroup from '../../components/CheckboxGroup';
+import { IStudent } from '../../data/stores/studentStore';
+import * as Yup from 'yup'
+import { useNavigate, useNavigation } from 'react-router-dom';
 
 function Authentication({ children }: { children: JSX.Element[] | JSX.Element }) {
     const { authStore, collegeStore, departmentStore, programStore } = useStore()
     const { cookie } = authStore
 
     const [signUp, setSignUp] = useState(false);
-    const {load_colleges} = collegeStore;
-    const {load_departments} = departmentStore;
-    const {load_programs} = programStore;
+    const { load_colleges } = collegeStore;
+    const { load_departments } = departmentStore;
+    const { load_programs } = programStore;
 
     useEffect(() => {
         load_colleges();
         load_departments();
         load_programs();
-    }, [load_colleges,load_departments,load_programs])
-    
+    }, [load_colleges, load_departments, load_programs])
+
 
     return (
         <>
@@ -71,7 +73,7 @@ export const SignIn = observer(({ handleSetSignUp }: { handleSetSignUp: (isSignU
                     </p>
                     <p className="max-w-md mx-auto mt-4 text-center text-gray-500">
                         <span>username: blessco</span>
-                        <br /> 
+                        <br />
                         <span>password: password</span>
                     </p>
 
@@ -117,7 +119,7 @@ export const SignIn = observer(({ handleSetSignUp }: { handleSetSignUp: (isSignU
 
                         <button
                             type="submit"
-                            className="btn btn-block"
+                            className="btn btn-block btn-neutral"
                         >
                             Sign in
                         </button>
@@ -139,8 +141,24 @@ export const SignUp = observer(({ handleSetSignUp }: { handleSetSignUp: (isSignU
         collegeStore: { collegeArrays },
         departmentStore: { departmentArrays },
         programStore: { programArrays },
-        // authStore: { handleUserSignUp }
+        studentStore: { student, create_student_user },
     } = useStore()
+
+    const navigation = useNavigate();
+
+    const validationScheme = Yup.object({
+        username: Yup.string().required('The first name is required'),
+        password: Yup.string().required('The first name is required'),
+        confirmPassword: Yup.string().oneOf([Yup.ref('password')], 'Passwords must match'),
+        firstName: Yup.string().required('The first name is required'),
+        lastName: Yup.string().required('The lastname is required'),
+        email: Yup.string().email("use a valid email").required('The email is required'),
+        studentNumber: Yup.string().required('The matriculation/registration number is required'),
+        phoneNumber: Yup.string().required('The phone number is required'),
+        collegeCode: Yup.string().required('The college is required'),
+        departmentCode: Yup.string().required('The department is required'),
+        programCode: Yup.string().required('The program is required'),
+    })
 
     return (
         <>
@@ -154,81 +172,67 @@ export const SignUp = observer(({ handleSetSignUp }: { handleSetSignUp: (isSignU
                     </p>
 
                     <Formik
-                        initialValues={{
-                            id: "",
-                            firstName: "",
-                            lastName: "",
-                            imageUrl: "",
-                            registrationNumber: "",
-                            matriculationNumber: "",
-                            collegeId: 0,
-                            college: "",
-                            departmentId: 0,
-                            department: "",
-                            programId: 0,
-                            program: "",
-                            username: "",
-                            password: ""
-                        }}
+                        validationSchema={validationScheme}
+                        enableReinitialize
+                        initialValues={student}
                         onSubmit={(
-                            values: IUser,
-                            { setSubmitting }: FormikHelpers<IUser>
+                            values: IStudent,
+                            { setSubmitting }: FormikHelpers<IStudent>
                         ) => {
-                            setTimeout(() => {
-                                alert(JSON.stringify(values, null, 2));
-                                setSubmitting(false);
-                            }, 500);
+                            create_student_user(values).then(() => navigation(0));
+                            // console.log(values);
+                            setSubmitting(false);
                         }}
                     >
                         <Form className="p-4 mt-6 mb-0 space-y-4 rounded-lg shadow-lg sm:p-6 lg:p-8"
                         >
                             <p className="text-lg font-medium text-center">Sign up to your account</p>
 
-                        <CheckboxGroup name="Level" data={["Fresher","Stalite"]} position="horizontal" type="radio" />
                             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                                 <TextInput type='text' label='First Name' id='firstName' name='firstName' />
                                 <TextInput type='text' label='Last Name' id='lastName' name='lastName' />
                             </div>
                             <TextInput label='Username' id='username' name='username' />
-                            <TextInput label='Registration Number' id='registrationNumber' name='registrationNumber' />
+                            <TextInput label='Email Addresss' id='email' name='email' />
+                            <TextInput label='Phone Number' id='phoneNumber' name='phoneNumber' />
+                            <TextInput label='Matriculation/Registration Number' id='studentNumber' name='studentNumber' />
                             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                                 <TextInput type='password' label='Password' id='password' name='password' />
                                 <TextInput type='password' label='Confirm Password' id='confirmPassword' name='confirmPassword' />
                             </div>
 
-
                             <Select
-                                id='collegeId'
-                                name='collegeId'
+                                id='collegeCode'
+                                name='collegeCode'
                                 options={collegeArrays} optionSetter={(data) => data.name}
-                                valueSetter={(data) => data.id}
+                                valueSetter={(data) => data.code}
                                 label="College"
                             />
                             <Select
-                                id='departmentId'
-                                name='departmentId'
+                                id='departmentCode'
+                                name='departmentCode'
                                 options={departmentArrays}
                                 optionSetter={(data) => data.name}
-                                valueSetter={(data) => data.id}
+                                valueSetter={(data) => data.code}
                                 label="Department"
                             />
                             <Select
-                                id='programId'
-                                name='programId'
+                                id='programCode'
+                                name='programCode'
                                 options={programArrays}
                                 optionSetter={(data) => data.name}
-                                valueSetter={(data) => data.id}
+                                valueSetter={(data) => data.code}
                                 label="Program"
                             />
 
                             <button
                                 type="submit"
-                                className="btn btn-block"
+                                className="btn btn-block btn-neutral"
                             >
                                 Sign up
                             </button>
 
-                            <p className="text-sm text-center text-gray-500">
+                            <p className="text-sm text-center">
                                 No account?
                                 <a className="underline" onClick={() => handleSetSignUp(false)}
                                 >Sign in</a>

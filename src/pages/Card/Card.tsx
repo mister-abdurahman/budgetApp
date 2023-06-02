@@ -1,5 +1,6 @@
 import { HiDocumentDownload } from "react-icons/hi";
 import Button from "../../components/Button";
+import { MdWarning } from "react-icons/md";
 
 interface ICardProps {
     header: string;
@@ -7,13 +8,13 @@ interface ICardProps {
     downloadUrl?: string;
 }
 
-function Card({ header = "Card title!", details = "If a dog chews shoes whose shoes does he choose?", downloadUrl = "/test.pdf" }: ICardProps) {
+function Card({ header = "Card title!", details = "If a dog chews shoes whose shoes does he choose?", downloadUrl }: ICardProps) {
     return (
-        <div className="self-stretch shadow-xl card card-compact w-80 bg-base-100">
-            <div className="card-body">
+        <div className="self-center shadow-xl card w-80 bg-base-100">
+            <div className="card-body items-center">
                 <h2 className="capitalize card-title">{header}</h2>
                 <p>{details}</p>
-                <div className="justify-end items-end card-actions">
+                {downloadUrl ? (<div className="justify-end items-end card-actions">
                     <a href={downloadUrl} download rel="noopener noreferrer" target="_blank">
                         <Button icon={<HiDocumentDownload />}>View</Button>
                     </a>
@@ -21,7 +22,7 @@ function Card({ header = "Card title!", details = "If a dog chews shoes whose sh
                         <Button icon={<HiDocumentDownload />}>Download</Button>
 
                     </a>
-                </div>
+                </div>): <Button icon={<MdWarning  />}>Not Available</Button>}
             </div>
         </div>
     )

@@ -8,10 +8,17 @@ import { Form, Formik } from "formik"
 import { BiDetail, BiSearch } from "react-icons/bi"
 import { Link } from "react-router-dom"
 import CheckboxGroup from "../../components/CheckboxGroup/CheckboxGroup"
+import { useEffect } from "react"
+import { observer } from "mobx-react-lite"
 
 function Student() {
-    const { authStore } = useStore()
-    const { userArrays } = authStore
+    const { studentStore } = useStore()
+    const { load_students, studentArrays } = studentStore
+
+    useEffect(() => {
+        load_students();
+    }, [load_students])
+    
     
     return (
         <div className="">
@@ -44,23 +51,24 @@ function Student() {
                     </Form>
                 </Formik>
                 <List>
-                    {userArrays.map((user, index) => {
+                    {studentArrays.map((student, index) => {
                         return (
                             <ListRow key={index}>
-                                <Avatar imageUrl={user.imageUrl} size="xs" />
+                                <Avatar imageUrl={student.imageUrl} size="xs" />
                                 <div className="flex items-center flex-1 gap-6 my-auto">
                                     <div className="w-40">
-                                        <h1 className="text-sm font-semibold text-gray-800 capitalize">{user.firstName} {user.lastName}</h1>
-                                        <h1 className="text-sm text-gray-400-100">{user.username}</h1>
+                                        <h1 className="text-sm font-semibold text-gray-800 capitalize">{student.firstName} {student.lastName}</h1>
+                                        <h1 className="text-sm text-gray-400-100">{student.username}</h1>
                                     </div>
-                                    <h1 className="text-sm font-semibold text-gray-800 capitalize">{user.matriculationNumber}</h1>
-                                    <h1 className="text-sm font-semibold text-gray-800 capitalize">{user.college}</h1>
+                                    <h1 className="text-sm font-semibold text-gray-800 capitalize">{student.collegeName}</h1>
+                                    <h1 className="text-sm font-semibold text-gray-800 capitalize">{student.departmentName}</h1>
+                                    <h1 className="text-sm font-semibold text-gray-800 capitalize">{student.programName}</h1>
                                     <div className="text-xs badge badge-success">completed</div>
 
                                     {/* <div className="text-xs badge badge-error">uncompleted</div> */}
                                 </div>
                                 <Link
-                                    to={`/students/${user.id}`}
+                                    to={`/students/${student.userId}`}
                                     className="flex items-center justify-center gap-2 px-3 py-2 text-white bg-gray-500 rounded-md cursor-pointer borderborder-gray-500 hover:border-gray-200"
                                 >
                                     <BiDetail className="w-5 h-5" />
@@ -87,4 +95,4 @@ function Student() {
     )
 }
 
-export default Student
+export default observer(Student)

@@ -1,5 +1,6 @@
-import { Field } from 'formik';
+import { Field, useField } from 'formik';
 import React from 'react';
+import { MdWarning } from 'react-icons/md';
 
 export interface ITextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     label: string,
@@ -9,7 +10,9 @@ export interface ITextInputProps extends React.InputHTMLAttributes<HTMLInputElem
 }
 
 function TextInput(props: ITextInputProps) {
-    const { label, type } = props;
+    const { label, type, name } = props;
+    const [field, meta] = useField(name || "")
+
 
     switch (type) {
         case "HyperUI":
@@ -24,10 +27,10 @@ function TextInput(props: ITextInputProps) {
                         {/* <span className="label-text-alt"></span> */}
                     </label>
                     <Field {...props} className="w-full input input-bordered" />
-                    {/* <label className="label">
-                        <span className="label-text-alt"></span>
-                        <span className="label-text-alt"></span>
-                    </label> */}
+                    {meta.touched && meta.error ? (<label className="label">
+                        {/* <span className="label-text-alt"></span> */}
+                        <span className="text-xs leading-3 text-rose-700 flex gap-2 items-center">{meta.error}<MdWarning /></span>
+                    </label>) : ""}
                 </div>
             )
     }

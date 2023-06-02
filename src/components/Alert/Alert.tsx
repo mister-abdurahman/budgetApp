@@ -3,12 +3,13 @@ import { MdCancel, MdWarning } from "react-icons/md";
 import { useStore } from "../../data/stores/store";
 
 interface IAlertProps {
-    message: string;
+    heading?: string
+    message?: string;
     type: string
     id: string
 }
 
-function Alert({ message, type, id }: IAlertProps) {
+function Alert({ message, type, id, heading }: IAlertProps) {
     const { commonStore } = useStore()
     const { removeAlert } = commonStore
     const icon = () => {
@@ -41,7 +42,7 @@ function Alert({ message, type, id }: IAlertProps) {
     return (
         <div
             role="alert"
-            className="p-4 bg-white border border-gray-100 shadow-xl rounded-xl"
+            className="p-4 bg-white border border-gray-100 shadow-xl rounded-xl z-50"
         >
             <div className="flex items-start gap-4">
                 <span className="text-green-600">
@@ -49,7 +50,7 @@ function Alert({ message, type, id }: IAlertProps) {
                 </span>
 
                 <div className="flex-1">
-                    <strong className="block font-medium text-gray-900"> {header()} </strong>
+                    <strong className="block font-medium text-gray-900"> {heading || header()} </strong>
 
                     <p className="mt-1 text-sm text-gray-700">
                         {message}

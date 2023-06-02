@@ -1,15 +1,17 @@
 import { makeAutoObservable } from "mobx";
 
 interface IAlert{
+    heading?: string,
     id?: string
-    message: string,
+    message?: string,
     type: string
 }
 
 //Mobx
 export default class CommonStore {
     alerts = new Map<string, IAlert>();
-    offline = false
+    offline = false;
+    loading = false;
 
     constructor() {
         makeAutoObservable(this)
@@ -30,6 +32,10 @@ export default class CommonStore {
         setTimeout(() => {
             this.removeAlert(alert.id!)
         }, 10000);
+    }
+
+    setLoading = (status: boolean) => {
+        this.loading = status;
     }
 
     removeAlert = (id: string) => {

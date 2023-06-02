@@ -13,9 +13,9 @@ export class UserStore {
     }
 
     get userArrays() {
-        if (store.commonStore.offline) {            
+        if (store.commonStore.offline) {
             return users;
-        }else{
+        } else {
             return Array.from(this.users.values());
         }
     }
@@ -23,18 +23,20 @@ export class UserStore {
     load_users = async () => {
 
         try {
+            store.commonStore.setLoading(true)
             const users = await apiHandler.Users.list();
 
             users.forEach((user: IUser) => {
-                runInAction(() =>{
+                runInAction(() => {
                     this.users.set(user.id, user)
+                    store.commonStore.setLoading(false)
                 })
             })
 
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
                 store.commonStore.setAlert({ type: "error", message: error.message });
-                console.log(error.message);                
+                store.commonStore.setLoading(false)
             }
         }
 
@@ -59,17 +61,44 @@ export class UserStore {
 
     create_user = async (user: IUser) => {
         try {
-
+            store.commonStore.setLoading(true)
             user = await apiHandler.Users.create(user);
 
             runInAction(() => {
                 this.users.set(user.id, user)
+                store.commonStore.setLoading(false)
+                store.commonStore.setAlert({ type: "success", message: "user created successfully" });
             })
 
             return this.user
 
         } catch (error) {
-            console.log(error);
+            if (axios.isAxiosError(error) && error.response) {
+                store.commonStore.setAlert({ type: "error", message: error.message });
+                store.commonStore.setLoading(false)
+            }
+        }
+    }
+
+    login = async (username: string, password: string) => {
+        try {
+            store.commonStore.setLoading(true)
+            const user = await apiHandler.Users.login(username, password);
+
+            runInAction(() => {
+                this.users.set(user.id, user)
+                store.commonStore.setLoading(false)
+                store.commonStore.setAlert({ type: "success", heading: "welcome back!" });
+
+            })
+
+            return user
+
+        } catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
+                store.commonStore.setAlert({ type: "error", message: error.message });
+                store.commonStore.setLoading(false)
+            }
         }
     }
 

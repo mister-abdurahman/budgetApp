@@ -10,6 +10,7 @@ import { BsGearWide } from 'react-icons/bs';
 import Dropdown from '../../components/Dropdown/Dropdown';
 import './style.css';
 import LogoImage from '../../assets/covenant-university-logo-desktop.png'
+import placeHolder from '../../assets/profile-image-placeholder.png'
 import { Link, NavLink } from 'react-router-dom';
 import { useStore } from '../../data/stores/store';
 import React from 'react';
@@ -176,7 +177,7 @@ export const UserInfo = () => {
             <span className="sr-only">Menu</span>
             <img
                 alt="Man"
-                src={user?.imageUrl}
+                src={user?.imageUrl || placeHolder }
                 className="object-cover w-10 h-10 rounded-full"
             />
 

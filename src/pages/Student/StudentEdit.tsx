@@ -8,13 +8,14 @@ import CheckboxGroup from "../../components/CheckboxGroup/CheckboxGroup";
 
 function StudentEdit() {
   const { studentId } = useParams()
-  const { userStore } = useStore()
-  const { load_users, get_user_by_id, user } = userStore
+  const { userStore, studentDocumentStore } = useStore()
+  const { user } = userStore
+  const { get_student_document_by_userId, studentDocumentGroupArrays} = studentDocumentStore
 
   useEffect(() => {
-    load_users();
-    get_user_by_id(studentId || null)
-  }, [load_users, get_user_by_id, studentId])
+    get_student_document_by_userId(studentId || "")
+
+  }, [get_student_document_by_userId, studentId])
 
   const [level, setLevel] = useState("100")
   console.log(level);
@@ -24,9 +25,9 @@ function StudentEdit() {
       <CheckboxGroup header="Level" name="Level" data={uploads.map(x => `${x.level}`)} position="horizontal" type="radio" action={setLevel} />
       <div className='flex flex-col-reverse gap-3 lg:grid lg:grid-cols-[repeat(14,minmax(0,1fr))]'>
         <div className="flex flex-wrap col-span-10 gap-4 justify-around">
-          {uploads.map((upload) => {
+          {studentDocumentGroupArrays.map((upload) => {
             if (upload["level"] === level) {
-              return upload.documents.map((x, index) => <Card key={index} header={x.header} details={x.details} />)
+              return upload.documents.map((x, index) => <Card key={index} header={x.documentName} details={x.documentDetail} />)
             }
           })}          
         </div>

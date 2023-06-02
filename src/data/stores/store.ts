@@ -5,6 +5,8 @@ import ProgramStore from "./programStore";
 import DepartmentStore from "./departmentStore";
 import CommonStore from "./commonStore";
 import { UserStore } from "./userStore";
+import StudentStore from "./studentStore";
+import StudentDocumentStore from "./studentDocumentStore";
 
 interface IStore{
     commonStore: CommonStore;
@@ -13,6 +15,8 @@ interface IStore{
     collegeStore: CollegeStore;
     departmentStore: DepartmentStore;
     programStore: ProgramStore;
+    studentStore: StudentStore;
+    studentDocumentStore: StudentDocumentStore;
 
 }
 
@@ -23,6 +27,8 @@ export const store: IStore = {
     collegeStore: new CollegeStore(),
     departmentStore: new DepartmentStore(),
     programStore: new ProgramStore(),
+    studentStore: new StudentStore(),
+    studentDocumentStore: new StudentDocumentStore(),
 } 
 
 export const StoreContext = createContext(store)

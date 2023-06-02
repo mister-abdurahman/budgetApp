@@ -3,9 +3,12 @@ import { ICollege } from "../stores/collegeStore";
 import { IDepartment } from "../stores/departmentStore";
 import { IProgram } from "../stores/programStore";
 import { IUser } from "../stores/authStore";
+import { IStudent } from "../stores/studentStore";
+import { IStudentDocument, IStudentDocumentGroup } from "../stores/studentDocumentStore";
 
 
-axios.defaults.baseURL = "https://localhost:7151/api";
+// axios.defaults.baseURL = "https://localhost:7151/api";
+axios.defaults.baseURL = "https://api-fgbmfi-clone.azurewebsites.net/api";
 
 const responseBody = (res: AxiosResponse) => res.data
 
@@ -27,6 +30,7 @@ const Users = {
     create: (user: IUser) => request.post<IUser>(`/users`, user),
     update: (id: string, user: IUser) => request.post<IUser>(`/users/${id}`, user),
     delete: (id: string) => request.delete<IUser>(`/users/${id}`),
+    login: (username: string, password: string) => request.post<IUser | null>(`/users/login?username=${username}&password=${password}`, null),
 }
 
 /////////////////////
@@ -62,11 +66,37 @@ const Programs = {
     delete: (id: string) => request.delete<IProgram>(`/programs/${id}`),
 }
 
+/////////////////////
+///// Students //////
+/////////////////////
+const Students = {
+    list: (param?: string) => request.get<IStudent[]>(`/students?${param || ""}`),
+    detail: (id: number) => request.get<IStudent>(`/students/${id}`),
+    create: (student: IStudent) => request.post<IStudent>(`/students`, student),
+    create_student_user: (student: IStudent) => request.post<IStudent>(`/users/create_student`, student),
+    update: (id: string, student: IStudent) => request.post<IStudent>(`/students/${id}`, student),
+    delete: (id: string) => request.delete<IStudent>(`/students/${id}`),
+}
+
+/////////////////////
+///// Student Documents //////
+/////////////////////
+const StudentDocuments = {
+    list: (param?: string) => request.get<IStudentDocument[]>(`/student_documents?${param || ""}`),
+    list_by_user_id: (id: string) => request.get<IStudentDocumentGroup[]>(`/student_documents/by_user_id/${id}`),
+    detail: (id: number) => request.get<IStudentDocument>(`/student_documents/${id}`),
+    create: (studentDocument: IStudentDocument) => request.post<IStudentDocument>(`/student_documents`, studentDocument),
+    update: (id: string, studentDocument: IStudentDocument) => request.post<IStudentDocument>(`/student_documents/${id}`, studentDocument),
+    delete: (id: string) => request.delete<IStudentDocument>(`/student_documents/${id}`),
+}
+
 const apiHandler = {
     Users,
     Colleges,
     Departments,
-    Programs
+    Programs,
+    Students,
+    StudentDocuments
 }
 
 export default apiHandler

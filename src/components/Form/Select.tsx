@@ -5,11 +5,15 @@ interface ISelectProps extends Partial<React.SelectHTMLAttributes<HTMLSelectElem
     valueSetter?: (data: any) => string,
 }
 
-import { Field } from 'formik'
+import { Field, useField } from 'formik'
 import React from 'react'
+import { MdWarning } from 'react-icons/md'
 
 function Select(props: ISelectProps) {
     const { label, options, optionSetter, valueSetter, ...restProps } = props
+    const [field, meta] = useField(restProps.name || "")
+
+
     return (
         <div className="form-control">
             <label className="label">
@@ -22,10 +26,10 @@ function Select(props: ISelectProps) {
                     return <option key={index} value={valueSetter ? valueSetter(option) : option.id}>{optionSetter && optionSetter(option)}</option>
                 })}
             </Field>
-            {/* <label className="label">
-                <span className="label-text-alt"></span>
-                <span className="label-text-alt"></span>
-            </label> */}
+            {meta.touched && meta.error ? (<label className="label">
+                {/* <span className="label-text-alt"></span> */}
+                <span className="text-xs leading-3 text-rose-700 flex gap-2 items-center">{meta.error}<MdWarning /></span>
+            </label>) : ""}
         </div>
     )
 }
