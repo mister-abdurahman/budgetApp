@@ -7,8 +7,8 @@ import { IStudent } from "../stores/studentStore";
 import { IStudentDocument, IStudentDocumentGroup } from "../stores/studentDocumentStore";
 
 
-// axios.defaults.baseURL = "https://localhost:7151/api";
-axios.defaults.baseURL = "https://api-fgbmfi-clone.azurewebsites.net/api";
+axios.defaults.baseURL = "https://localhost:7151/api";
+// axios.defaults.baseURL = "https://api-fgbmfi-clone.azurewebsites.net/api";
 
 const responseBody = (res: AxiosResponse) => res.data
 
@@ -72,6 +72,7 @@ const Programs = {
 const Students = {
     list: (param?: string) => request.get<IStudent[]>(`/students?${param || ""}`),
     detail: (id: number) => request.get<IStudent>(`/students/${id}`),
+    get_user_by_id: (id: string) => request.get<IStudent>(`/students/by_user_id/${id}`),
     create: (student: IStudent) => request.post<IStudent>(`/students`, student),
     create_student_user: (student: IStudent) => request.post<IStudent>(`/users/create_student`, student),
     update: (id: string, student: IStudent) => request.post<IStudent>(`/students/${id}`, student),

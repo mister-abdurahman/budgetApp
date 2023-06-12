@@ -14,6 +14,12 @@ export interface IUser {
     imageUrl: string;
     username: string;
     password?: string;
+    roles?: string[]
+}
+
+export interface IUserRole {
+    user: IUser;
+    roles: string[];
 }
 
 export interface ICollege {
@@ -121,6 +127,10 @@ export default class AuthStore {
     signOut = async () => {
         localStorage.removeItem("cookie");
         window.location.reload();
+    }
+
+    hasRole = (role: string) => {    
+        return !!this.user?.roles?.find(x => x.toLowerCase() === role.toLowerCase())
     }
 }
 

@@ -4,6 +4,12 @@ import { IUser, users } from "./authStore";
 import { store } from "./store";
 import axios from "axios";
 
+export const ROLES = {
+    admin: "admin",
+    student: "student",
+    advisor: "advisor",
+}
+
 export class UserStore {
     user: IUser | null = null;
     users = new Map<string, IUser>();
@@ -18,6 +24,18 @@ export class UserStore {
         } else {
             return Array.from(this.users.values());
         }
+    }
+
+    studentArrays = () => {
+        return this.userArrays.filter(x => x.roles?.find(a => a === ROLES.admin));
+    }
+
+    advisorArrays = () => {
+        return this.userArrays.filter(x => x.roles?.find(a => a === ROLES.admin));
+    }
+
+    adminArrays = () => {
+        return this.userArrays.filter(x => x.roles?.find(a => a === ROLES.admin));
     }
 
     load_users = async () => {
@@ -102,4 +120,24 @@ export class UserStore {
         }
     }
 
+    get menus() {
+        return [
+            {
+                title: "All Users",
+                total: this.userArrays.length
+            },
+            {
+                title: "All Admins",
+                total: this.userArrays.filter(x => x.roles?.find(a => a.toLowerCase === ROLES.admin.toLowerCase))?.length
+            },
+            {
+                title: "All Advisor",
+                total: this.userArrays.filter(x => x.roles?.find(a => a.toLowerCase === ROLES.advisor.toLowerCase))?.length
+            },
+            {
+                title: "All Students",
+                total: this.userArrays.filter(x => x.roles?.find(a => a.toLowerCase === ROLES.student.toLowerCase))?.length
+            },
+        ]
+    }
 }

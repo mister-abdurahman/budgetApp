@@ -67,7 +67,7 @@ function User() {
                                         <h1 className="text-sm font-semibold text-gray-800 capitalize">{user.firstName} {user.lastName}</h1>
                                         <h1 className="text-sm text-gray-400-100">{user.username}</h1>
                                     </div>
-                                    {/* <div className="text-xs badge badge-error">uncompleted</div> */}
+                                    {user.roles?.map(role => <div className="lowercase badge badge-neutral">{role}</div>)}
                                 </div>
                                 <Link
                                     to={`/students/${user.id}`}

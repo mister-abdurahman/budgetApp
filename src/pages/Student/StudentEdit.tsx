@@ -24,7 +24,7 @@ function StudentEdit() {
     <div className="space-y-5">
       <CheckboxGroup header="Level" name="Level" data={uploads.map(x => `${x.level}`)} position="horizontal" type="radio" action={setLevel} />
       <div className='flex flex-col-reverse gap-3 lg:grid lg:grid-cols-[repeat(14,minmax(0,1fr))]'>
-        <div className="flex flex-wrap col-span-10 gap-4 justify-around">
+        <div className="flex flex-wrap justify-around col-span-10 gap-4">
           {studentDocumentGroupArrays.map((upload) => {
             if (upload["level"] === level) {
               return upload.documents.map((x, index) => <Card key={index} header={x.documentName} details={x.documentDetail} />)

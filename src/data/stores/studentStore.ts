@@ -89,6 +89,23 @@ export default class StudentStore {
 
     }
 
+    get_student_by_user_id = async (id: string) => {
+        try {
+            store.commonStore.setLoading(true)
+            this.student = await apiHandler.Students.get_user_by_id(id);
+
+            store.commonStore.setLoading(false)
+            return this.student
+
+        } catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
+                store.commonStore.setAlert({ type: "error", message: error.message });
+                store.commonStore.setLoading(false)
+            }
+        }
+
+    }
+
     create_student = async (student: IStudent) => {
         try {
             store.commonStore.setLoading(true)

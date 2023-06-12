@@ -13,7 +13,6 @@ import LogoImage from '../../assets/covenant-university-logo-desktop.png'
 import placeHolder from '../../assets/profile-image-placeholder.png'
 import { Link, NavLink } from 'react-router-dom';
 import { useStore } from '../../data/stores/store';
-import React from 'react';
 
 
 
@@ -21,9 +20,42 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
     const { authStore } = useStore()
     const { signOut } = authStore
 
+    const sideMenu = [
+        {
+            name: "dashboard",
+            url: "/dashboard",
+            icon: <RiDashboardLine size={20} />
+        },
+        {
+            name: "students",
+            url: "/students",
+            icon: <FaUserGraduate size={20} />
+
+        },
+        {
+            name: "users",
+            url: "/users",
+            icon: <HiUserGroup size={20} />
+        }
+    ]
+
     return (
         <>
-            <Drawer>
+            <Drawer sideMenu={
+                <>
+                    {sideMenu.map((x, index) => (
+                        <NavLink
+                            key={index}
+                            to={x.url}
+                            className={({ isActive }) =>
+                                isActive ? "flex items-center gap-2 px-4 py-2 text-gray-100 bg-gray-600 rounded-lg" : "flex items-center gap-2 px-4 py-2 text-gray-700 bg-gray-100 rounded-lg"
+                            }
+                        >
+                            <span className="text-sm font-medium capitalize"> {x.name} </span>
+                        </NavLink>
+                    ))}
+                </>
+            }>
                 <div className='w-screen h-screen cs-grid'>
                     <Navbar className='col-span-12'>
                         <Logo />
@@ -49,88 +81,27 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
                             </Dropdown>
                         </NavbarMenu>
                     </Navbar>
-                    <SideNav className='sticky self-start'>
-                        <div className='p-3 space-y-2 bg-gray-600 rounded-xl'>
-                            <NavLink
-                                to="/dashboard"
-                                className={({ isActive }) =>
-                                    isActive ? "flex items-center gap-2 px-4 py-2 text-gray-700 bg-gray-100 rounded-lg"  : "flex items-center gap-2 px-4 py-2 text-white rounded-lg hover:bg-gray-100 hover:text-gray-700"
-                                }
-                            >
-                                <RiDashboardLine />
+                    <SideNav className='sticky self-start hidden bg-gray-700 lg:block'>
+                        <div className='space-y-2 rounded-xl'>
 
-                                <span className="text-sm font-medium"> Dashboard </span>
-                            </NavLink>
-
-                            <NavLink
-                                to='/students'
-                                className={({ isActive }) =>
-                                isActive ? "flex items-center gap-2 px-4 py-2 text-gray-700 bg-gray-100 rounded-lg"  : "flex items-center gap-2 px-4 py-2 text-white rounded-lg hover:bg-gray-100 hover:text-gray-700"
-                            }                            >
-                                <FaUserGraduate />
-                                <span className="text-sm font-medium"> Students </span>
-                            </NavLink>
-
-                            <NavLink
-                                to='/users'
-                                className={({ isActive }) =>
-                                isActive ? "flex items-center gap-2 px-4 py-2 text-gray-700 bg-gray-100 rounded-lg"  : "flex items-center gap-2 px-4 py-2 text-white rounded-lg hover:bg-gray-100 hover:text-gray-700"
-                            }                            >
-                                <HiUserGroup />
-                                <span className="text-sm font-medium"> Users </span>
-                            </NavLink>
-
-                            <details className="group [&_summary::-webkit-details-marker]:hidden text-white">
-                                <summary
-                                    className="flex items-center justify-between px-4 py-2 rounded-lg cursor-pointer hover:bg-gray-100 hover:text-gray-700"
+                            {sideMenu.map((x, index) => (
+                                <NavLink
+                                    key={index}
+                                    to={x.url}
+                                    className={({ isActive }) =>
+                                        isActive ? "flex items-center gap-2 px-4 py-2 text-gray-700 bg-gray-100" : "flex items-center gap-2 px-4 py-2 text-white hover:bg-gray-100 hover:text-gray-700"
+                                    }
                                 >
-                                    <div className="flex items-center gap-2">
-                                        <HiUserGroup />
-                                        <span className="text-sm font-medium"> Teams </span>
-                                    </div>
-
-                                    <span className="transition duration-300 shrink-0 group-open:-rotate-180">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            className="w-5 h-5"
-                                            viewBox="0 0 20 20"
-                                            fill="currentColor"
-                                        >
-                                            <path
-                                                fillRule="evenodd"
-                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                clipRule="evenodd"
-                                            />
-                                        </svg>
-                                    </span>
-                                </summary>
-
-                                <nav aria-label="Teams Nav" className="flex flex-col px-4 mt-2">
-                                    <a
-                                        href="#"
-                                        className="flex items-center gap-2 px-4 py-2 text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700"
-                                    >
-                                        <MdCancel />
-                                        <span className="text-sm font-medium"> Banned Users </span>
-                                    </a>
-
-                                    <a
-                                        href="#"
-                                        className="flex items-center gap-2 px-4 py-2 text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700"
-                                    >
-                                        <BiCalendar />
-                                        <span className="text-sm font-medium"> Calendar </span>
-                                    </a>
-                                </nav>
-                            </details>
-
-
+                                    {x.icon}
+                                    <span className="text-sm font-medium capitalize"> {x.name} </span>
+                                </NavLink>
+                            ))}
                         </div>
 
 
 
                     </SideNav>
-                    <main className='p-6 overflow-y-auto '>
+                    <main className='p-6 overflow-y-auto bg-gray-100 '>
                         {children}
                     </main>
                     <Footer />
@@ -177,12 +148,12 @@ export const UserInfo = () => {
             <span className="sr-only">Menu</span>
             <img
                 alt="Man"
-                src={user?.imageUrl || placeHolder }
+                src={user?.imageUrl || placeHolder}
                 className="object-cover w-10 h-10 rounded-full"
             />
 
             <p className="hidden text-xs text-left ms-2 sm:block">
-                <strong className="block font-medium">{user?.lastName} {user?.firstName}</strong>
+                <strong className="block font-medium capitalize">{user?.lastName} {user?.firstName}</strong>
 
                 <span className="text-gray-500"> {user?.username} </span>
             </p>
@@ -213,9 +184,8 @@ export const SideNav = (props: ISideNav) => {
     // const { user } = authStore
 
     return (
-        <aside {...props} className={`flex h-full flex-col justify-between border-e bg-white ${className}`}>
-            <div className="px-4 py-6">
-
+        <aside {...props} className={`flex h-full flex-col justify-between border-e ${className}`}>
+            <div className="">
                 <nav aria-label="Main Nav" className="flex flex-col mt-6 space-y-1">
                     {children}
                 </nav>
