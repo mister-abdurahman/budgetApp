@@ -1,19 +1,24 @@
-interface IModal{
-    children: JSX.Element[] | JSX.Element,
+import MUIModal from '@mui/material/Modal';
+
+interface IModal {
+    children?: JSX.Element[] | JSX.Element,
     page: JSX.Element
+    isOpen: boolean
 }
-function Modal({ children , page}: IModal) {
+function Modal({ children, page, isOpen }: IModal) {
+
     return (
         <>
             {/* The button to open modal */}
             {children}
-            <input type="checkbox" id="my-modal" className="modal-toggle" />
-            <div className="modal">
-                <div className="modal-box relative">
-                <label htmlFor="my-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-                    {page}
-                </div>
-            </div>
+            <MUIModal
+                open={isOpen}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                className='grid place-items-center z-30'
+            >
+                {page}
+            </MUIModal>
         </>
     )
 }

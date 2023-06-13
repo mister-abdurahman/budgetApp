@@ -8,6 +8,7 @@ import { StoreContext, store } from './data/stores/store.ts'
 import Student from './pages/Student/Student.tsx'
 import StudentEdit from './pages/Student/StudentEdit.tsx'
 import User from './pages/User/User.tsx'
+import Advisor from './pages/Advisor/Advisor.tsx'
 
 
 const router = createBrowserRouter([
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "/students/:studentId",
         element: <StudentEdit />
+      },
+      {
+        path: "/advisors",
+        element: <Advisor />
       },
       {
         path: "/users",

@@ -7,6 +7,8 @@ import CommonStore from "./commonStore";
 import { UserStore } from "./userStore";
 import StudentStore from "./studentStore";
 import StudentDocumentStore from "./studentDocumentStore";
+import AdvisorStore from "./advisorStore";
+import LevelStore from "./levelStore";
 
 interface IStore{
     commonStore: CommonStore;
@@ -15,6 +17,8 @@ interface IStore{
     collegeStore: CollegeStore;
     departmentStore: DepartmentStore;
     programStore: ProgramStore;
+    levelStore: LevelStore,
+    advisorStore: AdvisorStore,
     studentStore: StudentStore;
     studentDocumentStore: StudentDocumentStore;
 
@@ -27,6 +31,8 @@ export const store: IStore = {
     collegeStore: new CollegeStore(),
     departmentStore: new DepartmentStore(),
     programStore: new ProgramStore(),
+    levelStore: new LevelStore(),
+    advisorStore: new AdvisorStore(),
     studentStore: new StudentStore(),
     studentDocumentStore: new StudentDocumentStore(),
 } 

@@ -5,6 +5,8 @@ import { IProgram } from "../stores/programStore";
 import { IUser } from "../stores/authStore";
 import { IStudent } from "../stores/studentStore";
 import { IStudentDocument, IStudentDocumentGroup } from "../stores/studentDocumentStore";
+import { IAdvisor } from "../stores/advisorStore";
+import { ILevel } from "../stores/levelStore";
 
 
 axios.defaults.baseURL = "https://localhost:7151/api";
@@ -31,6 +33,19 @@ const Users = {
     update: (id: string, user: IUser) => request.post<IUser>(`/users/${id}`, user),
     delete: (id: string) => request.delete<IUser>(`/users/${id}`),
     login: (username: string, password: string) => request.post<IUser | null>(`/users/login?username=${username}&password=${password}`, null),
+}
+
+/////////////////////
+///// Advisors //////
+/////////////////////
+const Advisors = {
+    list: (param?: string) => request.get<IAdvisor[]>(`/advisors?${param || ""}`),
+    detail: (id: number) => request.get<IAdvisor>(`/advisors/${id}`),
+    get_user_by_id: (id: string) => request.get<IAdvisor>(`/advisors/by_user_id/${id}`),
+    create: (advisor: IAdvisor) => request.post<IAdvisor>(`/advisors`, advisor),
+    create_advisor_user: (student: IAdvisor) => request.post<IAdvisor>(`/users/create_advisor`, student),
+    update: (id: string, advisor: IAdvisor) => request.post<IAdvisor>(`/advisors/${id}`, advisor),
+    delete: (id: string) => request.delete<IAdvisor>(`/advisors/${id}`),
 }
 
 /////////////////////
@@ -67,6 +82,17 @@ const Programs = {
 }
 
 /////////////////////
+///// Levels //////
+/////////////////////
+const Levels = {
+    list: (param?: string) => request.get<ILevel[]>(`/levels?${param || ""}`),
+    detail: (id: number) => request.get<ILevel>(`/levels/${id}`),
+    create: (level: ILevel) => request.post<ILevel>(`/levels`, level),
+    update: (id: string, level: ILevel) => request.post<ILevel>(`/levels/${id}`, level),
+    delete: (id: string) => request.delete<ILevel>(`/levels/${id}`),
+}
+
+/////////////////////
 ///// Students //////
 /////////////////////
 const Students = {
@@ -79,9 +105,9 @@ const Students = {
     delete: (id: string) => request.delete<IStudent>(`/students/${id}`),
 }
 
-/////////////////////
+//////////////////////////////
 ///// Student Documents //////
-/////////////////////
+//////////////////////////////
 const StudentDocuments = {
     list: (param?: string) => request.get<IStudentDocument[]>(`/student_documents?${param || ""}`),
     list_by_user_id: (id: string) => request.get<IStudentDocumentGroup[]>(`/student_documents/by_user_id/${id}`),
@@ -93,11 +119,13 @@ const StudentDocuments = {
 
 const apiHandler = {
     Users,
+    Advisors,
     Colleges,
     Departments,
     Programs,
+    Levels,
     Students,
-    StudentDocuments
+    StudentDocuments,
 }
 
 export default apiHandler

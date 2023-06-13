@@ -127,15 +127,15 @@ export class UserStore {
                 total: this.userArrays.length
             },
             {
-                title: "All Admins",
+                title: "Admins",
                 total: this.userArrays.filter(x => x.roles?.find(a => a.toLowerCase === ROLES.admin.toLowerCase))?.length
             },
             {
-                title: "All Advisor",
+                title: "Advisor",
                 total: this.userArrays.filter(x => x.roles?.find(a => a.toLowerCase === ROLES.advisor.toLowerCase))?.length
             },
             {
-                title: "All Students",
+                title: "Students",
                 total: this.userArrays.filter(x => x.roles?.find(a => a.toLowerCase === ROLES.student.toLowerCase))?.length
             },
         ]

@@ -1,5 +1,5 @@
-import { MdArrowDropDown, MdCancel, MdNotifications } from 'react-icons/md';
-import { BiCalendar, BiCopyright } from 'react-icons/bi';
+import { MdArrowDropDown, MdNotifications } from 'react-icons/md';
+import { BiCopyright } from 'react-icons/bi';
 import { RiDashboardLine } from 'react-icons/ri';
 import { FaUserGraduate } from 'react-icons/fa';
 import './style.css'
@@ -27,16 +27,27 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
             icon: <RiDashboardLine size={20} />
         },
         {
+            name: "users",
+            url: "/users",
+            icon: <HiUserGroup size={20} />
+        },
+        {
+            name: "admins",
+            url: "/admins",
+            icon: <HiUserGroup size={20} />
+        },
+        {
+            name: "advisors",
+            url: "/advisors",
+            icon: <HiUserGroup size={20} />
+        },
+        {
             name: "students",
             url: "/students",
             icon: <FaUserGraduate size={20} />
 
         },
-        {
-            name: "users",
-            url: "/users",
-            icon: <HiUserGroup size={20} />
-        }
+        
     ]
 
     return (
