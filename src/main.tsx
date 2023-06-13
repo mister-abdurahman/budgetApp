@@ -9,6 +9,7 @@ import Student from './pages/Student/Student.tsx'
 import StudentEdit from './pages/Student/StudentEdit.tsx'
 import User from './pages/User/User.tsx'
 import Advisor from './pages/Advisor/Advisor.tsx'
+import Admin from './pages/Admin/Admin.tsx'
 
 
 const router = createBrowserRouter([
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: "/users",
         element: <User />
+      },
+      {
+        path: "/admins",
+        element: <Admin />
       }
     ]
   }

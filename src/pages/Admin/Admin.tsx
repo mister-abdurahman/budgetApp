@@ -6,28 +6,36 @@ import { useStore } from "../../data/stores/store"
 import TextInput from "../../components/Form/TextInput"
 import { Form, Formik } from "formik"
 import { BiDetail, BiPlusCircle, BiSearch } from "react-icons/bi"
-import { Link } from "react-router-dom"
-import CheckboxGroup from "../../components/CheckboxGroup/CheckboxGroup"
+import CheckboxGroup from "../../components/CheckboxGroup"
 import { useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
 import Button from "../../components/Button"
 import Modal from "../../components/Modal"
-import StudentCreate from "./StudentCreate"
+import UserEdit from "./AdminEdit"
 
-function Student() {
-    const { studentStore } = useStore()
-    const { load_students, select_student_by_id, studentArrays } = studentStore
+function Admin() {
+    const { userStore } = useStore()
+    const { userArrays, select_user_by_id, load_admin_users } = userStore
 
     useEffect(() => {
-        load_students();
-    }, [load_students])
+        let isCurrent = true
+
+        if (isCurrent) {
+            load_admin_users()
+        }
+
+        return () => {
+            isCurrent = false;
+        }
+    }, [load_admin_users])
 
     const [isOpen, setIsOpen] = useState(false)
 
-    const handleModal = (state: boolean, id?: number) => {
-        select_student_by_id(id || 0)
+    const handleModal = (state: boolean, id?: string) => {
+        select_user_by_id(id || "")
         setIsOpen(state);
     }
+
     return (
         <div className="">
             <div className="space-y-2">
@@ -45,7 +53,6 @@ function Student() {
                 >
                     <Form className="flex items-center justify-between gap-2"
                     >
-
                         <div className="flex gap-5">
                             <TextInput label='' id='search' name='search' placeholder="search" type="TextIconInput" icon={<BiSearch />} />
                             <Button
@@ -58,47 +65,38 @@ function Student() {
                         </div>
                         <div className="flex items-center gap-3">
                             <HiSortDescending size={20} />
-                            <Dropdown title="Status" dropDownStyle="dropdown-end" className="capitalize rounded-sm btn-sm">
-                                <CheckboxGroup name="Status" data={["all", "Completed", "Uncompleted"]} />
+                            <Dropdown title="Users" dropDownStyle="dropdown-end" className="capitalize rounded-sm btn-sm">
+                                <CheckboxGroup name="users" data={["All", "Admin", "Adviser", "Student"]} />
                             </Dropdown>
                         </div>
-
-
-
                     </Form>
                 </Formik>
                 <List>
-                    {studentArrays.map((student, index) => {
+                    {userArrays.map((user, index) => {
                         return (
                             <ListRow key={index}>
-                                <Avatar imageUrl={student.imageUrl} size="xs" />
-                                <div className="flex items-center flex-1 gap-6 my-auto">
-                                    <div className="w-40">
-                                        <h1 className="text-sm font-semibold text-gray-800 capitalize">{student.firstName} {student.lastName}</h1>
-                                        <h1 className="text-sm text-gray-400-100">{student.username}</h1>
+                                <Avatar imageUrl={user.imageUrl} size="xs" />
+                                <div className="flex items-center flex-1 gap-4 my-auto">
+                                    <div>
+                                        <h1 className="text-sm font-semibold text-gray-800 capitalize">{user.firstName} {user.lastName}</h1>
+                                        <h1 className="text-sm text-gray-400-100">{user.userName}</h1>
                                     </div>
-                                    <h1 className="text-sm font-semibold text-gray-800 capitalize">{student.collegeName}</h1>
-                                    <h1 className="text-sm font-semibold text-gray-800 capitalize">{student.departmentName}</h1>
-                                    <h1 className="text-sm font-semibold text-gray-800 capitalize">{student.programName}</h1>
-                                    <div className="text-xs badge badge-success">completed</div>
-
-                                    {/* <div className="text-xs badge badge-error">uncompleted</div> */}
+                                    {user.roles?.map(role => <div className="lowercase badge badge-neutral">{role}</div>)}
                                 </div>
-                                <Link
-                                    to={`/students/${student.userId}`}
-                                    className="flex items-center justify-center gap-2 px-3 py-2 text-white bg-gray-500 rounded-md cursor-pointer borderborder-gray-500 hover:border-gray-200"
+                                <Button
+                                    onClick={() => handleModal(true,user.id)}
+                                    icon={<BiDetail className="w-5 h-5" />}
                                 >
-                                    <BiDetail className="w-5 h-5" />
                                     <p className="text-sm font-medium">View</p>
-                                </Link>                                
+                                </Button>
                             </ListRow>
                         )
                     })}
                 </List>
-                <Modal page={<StudentCreate handleModal={handleModal} />} isOpen={isOpen} />
+                <Modal page={<UserEdit handleModal={handleModal} />} isOpen={isOpen} />
             </div>
         </div>
     )
 }
 
-export default observer(Student)
+export default observer(Admin)

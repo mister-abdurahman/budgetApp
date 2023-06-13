@@ -2,11 +2,11 @@ import axios, { AxiosResponse } from "axios";
 import { ICollege } from "../stores/collegeStore";
 import { IDepartment } from "../stores/departmentStore";
 import { IProgram } from "../stores/programStore";
-import { IUser } from "../stores/authStore";
 import { IStudent } from "../stores/studentStore";
 import { IStudentDocument, IStudentDocumentGroup } from "../stores/studentDocumentStore";
 import { IAdvisor } from "../stores/advisorStore";
 import { ILevel } from "../stores/levelStore";
+import { IUser } from "../stores/userStore";
 
 
 axios.defaults.baseURL = "https://localhost:7151/api";
@@ -30,6 +30,7 @@ const Users = {
     list: (param?: string) => request.get<IUser[]>(`/users?${param || ""}`),
     detail: (id: string) => request.get<IUser>(`/users/${id}`),
     create: (user: IUser) => request.post<IUser>(`/users`, user),
+    create_admin_user: (user: IUser) => request.post<IUser>(`/users/create_admin`, user),
     update: (id: string, user: IUser) => request.post<IUser>(`/users/${id}`, user),
     delete: (id: string) => request.delete<IUser>(`/users/${id}`),
     login: (username: string, password: string) => request.post<IUser | null>(`/users/login?username=${username}&password=${password}`, null),

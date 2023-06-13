@@ -19,23 +19,24 @@ export interface IStudent {
     username: string;
 }
 
+export const student: IStudent = {
+    id: 0,
+    firstName: "",
+    lastName: "",
+    imageUrl: "",
+    studentNumber: "",
+    userId: "",
+    collegeCode: "",
+    collegeName: "",
+    departmentCode: "",
+    departmentName: "",
+    programCode: "",
+    programName: "",
+    username: "",
+};
 
 export default class StudentStore {
-    student: IStudent = {
-        id: 0,
-        firstName: "",
-        lastName: "",
-        imageUrl: "",
-        studentNumber: "",
-        userId: "",
-        collegeCode: "",
-        collegeName: "",
-        departmentCode: "",
-        departmentName: "",
-        programCode: "",
-        programName: "",
-        username: "",
-    };
+    student: IStudent = student
     students = new Map<number, IStudent>();
 
     constructor() {
@@ -104,6 +105,10 @@ export default class StudentStore {
             }
         }
 
+    }
+
+    select_student_by_id = (id: number) => {
+        this.student = id ? this.students.get(id) : student;
     }
 
     create_student = async (student: IStudent) => {

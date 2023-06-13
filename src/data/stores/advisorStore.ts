@@ -113,7 +113,7 @@ export default class AdvisorStore {
 
     }
 
-    select_advisor_by_user_id = (id: number) => {
+    select_advisor_by_id = (id: number) => {
         this.advisor = id ? this.advisors.get(id) : advisor;
     }
 

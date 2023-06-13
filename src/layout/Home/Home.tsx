@@ -18,37 +18,46 @@ import { useStore } from '../../data/stores/store';
 
 function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
     const { authStore } = useStore()
-    const { signOut } = authStore
+    const { signOut, hasRole } = authStore
 
-    const sideMenu = [
+
+
+    let sideMenu = [
         {
             name: "dashboard",
             url: "/dashboard",
-            icon: <RiDashboardLine size={20} />
+            icon: <RiDashboardLine size={20} />,
+            roles: ["admin", "advisor", "student"]
         },
         {
             name: "users",
             url: "/users",
-            icon: <HiUserGroup size={20} />
+            icon: <HiUserGroup size={20} />,
+            roles: ["admin"]
         },
         {
             name: "admins",
             url: "/admins",
-            icon: <HiUserGroup size={20} />
+            icon: <HiUserGroup size={20} />,
+            roles: ["admin"]
         },
         {
             name: "advisors",
             url: "/advisors",
-            icon: <HiUserGroup size={20} />
+            icon: <HiUserGroup size={20} />,
+            roles: ["admin"]
         },
         {
             name: "students",
             url: "/students",
-            icon: <FaUserGraduate size={20} />
+            icon: <FaUserGraduate size={20} />,
+            roles: ["admin", "advisor"]
 
         },
-        
+
     ]
+
+
 
     return (
         <>
@@ -73,7 +82,7 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
                         <MdNotifications className='text-3xl lg:hidden' />
                         <NavbarCenterMenu>
                             <button className='font-semibold btn btn-md btn-ghost'><Link to="/dashboard">Dashboard</Link></button>
-                            <button className='font-semibold btn btn-md'><Link to="/upload">  Upload</Link></button>
+                            <button className='font-semibold btn btn-md btn-neutral'><Link to="/upload">  Upload</Link></button>
                         </NavbarCenterMenu>
                         <NavbarMenu>
                             {/* <MdNotifications size={25} /> */}
@@ -95,8 +104,8 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
                     <SideNav className='sticky self-start hidden bg-gray-700 lg:block'>
                         <div className='space-y-2 rounded-xl'>
 
-                            {sideMenu.map((x, index) => (
-                                <NavLink
+                            {sideMenu.map((x, index) => {
+                                const menu = <NavLink
                                     key={index}
                                     to={x.url}
                                     className={({ isActive }) =>
@@ -106,7 +115,19 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
                                     {x.icon}
                                     <span className="text-sm font-medium capitalize"> {x.name} </span>
                                 </NavLink>
-                            ))}
+                                const isValid = () => {
+                                    let result = false;
+                                    x.roles.forEach(x => {
+                                        if (hasRole(x)) {
+                                            result = true
+                                        }
+                                    })
+
+                                    return result
+                                }
+                                
+                                return isValid()  ? menu : null
+                            })}
                         </div>
 
 

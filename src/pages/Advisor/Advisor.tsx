@@ -15,7 +15,7 @@ import Button from "../../components/Button/Button"
 
 function Advisor() {
     const {
-        advisorStore: { load_advisors, select_advisor_by_user_id, advisorArrays },
+        advisorStore: { load_advisors, select_advisor_by_id, advisorArrays },
         levelStore: { load_levels, levelArrays },
     } = useStore()
 
@@ -27,7 +27,7 @@ function Advisor() {
     const [isOpen, setIsOpen] = useState(false)
 
     const handleModal = (state: boolean, id?: number) => {
-        select_advisor_by_user_id(id || 0)
+        select_advisor_by_id(id || 0)
         setIsOpen(state);
     }
 

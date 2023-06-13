@@ -43,6 +43,8 @@ export const SignIn = observer(({ handleSetSignUp }: { handleSetSignUp: (isSignU
     const { authStore } = useStore()
     const { handleUserSignIn } = authStore
 
+    const navigation = useNavigate();
+
     const [signIn, setSignIn] = useState<ISignIn>({
         username: "",
         password: ""
@@ -52,7 +54,7 @@ export const SignIn = observer(({ handleSetSignUp }: { handleSetSignUp: (isSignU
         e.preventDefault();
 
         handleUserSignIn(signIn).then(user => {
-            if (user) window.location.reload();
+            if (user) navigation('/dashboard');
         });
 
         setSignIn({
