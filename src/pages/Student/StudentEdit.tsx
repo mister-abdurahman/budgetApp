@@ -2,15 +2,13 @@ import { useEffect, useState } from "react"
 import { useStore } from "../../data/stores/store"
 import { observer } from "mobx-react-lite"
 import { useParams } from "react-router-dom";
-import { DashboardProfile } from "../Dashboard/DashboardProfile";
 import Card from "../Card";
 import CheckboxGroup from "../../components/CheckboxGroup/CheckboxGroup";
 import { StudentProfile } from "../StudentDashboard/StudentProfile";
 
 function StudentEdit() {
   const { studentId } = useParams()
-  const { userStore, studentDocumentStore, studentStore } = useStore()
-  const { user } = userStore
+  const { studentDocumentStore, studentStore } = useStore()
   const { get_student_by_user_id, student } = studentStore
   const { get_student_document_by_userId, studentDocumentGroupArrays} = studentDocumentStore
 
@@ -18,7 +16,7 @@ function StudentEdit() {
     get_student_by_user_id(studentId || "")
     get_student_document_by_userId(studentId || "")
 
-  }, [get_student_document_by_userId, studentId])
+  }, [get_student_by_user_id, get_student_document_by_userId, studentId])
 
   const [level, setLevel] = useState("100")
   console.log(level);
@@ -39,6 +37,8 @@ function StudentEdit() {
     </div>
   )
 }
+
+export default observer(StudentEdit)
 
 interface IUpload {
   level: string;
@@ -132,5 +132,3 @@ export const uploads: IUpload[] = [
     ]
   }
 ]
-
-export default observer(StudentEdit)

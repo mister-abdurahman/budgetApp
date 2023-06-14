@@ -10,7 +10,7 @@ import { StudentProfile } from "../StudentDashboard/StudentProfile";
 
 function UploadEdit() {
   const { studentId } = useParams()
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const { studentStore, studentDocumentStore, authStore } = useStore()
   const { user } = authStore
