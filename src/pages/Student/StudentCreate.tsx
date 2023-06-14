@@ -67,7 +67,7 @@ function StudentCreate({ handleModal }: { handleModal: (state: boolean) => void 
         <Form method="dialog" className="modal-box"
         >
           <label htmlFor="modal" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={() => handleModal(false)}>✕</label>
-          <h1 className="text-xl font-bold mb-4">{student.id === 0 ? "Update" : "Create"} Student</h1>
+          <h1 className="text-xl font-bold mb-4">{student.id !== 0 ? "Update" : "Create"} Student</h1>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <TextInput type='text' label='First Name' id='firstName' name='firstName' />
             <TextInput type='text' label='Last Name' id='lastName' name='lastName' />

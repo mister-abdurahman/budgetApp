@@ -108,7 +108,7 @@ export default class StudentStore {
     }
 
     select_student_by_id = (id: number) => {
-        this.student = id ? this.students.get(id) : student;
+        this.student = this.students.get(id) || student;
     }
 
     create_student = async (student: IStudent) => {
@@ -151,6 +151,31 @@ export default class StudentStore {
                 store.commonStore.setLoading(false)
             }
         }
+    }
+
+    get MENUS() {
+        return [
+            {
+                title: "100 Level",
+                url:"/upload?level=100"
+            },
+            {
+                title: "200 Level",
+                url:"/upload?level=200"
+            },
+            {
+                title: "300 Level",
+                url:"/upload?level=300"
+            },
+            {
+                title: "400 Level",
+                url:"/upload?level=400"
+            },
+            {
+                title: "500 Level",
+                url:"/upload?level=500"
+            },
+        ]
     }
 }
 

@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react"
 import { useStore } from "../../data/stores/store"
 import { observer } from "mobx-react-lite"
-import { useParams } from "react-router-dom";
-import { DashboardProfile } from "../Dashboard/DashboardProfile";
+import { useParams, useSearchParams } from "react-router-dom";
 import Card from "../Card";
 import CheckboxGroup from "../../components/CheckboxGroup/CheckboxGroup";
 import { BsPlus } from "react-icons/bs";
 import { MdViewHeadline } from "react-icons/md";
+import { StudentProfile } from "../StudentDashboard/StudentProfile";
 
 function UploadEdit() {
   const { studentId } = useParams()
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const { studentStore, studentDocumentStore, authStore } = useStore()
   const { user } = authStore
   const { get_student_by_user_id, student } = studentStore
@@ -21,7 +23,7 @@ function UploadEdit() {
     get_student_by_user_id(user?.id || "")
     get_student_document_by_userId(user?.id || "")
 
-  }, [get_student_by_user_id, get_student_document_by_userId, studentId, user?.id])
+  }, [get_student_by_user_id, get_student_document_by_userId, searchParams, studentId, user?.id])
 
   const handleDocumentUpload = async (files: FileList | null) => {
     console.log(files && files[0]);    
@@ -43,7 +45,7 @@ function UploadEdit() {
               )}
           })}          
         </div>
-        <DashboardProfile user={student} />
+        <StudentProfile user={student} />
       </div>
     </div>
   )

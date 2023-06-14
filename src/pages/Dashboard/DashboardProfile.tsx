@@ -1,11 +1,8 @@
-import { MdSchool } from "react-icons/md"
 import Avatar from "../../components/Avatar"
-import { IUser } from "../../data/stores/authStore"
-import { IStudent } from "../../data/stores/studentStore"
-import { BiBuildingHouse, BiCertification } from "react-icons/bi"
+import { IUser } from "../../data/stores/userStore"
 
 interface DashboardProfileProps {
-    user: IUser | IStudent | null
+    user: IUser
 }
 
 export const DashboardProfile = ({ user }: DashboardProfileProps) => {
@@ -17,10 +14,10 @@ export const DashboardProfile = ({ user }: DashboardProfileProps) => {
                 </div>
                 <div className='space-y-2'>
                     <h1 className='text-3xl text-[1.8rem] font-bold capitalize'>{user?.firstName} {user?.lastName}</h1>
-                    <h3 className='text-lg font-semibold'>{user?.studentNumber}</h3>
-                    <p className='p-4 font-semibold capitalize rounded-lg shadow-md'><MdSchool />{user?.collegeName} College</p>
+                    <h3 className='text-lg font-semibold'>{user?.userName}</h3>
+                    {/* <p className='p-4 font-semibold capitalize rounded-lg shadow-md'><MdSchool />{user?.collegeName} College</p>
                     <p className='p-4 font-semibold capitalize rounded-lg shadow-md'><BiBuildingHouse />{user?.departmentName} Department</p>
-                    <p className='p-4 font-semibold capitalize rounded-lg shadow-md'><BiCertification />{user?.programName}</p>
+                    <p className='p-4 font-semibold capitalize rounded-lg shadow-md'><BiCertification />{user?.programName}</p> */}
                 </div>
                 <button className='btn btn-sm btn-block btn-neutral'>edit</button>
             </div>

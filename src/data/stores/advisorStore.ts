@@ -114,7 +114,7 @@ export default class AdvisorStore {
     }
 
     select_advisor_by_id = (id: number) => {
-        this.advisor = id ? this.advisors.get(id) : advisor;
+        this.advisor =  this.advisors.get(id) || advisor;
     }
 
     create_advisor = async (advisor: IAdvisor) => {

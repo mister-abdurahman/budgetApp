@@ -22,7 +22,7 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
 
 
 
-    let sideMenu = [
+    const sideMenu = [
         {
             name: "dashboard",
             url: "/dashboard",
@@ -82,7 +82,7 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
                         <MdNotifications className='text-3xl lg:hidden' />
                         <NavbarCenterMenu>
                             <button className='font-semibold btn btn-md btn-ghost'><Link to="/dashboard">Dashboard</Link></button>
-                            <button className='font-semibold btn btn-md btn-neutral'><Link to="/upload">  Upload</Link></button>
+                            {hasRole("student") ? <button className='font-semibold btn btn-md btn-neutral'><Link to="/upload">Upload</Link></button> : <></>}                          
                         </NavbarCenterMenu>
                         <NavbarMenu>
                             {/* <MdNotifications size={25} /> */}
@@ -125,8 +125,8 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
 
                                     return result
                                 }
-                                
-                                return isValid()  ? menu : null
+
+                                return isValid() ? menu : null
                             })}
                         </div>
 
@@ -187,7 +187,7 @@ export const UserInfo = () => {
             <p className="hidden text-xs text-left ms-2 sm:block">
                 <strong className="block font-medium capitalize">{user?.lastName} {user?.firstName}</strong>
 
-                <span className="text-gray-500"> {user?.username} </span>
+                <span className="text-gray-500"> {user?.userName} </span>
             </p>
 
             <svg
@@ -230,7 +230,7 @@ export const Footer = () => {
     return (
         <footer className="sticky inset-x-0 bottom-0 grid col-span-12 p-1 text-white bg-gray-700 border-t border-gray-100 place-items-center">
             <p className="hidden text-xs text-left ms-2 sm:grid sm:place-items-center">
-                <strong className="block font-medium">Developed by Holutahyour</strong>
+                <strong className="block font-medium">Designed By Awogo Blessing</strong>
                 <span className="flex items-end gap-1 text-gray-300"><BiCopyright />copyright 2023 - {new Date().getFullYear()}</span>
             </p>
         </footer>

@@ -1,4 +1,3 @@
-import { useEffect } from "react"
 import { useStore } from "../../data/stores/store"
 import { observer } from "mobx-react-lite"
 import { useNavigate } from "react-router-dom";
@@ -57,7 +56,7 @@ function AdminEdit({ handleModal }: { handleModal: (state: boolean) => void }) {
         <Form method="dialog" className="modal-box"
         >
           <label htmlFor="modal" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={() => handleModal(false)}>✕</label>
-          <h1 className="text-xl font-bold mb-4">{user?.id === null ? "Update" : "Create"} Admin</h1>
+          <h1 className="text-xl font-bold mb-4">{user?.id !== "" ? "Update" : "Create"} Admin</h1>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <TextInput type='text' label='First Name' id='firstName' name='firstName' />
             <TextInput type='text' label='Last Name' id='lastName' name='lastName' />

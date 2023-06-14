@@ -1,9 +1,7 @@
-import { useEffect } from "react"
 import { useStore } from "../../data/stores/store"
 import { observer } from "mobx-react-lite"
 import { useNavigate } from "react-router-dom";
 import { Form, Formik, FormikHelpers } from "formik";
-import Select from "../../components/Form/Select";
 import TextInput from "../../components/Form/TextInput";
 import * as Yup from 'yup'
 import { IUser } from "../../data/stores/userStore";
@@ -11,20 +9,10 @@ import { IUser } from "../../data/stores/userStore";
 
 function UserEdit({ handleModal }: { handleModal: (state: boolean) => void }) {
   const {
-    collegeStore: { collegeArrays },
-    departmentStore: { departmentArrays },
-    programStore: { programArrays },
-    levelStore: { levelArrays },
     userStore: { user, create_admin_user },
   } = useStore()
 
   const navigation = useNavigate();
-
-  // useEffect(() => {
-  //   console.log(id);
-
-  //   id && get_user_by_user_id(id);
-  // }, [get_user_by_user_id, id])
 
   const validation = () => {
     const create = {
@@ -68,7 +56,7 @@ function UserEdit({ handleModal }: { handleModal: (state: boolean) => void }) {
         <Form method="dialog" className="modal-box"
         >
           <label htmlFor="modal" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={() => handleModal(false)}>✕</label>
-          <h1 className="text-xl font-bold mb-4">{user?.id === null ? "Update" : "Create"} User</h1>
+          <h1 className="text-xl font-bold mb-4">{user?.id !== "" ? "Update" : "Create"} User</h1>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <TextInput type='text' label='First Name' id='firstName' name='firstName' />
             <TextInput type='text' label='Last Name' id='lastName' name='lastName' />

@@ -31,7 +31,7 @@ export const NavbarMenu = ({ children }: { children: JSX.Element[] | JSX.Element
     )
 }
 
-export const NavbarCenterMenu = ({ children }: { children: JSX.Element[] | JSX.Element }) => {
+export const NavbarCenterMenu = ({ children }: { children: JSX.Element[] | JSX.Element | null }) => {
     return (
         <div className="flex-1 hidden gap-2 navbar-start lg:flex">
             {children}

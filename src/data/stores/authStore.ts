@@ -2,7 +2,7 @@ import { makeAutoObservable, runInAction } from "mobx";
 import { store } from "./store";
 import apiHandler from "../api/apiHandler";
 import axios from "axios";
-import { IUser, user } from "./userStore";
+import { IUser, user, users } from "./userStore";
 
 export interface ISignIn {
     username: string;
@@ -35,17 +35,6 @@ export default class AuthStore {
 
     handleUserSignIn = async (signIn: ISignIn) => {
         this.user = await this.login(signIn.username, signIn.password)
-
-        if (this.user.id !== "") {
-            if (user) {
-                localStorage.setItem("cookie", JSON.stringify({ user, token: store.commonStore.randomString() }))
-            } else {
-                store.commonStore.setAlert({ message: "invalid username or password", type: "error" })
-            }
-        }
-
-        console.log(this.user);
-
         return user;
     }
 
@@ -53,6 +42,12 @@ export default class AuthStore {
         try {
             store.commonStore.setLoading(true)
             const user = await apiHandler.Users.login(username, password);
+
+            if (user) {
+                localStorage.setItem("cookie", JSON.stringify({ user, token: store.commonStore.randomString() }))
+            } else {
+                store.commonStore.setAlert({ message: "invalid username or password", type: "error" })
+            }
 
             runInAction(() => {
                 this.user = user;
@@ -67,6 +62,8 @@ export default class AuthStore {
             if (axios.isAxiosError(error) && error.response) {
                 store.commonStore.setAlert({ type: "error", message: error.message });
                 store.commonStore.setLoading(false)
+                throw new Error(error.message);
+                
             }
         }
     }

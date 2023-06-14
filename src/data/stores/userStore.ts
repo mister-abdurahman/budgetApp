@@ -55,7 +55,7 @@ export class UserStore {
     }
 
     select_user_by_id = (id: string) => {
-        this.user = id ? this.users.get(id) : user;
+        this.user = this.users.get(id) || user;
     }
 
     hasRole = (user: IUser, role: string) => {
@@ -111,7 +111,7 @@ export class UserStore {
     get_user_by_id = async (id: string) => {
 
         if (store.commonStore.offline) {
-            this.user = this.userArrays.find(user => user.id === id) || null
+            this.user = this.userArrays.find(user => user.id === id) || user
         }
 
         try {

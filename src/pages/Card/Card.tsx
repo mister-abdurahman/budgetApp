@@ -15,8 +15,8 @@ function Card({ header = "Card title!", details = "If a dog chews shoes whose sh
             <div className="card-body">
                 <h2 className="capitalize card-title">{header}</h2>
                 <p className="text-left capitalize">{details}</p>
-                {!children ? (downloadUrl ? (<CardButtonAction />): <Button icon = { <MdWarning />}>Not Available</Button>) : children}
-        </div>
+                {!children ? (downloadUrl ? (<CardButtonAction downloadUrl={downloadUrl} />) : <Button icon={<MdWarning />}>Not Available</Button>) : children}
+            </div>
         </div >
     )
 }
@@ -24,7 +24,7 @@ function Card({ header = "Card title!", details = "If a dog chews shoes whose sh
 export default Card
 
 
-export const CardButtonAction = () => {
+export const CardButtonAction = ({ downloadUrl = "/" }: { downloadUrl: string }) => {
     return (
         <div className="items-end justify-end card-actions">
             <a href={downloadUrl} download rel="noopener noreferrer" target="_blank">

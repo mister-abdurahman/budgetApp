@@ -6,18 +6,12 @@ import { observer } from "mobx-react-lite"
 function AdminDashboard() {
     const {
         authStore: { user },
-        userStore: { userArrays, menus, load_users },
+        userStore: { menus, load_users },
     } = useStore()
 
     useEffect(() => {
         load_users()
     }, [load_users])
-
-    const ROLES = {
-        admin: "admin",
-        student: "student",
-        advisor: "advisor",
-    }
 
     return (
         <div className='space-y-6'>

@@ -1,7 +1,7 @@
 import { useStore } from "../../data/stores/store"
 import AdminDashboard from "./AdminDashboard"
 import AdvisorDashboard from "./AdvisorDashboard"
-import StudentDashboard from "./StudentDashboard"
+import StudentDashboard from "../StudentDashboard/StudentDashboard"
 
 function Dashboard() {
   const { authStore: { hasRole } } = useStore()
