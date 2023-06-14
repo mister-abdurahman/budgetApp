@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite"
 import { useParams } from "react-router-dom";
 import Card from "../Card";
 import CheckboxGroup from "../../components/CheckboxGroup/CheckboxGroup";
-import { StudentProfile } from "../StudentDashboard/StudentProfile";
+import { StudentProfile } from "./StudentDashboard/StudentProfile";
 
 function StudentEdit() {
   const { studentId } = useParams()

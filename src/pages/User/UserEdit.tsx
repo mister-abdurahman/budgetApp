@@ -7,7 +7,7 @@ import * as Yup from 'yup'
 import { IUser } from "../../data/stores/userStore";
 
 
-function UserEdit({ handleModal }: { handleModal: (state: boolean) => void }) {
+function UserEdit({ handleModal, title }: { handleModal: (state: boolean) => void; title?: string }) {
   const {
     userStore: { user, create_admin_user },
   } = useStore()
@@ -34,7 +34,7 @@ function UserEdit({ handleModal }: { handleModal: (state: boolean) => void }) {
     }
 
     return user?.id !== "" ? update : create
-  } 
+  }
 
   const validationScheme = Yup.object(validation())
 
@@ -56,25 +56,24 @@ function UserEdit({ handleModal }: { handleModal: (state: boolean) => void }) {
         <Form method="dialog" className="modal-box"
         >
           <label htmlFor="modal" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={() => handleModal(false)}>✕</label>
-          <h1 className="text-xl font-bold mb-4">{user?.id !== "" ? "Update" : "Create"} User</h1>
+          {<h1 className="text-xl font-bold mb-4">{title || (user?.id !== "" ? "Update User" : "Create User")}</h1>}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <TextInput type='text' label='First Name' id='firstName' name='firstName' />
-            <TextInput type='text' label='Last Name' id='lastName' name='lastName' />
+            <TextInput type='text' label='First Name' id='firstName' name='firstName' disabled />
+            <TextInput type='text' label='Last Name' id='lastName' name='lastName' disabled />
           </div>
-          <TextInput type='text' label='User Name' id='userName' name='userName' disabled={user?.id !== ""} />
-          <TextInput type='email' label='Email Addresss' id='email' name='email' disabled={user?.id !== ""} />
-          <TextInput type='text' label='Phone Number' id='phoneNumber' name='phoneNumber' />
+          <TextInput type='text' label='User Name' id='userName' name='userName' disabled />
+          <TextInput type='email' label='Email Addresss' id='email' name='email' disabled />
+          <TextInput type='text' label='Phone Number' id='phoneNumber' name='phoneNumber' disabled />
           {user?.id === "" && <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <TextInput type='password' label='Password' id='password' name='password' />
-            <TextInput type='password' label='Confirm Password' id='confirmPassword' name='confirmPassword' />
+            <TextInput type='password' label='Password' id='password' name='password' disabled />
+            <TextInput type='password' label='Confirm Password' id='confirmPassword' name='confirmPassword' disabled />
           </div>}
 
-          
-          <div className="modal-action">
-            {/* if there is a button in form, it will close the modal */}
+
+          {/* <div className="modal-action">
             <button type="submit" className="btn btn-neutral">Save</button>
             <button type="button" className="btn" onClick={() => handleModal(false)}>Close</button>
-          </div>
+          </div> */}
         </Form>
       </Formik>
     </>

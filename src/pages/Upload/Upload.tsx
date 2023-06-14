@@ -6,7 +6,7 @@ import Card from "../Card";
 import CheckboxGroup from "../../components/CheckboxGroup/CheckboxGroup";
 import { BsPlus } from "react-icons/bs";
 import { MdViewHeadline } from "react-icons/md";
-import { StudentProfile } from "../StudentDashboard/StudentProfile";
+import { StudentProfile } from "../Student/StudentDashboard/StudentProfile";
 
 function UploadEdit() {
   const { studentId } = useParams()

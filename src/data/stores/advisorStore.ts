@@ -53,7 +53,7 @@ export default class AdvisorStore {
         if (store.commonStore.offline) {
             return advisors;
         } else {
-            return Array.from(this.advisors.values());
+            return Array.from(this.advisors.values()).sort(store.commonStore.ascendingSort);
         }
     }
 

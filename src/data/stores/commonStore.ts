@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
 
-interface IAlert{
+interface IAlert {
     heading?: string,
     id?: string
     message?: string,
@@ -25,7 +25,7 @@ export default class CommonStore {
         return JSON.parse(localStorage.getItem("cookie")!);
     }
 
-    setAlert = (alert:IAlert) => {
+    setAlert = (alert: IAlert) => {
         alert.id = this.randomString();
         this.alerts.set(alert.id, alert)
 
@@ -43,6 +43,18 @@ export default class CommonStore {
     }
 
     randomString = () => Math.random().toString(36).substring(2, 20)
+
+    ascendingSort = (a: any, b: any) => {
+        const a_upper = a.firstName.toUpperCase();
+        const b_upper = b.firstName.toUpperCase();
+        return (a_upper < b_upper) ? -1 : (a_upper > b_upper) ? 1 : 0;
+    }
+
+    descendingSort = (a: any, b: any) => {
+        const a_upper = a.lastName.toUpperCase();
+        const b_upper = b.lastName.toUpperCase();
+        return (a_upper > b_upper) ? -1 : (a_upper < b_upper) ? 1 : 0;
+    }
 }
 
 

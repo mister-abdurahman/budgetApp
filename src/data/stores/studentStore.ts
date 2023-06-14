@@ -35,9 +35,16 @@ export const student: IStudent = {
     username: "",
 };
 
+export interface IStudentStat {
+    allStudent: number,
+    completed: number,
+    uncompleted: number,
+}
+
 export default class StudentStore {
     student: IStudent = student
     students = new Map<number, IStudent>();
+    studentStat: IStudentStat | null = null
 
     constructor() {
         makeAutoObservable(this)
@@ -47,7 +54,7 @@ export default class StudentStore {
         if (store.commonStore.offline) {
             return students;
         } else {
-            return Array.from(this.students.values());
+            return Array.from(this.students.values()).sort(store.commonStore.ascendingSort);
         }
     }
 
@@ -94,6 +101,23 @@ export default class StudentStore {
         try {
             store.commonStore.setLoading(true)
             this.student = await apiHandler.Students.get_user_by_id(id);
+
+            store.commonStore.setLoading(false)
+            return this.student
+
+        } catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
+                store.commonStore.setAlert({ type: "error", message: error.message });
+                store.commonStore.setLoading(false)
+            }
+        }
+
+    }
+
+    get_student_stat = async () => {
+        try {
+            store.commonStore.setLoading(true)
+            this.studentStat = await apiHandler.Students.get_stat();
 
             store.commonStore.setLoading(false)
             return this.student

@@ -38,8 +38,21 @@ export class UserStore {
         if (store.commonStore.offline) {
             return users;
         } else {
-            return Array.from(this.users.values());
+            return Array.from(this.users.values()).sort(store.commonStore.ascendingSort);
         }
+    }
+
+    filter_user_by_role = (role: string) => {
+        return this.userArrays.filter(user => {
+            let result = false;
+            user.roles?.forEach(x => {
+                if (x.toLowerCase() === role.toLowerCase()) {
+                    result = true;
+                }
+            });
+
+            if (result || (role === "")) return user;
+        });
     }
 
     studentArrays = () => {
@@ -63,7 +76,7 @@ export class UserStore {
     }
 
     load_users = async () => {
-
+        this.users.clear();
         try {
             store.commonStore.setLoading(true)
             const users = await apiHandler.Users.list();
@@ -92,7 +105,7 @@ export class UserStore {
 
             users.forEach((user: IUser) => {
                 runInAction(() => {
-                    if (this.hasRole(user, "admin")){
+                    if (this.hasRole(user, "admin")) {
                         this.users.set(user.id, user)
                     }
                     store.commonStore.setLoading(false)
@@ -201,19 +214,23 @@ export class UserStore {
         return [
             {
                 title: "All Users",
-                total: this.userArrays.length
+                role: "",
+                url: "/users"
             },
             {
                 title: "Admins",
-                total: this.userArrays.filter(x => x.roles?.find(a => a.toLowerCase === ROLES.admin.toLowerCase))?.length
+                role: ROLES.admin,
+                url: "/admins"
             },
             {
                 title: "Advisor",
-                total: this.userArrays.filter(x => x.roles?.find(a => a.toLowerCase === ROLES.advisor.toLowerCase))?.length
+                role: ROLES.advisor,
+                url: "/advisors"
             },
             {
                 title: "Students",
-                total: this.userArrays.filter(x => x.roles?.find(a => a.toLowerCase === ROLES.student.toLowerCase))?.length
+                role: ROLES.student,
+                url: "/students",
             },
         ]
     }

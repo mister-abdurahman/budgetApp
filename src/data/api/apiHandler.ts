@@ -2,15 +2,15 @@ import axios, { AxiosResponse } from "axios";
 import { ICollege } from "../stores/collegeStore";
 import { IDepartment } from "../stores/departmentStore";
 import { IProgram } from "../stores/programStore";
-import { IStudent } from "../stores/studentStore";
+import { IStudent, IStudentStat } from "../stores/studentStore";
 import { IStudentDocument, IStudentDocumentGroup } from "../stores/studentDocumentStore";
 import { IAdvisor } from "../stores/advisorStore";
 import { ILevel } from "../stores/levelStore";
 import { IUser } from "../stores/userStore";
 
 
-// axios.defaults.baseURL = "https://localhost:7151/api";
-axios.defaults.baseURL = "https://api-fgbmfi-clone.azurewebsites.net/api";
+axios.defaults.baseURL = "https://localhost:7151/api";
+// axios.defaults.baseURL = "https://api-fgbmfi-clone.azurewebsites.net/api";
 
 const responseBody = (res: AxiosResponse) => res.data
 
@@ -100,6 +100,7 @@ const Students = {
     list: (param?: string) => request.get<IStudent[]>(`/students?${param || ""}`),
     detail: (id: number) => request.get<IStudent>(`/students/${id}`),
     get_user_by_id: (id: string) => request.get<IStudent>(`/students/by_user_id/${id}`),
+    get_stat: () => request.get<IStudentStat>(`/students/student_stat`),
     create: (student: IStudent) => request.post<IStudent>(`/students`, student),
     create_student_user: (student: IStudent) => request.post<IStudent>(`/users/create_student`, student),
     update: (id: string, student: IStudent) => request.post<IStudent>(`/students/${id}`, student),

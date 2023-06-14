@@ -1,6 +1,6 @@
 import { MdSchool } from "react-icons/md"
-import Avatar from "../../components/Avatar"
-import { IStudent } from "../../data/stores/studentStore"
+import Avatar from "../../../components/Avatar"
+import { IStudent } from "../../../data/stores/studentStore"
 import { BiBuildingHouse, BiCertification } from "react-icons/bi"
 import { observer } from "mobx-react-lite"
 

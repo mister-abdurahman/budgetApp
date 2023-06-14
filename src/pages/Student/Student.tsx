@@ -13,6 +13,7 @@ import { observer } from "mobx-react-lite"
 import Button from "../../components/Button"
 import Modal from "../../components/Modal"
 import StudentCreate from "./StudentCreate"
+import { BsLink } from "react-icons/bs"
 
 function Student() {
     const { studentStore } = useStore()
@@ -86,11 +87,13 @@ function Student() {
                                 </div>
                                 <Link
                                     to={`/students/${student.userId}`}
-                                    className="flex items-center justify-center gap-2 px-3 py-2 text-white bg-gray-500 rounded-md cursor-pointer borderborder-gray-500 hover:border-gray-200"
                                 >
-                                    <BiDetail className="w-5 h-5" />
-                                    <p className="text-sm font-medium">View</p>
-                                </Link>                                
+                                    <Button
+                                        icon={<BsLink className="w-5 h-5" />}
+                                    >
+                                        <p className="text-sm font-medium">View</p>
+                                    </Button>
+                                </Link>
                             </ListRow>
                         )
                     })}

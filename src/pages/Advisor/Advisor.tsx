@@ -12,6 +12,7 @@ import { observer } from "mobx-react-lite"
 import AdvisorEdit from "./AdvisorEdit"
 import Modal from "../../components/Modal"
 import Button from "../../components/Button/Button"
+import { BsLink } from "react-icons/bs"
 
 function Advisor() {
     const {
@@ -27,7 +28,7 @@ function Advisor() {
     const [isOpen, setIsOpen] = useState(false)
 
     const handleModal = (state: boolean, id?: number) => {
-        select_advisor_by_id(id || 0)
+        state && select_advisor_by_id(id || 0)
         setIsOpen(state);
     }
 
@@ -90,7 +91,7 @@ function Advisor() {
                                 </div>
                                 <Button
                                     onClick={() => handleModal(true,advisor.id)}
-                                    icon={<BiDetail className="w-5 h-5" />}
+                                    icon={<BsLink className="w-5 h-5" />}
                                 >
                                     <p className="text-sm font-medium">View</p>
                                 </Button>

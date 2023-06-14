@@ -8,7 +8,7 @@ import { IAdvisor } from "../../data/stores/advisorStore";
 import * as Yup from 'yup'
 
 
-function AdvisorEdit({ handleModal, title, isDetail }: { handleModal: (state: boolean) => void, title?: string, isDetail?: boolean }) {
+function AdvisorEdit({ handleModal, title }: { handleModal: (state: boolean) => void, title: string }) {
   const {
     collegeStore: { collegeArrays },
     departmentStore: { departmentArrays },
@@ -18,12 +18,6 @@ function AdvisorEdit({ handleModal, title, isDetail }: { handleModal: (state: bo
   } = useStore()
 
   const navigation = useNavigate();
-
-  // useEffect(() => {
-  //   console.log(id);
-
-  //   id && get_advisor_by_user_id(id);
-  // }, [get_advisor_by_user_id, id])
 
   const validation = () => {
     const create = {
@@ -94,7 +88,6 @@ function AdvisorEdit({ handleModal, title, isDetail }: { handleModal: (state: bo
             options={collegeArrays} optionSetter={(data) => data.name}
             valueSetter={(data) => data.code}
             label="College"
-            disabled={isDetail}
           />
           <Select
             id='departmentCode'
@@ -103,7 +96,6 @@ function AdvisorEdit({ handleModal, title, isDetail }: { handleModal: (state: bo
             optionSetter={(data) => data.name}
             valueSetter={(data) => data.code}
             label="Department"
-            disabled={isDetail}
           />
           <Select
             id='programCode'
@@ -112,7 +104,6 @@ function AdvisorEdit({ handleModal, title, isDetail }: { handleModal: (state: bo
             optionSetter={(data) => data.name}
             valueSetter={(data) => data.code}
             label="Program"
-            disabled={isDetail}
           />
           <Select
             id='levelCode'
@@ -121,7 +112,6 @@ function AdvisorEdit({ handleModal, title, isDetail }: { handleModal: (state: bo
             optionSetter={(data) => data.name}
             valueSetter={(data) => data.code}
             label="Level"
-            disabled={isDetail}
           />
           <div className="modal-action">
             {/* if there is a button in form, it will close the modal */}

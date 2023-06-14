@@ -1,6 +1,6 @@
 import './style.css'
-import { useStore } from '../../data/stores/store'
-import { IStudent } from '../../data/stores/studentStore'
+import { useStore } from '../../../data/stores/store'
+import { IStudent } from '../../../data/stores/studentStore'
 import { MdDocumentScanner } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 import { StudentProfile } from './StudentProfile'

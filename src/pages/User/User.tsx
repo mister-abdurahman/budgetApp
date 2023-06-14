@@ -12,6 +12,7 @@ import { observer } from "mobx-react-lite"
 import Button from "../../components/Button"
 import Modal from "../../components/Modal"
 import UserEdit from "./UserEdit"
+import { BsLink } from "react-icons/bs"
 
 function User() {
     const { userStore } = useStore()
@@ -55,13 +56,13 @@ function User() {
                     >
                         <div className="flex gap-5">
                             <TextInput label='' id='search' name='search' placeholder="search" type="TextIconInput" icon={<BiSearch />} />
-                            <Button
+                            {/* <Button
                                 type="button"
                                 onClick={() => handleModal(true)}
                                 icon={<BiPlusCircle className="w-5 h-5" />}
                             >
                                 <p className="text-sm font-medium">Create</p>
-                            </Button>
+                            </Button> */}
                         </div>
                         <div className="flex items-center gap-3">
                             <HiSortDescending size={20} />
@@ -83,9 +84,10 @@ function User() {
                                     </div>
                                     {user.roles?.map(role => <div className="lowercase badge badge-neutral">{role}</div>)}
                                 </div>
+                                
                                 <Button
                                     onClick={() => handleModal(true,user.id)}
-                                    icon={<BiDetail className="w-5 h-5" />}
+                                    icon={<BsLink className="w-5 h-5" />}
                                 >
                                     <p className="text-sm font-medium">View</p>
                                 </Button>
