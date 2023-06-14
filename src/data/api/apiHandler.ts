@@ -9,8 +9,8 @@ import { ILevel } from "../stores/levelStore";
 import { IUser } from "../stores/userStore";
 
 
-axios.defaults.baseURL = "https://localhost:7151/api";
-// axios.defaults.baseURL = "https://api-fgbmfi-clone.azurewebsites.net/api";
+// axios.defaults.baseURL = "https://localhost:7151/api";
+axios.defaults.baseURL = "https://api-fgbmfi-clone.azurewebsites.net/api";
 
 const responseBody = (res: AxiosResponse) => res.data
 
