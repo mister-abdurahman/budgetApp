@@ -52,7 +52,7 @@ export const OfflineAvatar = ({ imageUrl, width }: { imageUrl: string, width: st
     return (
         <div className="avatar offline">
             <div className={`${width} rounded-full`}>
-                <img src={imageUrl || "https://avatars.githubusercontent.com/u/48675387"} />
+                <img src={imageUrl || placeHolder} />
             </div>
         </div>
     )
