@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom'
 import { StudentProfile } from './StudentProfile'
 import { useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
-import CloudinaryWidgetUpload from '../../../components/CloudinaryWidgetUpload/CloudinaryWidgetUpload'
 
 function StudentDashboard() {
   const {

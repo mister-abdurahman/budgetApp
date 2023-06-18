@@ -1,4 +1,4 @@
-import { MdArrowDropDown, MdNotifications } from 'react-icons/md';
+import { MdArrowDropDown } from 'react-icons/md';
 import { BiCopyright } from 'react-icons/bi';
 import { RiDashboardLine } from 'react-icons/ri';
 import { FaUserGraduate } from 'react-icons/fa';

@@ -2,7 +2,6 @@ import { makeAutoObservable, runInAction } from "mobx";
 import apiHandler from "../api/apiHandler";
 import axios from "axios";
 import { store } from "./store";
-import { uploadImage } from "../services/azureBlobService";
 
 export interface IStudent {
     id: number
