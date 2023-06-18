@@ -59,9 +59,9 @@ function Student() {
                         </div>
                         <div className="flex items-center gap-3">
                             <HiSortDescending size={20} />
-                            <Dropdown title="Status" dropDownStyle="dropdown-end" className="capitalize rounded-sm btn-sm">
+                            {/* <Dropdown title="Status" dropDownStyle="dropdown-end" className="capitalize rounded-sm btn-sm">
                                 <CheckboxGroup name="Status" data={["all", "Completed", "Uncompleted"]} />
-                            </Dropdown>
+                            </Dropdown> */}
                         </div>
 
 
@@ -73,15 +73,15 @@ function Student() {
                         return (
                             <ListRow key={index}>
                                 <Avatar imageUrl={student.imageUrl} size="xs" />
-                                <div className="flex items-center flex-1 gap-6 my-auto">
+                                <div className="flex flex-wrap items-center flex-1 gap-2 my-auto lg:gap-6 lg:flex-nowrap">
                                     <div className="w-40">
-                                        <h1 className="text-sm font-semibold text-gray-800 capitalize">{student.firstName} {student.lastName}</h1>
+                                        <h1 className="font-bold text-gray-800 capitalize lg:font-semibold lg:text-sm">{student.firstName} {student.lastName}</h1>
                                         <h1 className="text-sm text-gray-400-100">{student.username}</h1>
                                     </div>
                                     <h1 className="text-sm font-semibold text-gray-800 capitalize">{student.collegeName}</h1>
                                     <h1 className="text-sm font-semibold text-gray-800 capitalize">{student.departmentName}</h1>
                                     <h1 className="text-sm font-semibold text-gray-800 capitalize">{student.programName}</h1>
-                                    <div className="text-xs badge badge-success">completed</div>
+                                    {/* <div className="text-xs badge badge-success">completed</div> */}
 
                                     {/* <div className="text-xs badge badge-error">uncompleted</div> */}
                                 </div>
@@ -89,6 +89,7 @@ function Student() {
                                     to={`/students/${student.userId}`}
                                 >
                                     <Button
+                                    className="justify-center w-full md:lg:w-fit"
                                         icon={<BsLink className="w-5 h-5" />}
                                     >
                                         <p className="text-sm font-medium">View</p>

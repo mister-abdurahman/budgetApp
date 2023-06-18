@@ -42,7 +42,7 @@ export const OnlineAvatar = ({ imageUrl, width }: { imageUrl: string, width: str
     return (
         <div className="avatar online">
             <div className={`${width} rounded-full`}>
-                <img src={imageUrl || "https://media.licdn.com/dms/image/C4D03AQHKNmB-w7WlGg/profile-displayphoto-shrink_800_800/0/1658915297053?e=1689206400&v=beta&t=SrF-hl453awu9qzOx5i0gC0I354qHH_gHQESnbQD_Us"} />
+                <img src={imageUrl || placeHolder} />
             </div>
         </div>
     )

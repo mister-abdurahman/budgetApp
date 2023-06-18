@@ -2,6 +2,7 @@ import { makeAutoObservable, runInAction } from "mobx";
 import apiHandler from "../api/apiHandler";
 import axios from "axios";
 import { store } from "./store";
+import { uploadImage } from "../services/azureBlobService";
 
 export interface IStudentDocumentGroup {
     level: string,
@@ -94,7 +95,6 @@ export default class StudentDocumentStore {
                 runInAction(() => {
                     this.studentDocumentGroups.set(studentDocumentGroup.level, studentDocumentGroup)
                     store.commonStore.setLoading(false)
-
                 })
             })
 
@@ -102,6 +102,7 @@ export default class StudentDocumentStore {
             if (axios.isAxiosError(error) && error.response) {
                 store.commonStore.setAlert({ type: "error", message: error.message });
                 store.commonStore.setLoading(false)
+                throw new Error(error.message);
             }
         }
 
@@ -125,6 +126,26 @@ export default class StudentDocumentStore {
                 store.commonStore.setLoading(false)
             }
         }
+    }
+
+    upload_document = async (id: number, e: any) => {
+
+        if (e.target.files.length !== 0) {
+            try {
+                store.commonStore.setLoading(true)
+                const url = await uploadImage(e.target.files[0])
+                await apiHandler.StudentDocuments.update_document_url((id || 0), url);
+
+                store.commonStore.setLoading(false)
+
+            } catch (error) {
+                if (axios.isAxiosError(error) && error.response) {
+                    store.commonStore.setAlert({ type: "error", message: error.message });
+                    store.commonStore.setLoading(false)
+                }
+            }
+        }
+
     }
 }
 

@@ -9,8 +9,8 @@ import { ILevel } from "../stores/levelStore";
 import { IUser } from "../stores/userStore";
 
 
-// axios.defaults.baseURL = "https://localhost:7151/api";
-axios.defaults.baseURL = "https://api-fgbmfi-clone.azurewebsites.net/api";
+axios.defaults.baseURL = "https://localhost:7151/api";
+// axios.defaults.baseURL = "https://api-fgbmfi-clone.azurewebsites.net/api";
 
 const responseBody = (res: AxiosResponse) => res.data
 
@@ -115,7 +115,8 @@ const StudentDocuments = {
     list_by_user_id: (id: string) => request.get<IStudentDocumentGroup[]>(`/student_documents/by_user_id/${id}`),
     detail: (id: number) => request.get<IStudentDocument>(`/student_documents/${id}`),
     create: (studentDocument: IStudentDocument) => request.post<IStudentDocument>(`/student_documents`, studentDocument),
-    update: (id: string, studentDocument: IStudentDocument) => request.post<IStudentDocument>(`/student_documents/${id}`, studentDocument),
+    update: (id: number, studentDocument: IStudentDocument) => request.put<IStudentDocument>(`/student_documents/${id}`, studentDocument),
+    update_document_url: (id: number, documentUrl: string) => request.get(`/student_documents/update_document_url/${id}/?documentUrl=${documentUrl}`),
     delete: (id: string) => request.delete<IStudentDocument>(`/student_documents/${id}`),
 }
 

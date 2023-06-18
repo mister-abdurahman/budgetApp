@@ -1,6 +1,6 @@
-import { HiDocumentDownload } from "react-icons/hi";
 import Button from "../../components/Button";
 import { MdWarning } from "react-icons/md";
+import { BiDownArrowCircle } from "react-icons/bi";
 
 interface ICardProps {
     header: string;
@@ -15,7 +15,7 @@ function Card({ header = "Card title!", details = "If a dog chews shoes whose sh
             <div className="card-body">
                 <h2 className="capitalize card-title">{header}</h2>
                 <p className="text-left capitalize">{details}</p>
-                {!children ? (downloadUrl ? (<CardButtonAction downloadUrl={downloadUrl} />) : <Button icon={<MdWarning />}>Not Available</Button>) : children}
+                {!children ? (downloadUrl != null ? (<CardButtonAction downloadUrl={downloadUrl} />) : <Button className="bg-neutral-600 border-neutral-600" icon={<MdWarning />}>Not Available</Button>) : children}
             </div>
         </div >
     )
@@ -24,16 +24,6 @@ function Card({ header = "Card title!", details = "If a dog chews shoes whose sh
 export default Card
 
 
-export const CardButtonAction = ({ downloadUrl = "/" }: { downloadUrl: string }) => {
-    return (
-        <div className="items-end justify-end card-actions">
-            <a href={downloadUrl} download rel="noopener noreferrer" target="_blank">
-                <Button icon={<HiDocumentDownload />}>View</Button>
-            </a>
-            <a href="/test.pdf" download rel="noopener noreferrer" target="_blank">
-                <Button icon={<HiDocumentDownload />}>Download</Button>
-
-            </a>
-        </div>
-    )
+export const CardButtonAction = ({ downloadUrl = "/" }: { downloadUrl?: string }) => {
+    return (downloadUrl !== null) ? <a className="mt-5" href={downloadUrl} download rel="noopener noreferrer" target="_blank"><Button className="w-full" icon={<BiDownArrowCircle />}>Download</Button></a> : <></>
 }

@@ -77,9 +77,9 @@ function Advisor() {
                         return (
                             <ListRow key={index}>
                                 <Avatar imageUrl={advisor.imageUrl} size="xs" />
-                                <div className="flex items-center flex-1 gap-6 my-auto">
+                                <div className="flex flex-wrap items-center flex-1 gap-6 my-auto lg:gap-6 lg:flex-nowrap">
                                     <div className="w-40">
-                                        <h1 className="text-sm font-semibold text-gray-800 capitalize">{advisor.firstName} {advisor.lastName}</h1>
+                                        <h1 className="font-bold text-gray-800 capitalize lg:font-semibold lg:text-sm">{advisor.firstName} {advisor.lastName}</h1>
                                         <h1 className="text-sm text-gray-400-100">{advisor.username}</h1>
                                     </div>
                                     <div className="text-xs badge badge-neutral">Advisor</div>
@@ -90,7 +90,8 @@ function Advisor() {
                                     {/* <div className="text-xs badge badge-error">uncompleted</div> */}
                                 </div>
                                 <Button
-                                    onClick={() => handleModal(true,advisor.id)}
+                                    className="justify-center btn-wide lg:w-fit"
+                                    onClick={() => handleModal(true, advisor.id)}
                                     icon={<BsLink className="w-5 h-5" />}
                                 >
                                     <p className="text-sm font-medium">View</p>

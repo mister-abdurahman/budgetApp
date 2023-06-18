@@ -63,7 +63,7 @@ function Admin() {
                             >
                                 <p className="text-sm font-medium">Create</p>
                             </Button>
-                            
+
                         </div>
                         <div className="flex items-center gap-3">
                             <HiSortDescending size={20} />
@@ -84,9 +84,10 @@ function Admin() {
                                         <h1 className="text-sm text-gray-400-100">{user.userName}</h1>
                                     </div>
                                     {user.roles?.map(role => <div className="lowercase badge badge-neutral">{role}</div>)}
-                                </div>                                
+                                </div>
                                 <Button
-                                    onClick={() => handleModal(true,user.id)}
+                                    className="justify-center w-full lg:w-fit"
+                                    onClick={() => handleModal(true, user.id)}
                                     icon={<BsLink className="w-5 h-5" />}
                                 >
                                     <p className="text-sm font-medium">View</p>

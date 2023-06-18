@@ -1,32 +1,36 @@
 import { useEffect, useState } from "react"
 import { useStore } from "../../data/stores/store"
 import { observer } from "mobx-react-lite"
-import { useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import Card from "../Card";
 import CheckboxGroup from "../../components/CheckboxGroup/CheckboxGroup";
 import { BsPlus } from "react-icons/bs";
-import { MdViewHeadline } from "react-icons/md";
 import { StudentProfile } from "../Student/StudentDashboard/StudentProfile";
+import { HiRefresh } from "react-icons/hi";
+import { BiDownArrowCircle } from "react-icons/bi";
 
 function UploadEdit() {
   const { studentId } = useParams()
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate()
 
   const { studentStore, studentDocumentStore, authStore } = useStore()
   const { user } = authStore
   const { get_student_by_user_id, student } = studentStore
-  const { get_student_document_by_userId, studentDocumentGroupArrays} = studentDocumentStore
-    
+  const { get_student_document_by_userId, upload_document, studentDocumentGroupArrays } = studentDocumentStore
+
   const [level, setLevel] = useState("100")
-  
-  useEffect(() => {   
+  const [documentID, setDocumentID] = useState(0)
+
+  useEffect(() => {
     get_student_by_user_id(user?.id || "")
     get_student_document_by_userId(user?.id || "")
 
   }, [get_student_by_user_id, get_student_document_by_userId, searchParams, studentId, user?.id])
 
-  const handleDocumentUpload = async (files: FileList | null) => {
-    console.log(files && files[0]);    
+  const handleOnChange = (e: any) => {
+
+    upload_document(documentID, e).then(() => navigate(0))
   }
 
   return (
@@ -36,14 +40,19 @@ function UploadEdit() {
         <div className="flex flex-wrap justify-around col-span-9 gap-4">
           {studentDocumentGroupArrays.map((upload) => {
             if (upload["level"] === level) {
-              return upload.documents.map((x, index) => <Card key={index} header={x.documentName} details={x.documentDetail}>
+              const files = upload.documents.map((document, index) => {                
+                return <Card key={index} header={document.documentName} details={document.documentDetail}>
 
-                <label className="mt-5 btn btn-sm btn-block outline-dashed outline-offset-8" htmlFor="upload">Upload <BsPlus /></label>
-                <input type="file" onChange={(e) => handleDocumentUpload(e.target.files)} id="upload" className="hidden"/>
-                <button className="mt-5 btn btn-sm btn-block btn-neutral">View <MdViewHeadline /></button>
-              </Card>
-              )}
-          })}          
+                  <input onChange={(e) => handleOnChange(e)} type="file"  id="upload" className="hidden" />
+                  <label  onClick={() => setDocumentID(document.id || 0)} className="mt-5 btn btn-sm btn-block outline-dashed outline-offset-8" htmlFor="upload">{(document.documentUrl === null) ? <>Upload <BsPlus /></> : <>Re-Upload <HiRefresh /></>} </label>
+                  {(document.documentUrl !== null) ? <a className="mt-5 btn btn-sm btn-block btn-success" href={document.documentUrl} download rel="noopener noreferrer" target="_blank">Download <BiDownArrowCircle /></a> : <></>}
+                </Card>
+              }
+              )
+
+              return files
+            }
+          })}
         </div>
         <StudentProfile user={student} />
       </div>

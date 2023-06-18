@@ -28,7 +28,7 @@ function StudentEdit() {
         <div className="flex flex-wrap justify-around col-span-9 gap-4">
           {studentDocumentGroupArrays.map((upload) => {
             if (upload["level"] === level) {
-              return upload.documents.map((x, index) => <Card key={index} header={x.documentName} details={x.documentDetail} />)
+              return upload.documents.map((x, index) => <Card key={index} header={x.documentName} details={x.documentDetail} downloadUrl={x.documentUrl} />)
             }
           })}          
         </div>

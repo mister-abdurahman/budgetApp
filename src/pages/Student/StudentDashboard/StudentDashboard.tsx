@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { StudentProfile } from './StudentProfile'
 import { useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
+import CloudinaryWidgetUpload from '../../../components/CloudinaryWidgetUpload/CloudinaryWidgetUpload'
 
 function StudentDashboard() {
   const {
@@ -49,18 +50,19 @@ export const DashboardStat = ({ user }: IDashboardStatProps) => {
           pick a level to view, download or upload document
         </p>
       </div>
-      <div className="grid grid-cols-12 gap-4">
+      <div className="flex flex-wrap gap-4">
         {MENUS.map((x, index) => (
-          <Link key={index} className="flex col-span-6 gap-4 p-2 bg-white rounded-md shadow-lg" to={x.url}>
-            <div className="grid w-20 h-20 text-white rounded-md bg-neutral place-items-center"><MdDocumentScanner size={30} /></div>
+          <Link key={index} className="flex gap-4 p-2 bg-white rounded-md shadow-lg w-80" to={x.url}>
+            <div className="grid w-20 h-20 text-white rounded-md bg-neutral place-items-center aspect-square"><MdDocumentScanner size={30} /></div>
             <div className="grow">
-              <h1 className="grow text-2xl font-bold">{x.title}</h1>
+              <h1 className="text-2xl font-bold grow">{x.title}</h1>
               <p className="mt-1.5 text-sm text-gray-500">
                 download or upload document for alpha and omega semester
               </p>
             </div>
           </Link>
         ))}
+        {/* <CloudinaryWidgetUpload /> */}
       </div>
       {/* <div className='flex flex-wrap justify-around gap-5'>
         {levels.map((level, index) => {

@@ -62,27 +62,40 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
     return (
         <>
             <Drawer sideMenu={
-                <>
-                    {sideMenu.map((x, index) => (
-                        <NavLink
+                <>                    
+                    {sideMenu.map((x, index) => {
+                        const menu = <NavLink
                             key={index}
                             to={x.url}
                             className={({ isActive }) =>
                                 isActive ? "flex items-center gap-2 px-4 py-2 text-gray-100 bg-gray-600 rounded-lg" : "flex items-center gap-2 px-4 py-2 text-gray-700 bg-gray-100 rounded-lg"
                             }
                         >
-                            <span className="text-sm font-medium capitalize"> {x.name} </span>
+                            {x.icon}
+                            <span className="text-sm font-medium capitalize "> {x.name} </span>
                         </NavLink>
-                    ))}
+                        const isValid = () => {
+                            let result = false;
+                            x.roles.forEach(x => {
+                                if (hasRole(x)) {
+                                    result = true
+                                }
+                            })
+
+                            return result
+                        }
+
+                        return isValid() ? menu : null
+                    })}
                 </>
             }>
                 <div className='w-screen h-screen cs-grid'>
                     <Navbar className='col-span-12'>
                         <Logo />
-                        <MdNotifications className='text-3xl lg:hidden' />
+                        <HiLogout onClick={() => signOut()} className='text-3xl lg:hidden' />
                         <NavbarCenterMenu>
                             <button className='font-semibold btn btn-md btn-ghost'><Link to="/dashboard">Dashboard</Link></button>
-                            {hasRole("student") ? <button className='font-semibold btn btn-md btn-neutral'><Link to="/upload">Upload</Link></button> : <></>}                          
+                            {hasRole("student") ? <button className='font-semibold btn btn-md btn-neutral'><Link to="/upload">Upload</Link></button> : <></>}
                         </NavbarCenterMenu>
                         <NavbarMenu>
                             {/* <MdNotifications size={25} /> */}
@@ -101,7 +114,7 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
                             </Dropdown>
                         </NavbarMenu>
                     </Navbar>
-                    <SideNav className='sticky self-start hidden bg-gray-700 lg:block'>
+                    <SideNav className='sticky self-start hidden bg-neutral lg:block'>
                         <div className='space-y-2 rounded-xl'>
 
                             {sideMenu.map((x, index) => {
@@ -109,11 +122,11 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
                                     key={index}
                                     to={x.url}
                                     className={({ isActive }) =>
-                                        isActive ? "flex items-center gap-2 px-4 py-2 text-gray-700 bg-gray-100" : "flex items-center gap-2 px-4 py-2 text-white hover:bg-gray-100 hover:text-gray-700"
+                                        isActive ? "flex items-center gap-2 px-4 py-2 text-neutral bg-white" : "flex items-center gap-2 px-4 py-2 text-white hover:bg-gray-100 hover:text-gray-700"
                                     }
                                 >
                                     {x.icon}
-                                    <span className="text-sm font-medium capitalize"> {x.name} </span>
+                                    <span className="text-sm font-medium capitalize "> {x.name} </span>
                                 </NavLink>
                                 const isValid = () => {
                                     let result = false;
@@ -228,10 +241,10 @@ export const SideNav = (props: ISideNav) => {
 
 export const Footer = () => {
     return (
-        <footer className="sticky inset-x-0 bottom-0 grid col-span-12 p-1 text-white bg-gray-700 border-t border-gray-100 place-items-center">
+        <footer className="sticky inset-x-0 bottom-0 grid col-span-12 p-1 text-white border-t border-gray-100 bg-neutral place-items-center">
             <p className="hidden text-xs text-left ms-2 sm:grid sm:place-items-center">
                 <strong className="block font-medium">Designed By Awogo Blessing</strong>
-                <span className="flex items-end gap-1 text-gray-300"><BiCopyright />copyright 2023 - {new Date().getFullYear()}</span>
+                <span className="flex items-end gap-1 text-base-100"><BiCopyright />copyright 2023 - {new Date().getFullYear()}</span>
             </p>
         </footer>
     )
