@@ -132,7 +132,7 @@ export default class AdvisorStore {
 
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
-                store.commonStore.setAlert({ type: "error", message: error.message });
+                store.commonStore.setAlert({ type: "error", message: error.response.data });
                 store.commonStore.setLoading(false)
             }
         }

@@ -142,6 +142,7 @@ export default class StudentDocumentStore {
                 if (axios.isAxiosError(error) && error.response) {
                     store.commonStore.setAlert({ type: "error", message: error.message });
                     store.commonStore.setLoading(false)
+                    throw new Error(error.message);                    
                 }
             }
         }

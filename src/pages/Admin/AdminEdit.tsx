@@ -61,7 +61,7 @@ function AdminEdit({ handleModal }: { handleModal: (state: boolean) => void }) {
             <TextInput type='text' label='First Name' id='firstName' name='firstName' />
             <TextInput type='text' label='Last Name' id='lastName' name='lastName' />
           </div>
-          <TextInput type='text' label='Admin Name' id='userName' name='userName' disabled={user?.id !== ""} />
+          <TextInput type='text' label='User Name' id='userName' name='userName' disabled={user?.id !== ""} />
           <TextInput type='email' label='Email Addresss' id='email' name='email' disabled={user?.id !== ""} />
           <TextInput type='text' label='Phone Number' id='phoneNumber' name='phoneNumber' />
           {user?.id === "" && <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

@@ -153,7 +153,7 @@ export class UserStore {
 
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
-                store.commonStore.setAlert({ type: "error", message: error.message });
+                store.commonStore.setAlert({ type: "error", message: error.response.data });
                 store.commonStore.setLoading(false)
                 throw new Error(error.message);
 
@@ -178,7 +178,7 @@ export class UserStore {
             console.log(error);
 
             if (axios.isAxiosError(error) && error.response) {
-                store.commonStore.setAlert({ type: "error", message: error.message });
+                store.commonStore.setAlert({ type: "error", message: error.response.data });
                 console.log(error);
 
                 store.commonStore.setLoading(false)

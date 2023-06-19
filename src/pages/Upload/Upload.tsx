@@ -30,7 +30,8 @@ function UploadEdit() {
 
   const handleOnChange = (e: any) => {
 
-    upload_document(documentID, e).then(() => navigate(0))
+    upload_document(documentID, e)
+    // .then(() => navigate(0))
   }
 
   return (
