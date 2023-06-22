@@ -26,8 +26,8 @@ export default UserInfo
 
 export const VerticalUserInfo = ({ user, handleModal }: { user: IUser, handleModal: (state: boolean, id: string) => void }) => {
     return (
-        <div className="bg-white rounded-lg p-4 flex gap-3 items-center shadow-sm">
-            <h1 className="text-4xl font-extrabold bg-neutral text-white place-items-center uppercase inline-grid rounded-full h-20 w-20">
+        <div className="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm">
+            <h1 className="inline-grid w-20 h-20 text-4xl font-extrabold text-white uppercase rounded-full bg-neutral place-items-center">
                 {user?.firstName[0]}{user?.lastName[0]}
             </h1>
             <div className="grow">
@@ -37,9 +37,9 @@ export const VerticalUserInfo = ({ user, handleModal }: { user: IUser, handleMod
                 <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
                     <span className="capitalize">{user?.firstName}</span> <span className="capitalize">{user?.lastName}</span>
                 </h1>
-                <div>
+                {/* <div>
                     {user.roles?.map((x, index) => <div key={index} className="text-sm text-gray-500 capitalize">{x}</div>)}
-                </div>
+                </div> */}
             </div>
             <Button onClick={() => handleModal(true, user.id)} className="">View Profile</Button>
         </div>

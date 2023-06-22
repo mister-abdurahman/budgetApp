@@ -36,6 +36,8 @@ export default class BudgetStore {
   budget: IBudget = budget;
   budgets = new Map<number, IBudget>();
 
+  modal = false;
+
   constructor() {
     makeAutoObservable(this);
   }
