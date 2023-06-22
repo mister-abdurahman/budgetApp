@@ -4,8 +4,8 @@ import { IIncome } from "../stores/IncomeStore";
 import { IBudget } from "../stores/BudgetStore";
 import { IExpense } from "../stores/ExpenseStore";
 
-// axios.defaults.baseURL = "https://localhost:7151/api";
-axios.defaults.baseURL = "https://api-fgbmfi-clone.azurewebsites.net/api";
+axios.defaults.baseURL = "https://localhost:7265/api/v1";
+// axios.defaults.baseURL = "https://api-fgbmfi-clone.azurewebsites.net/api";
 
 const responseBody = (res: AxiosResponse) => res.data;
 

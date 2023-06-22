@@ -4,11 +4,11 @@ import { Form, Formik, FormikHelpers } from "formik";
 import { HiUserCircle } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import { MdPassword } from "react-icons/md";
-import { Logo } from "../Home/Home";
 import TextInput from "../../components/Form/TextInput";
 import * as Yup from "yup";
 import { IUser } from "../../data/stores/userStore";
 import { useStore } from "../../data/stores/store";
+// import { Logo } from "../Home/Home";
 
 interface IAuthProps {
   handleSetSignUp: (isSignUp: boolean) => void;
@@ -26,14 +26,8 @@ function Authentication({
 
   return (
     <>
-      {/* {cookie !== null ||
-        (signUp ? (
-          <SignUp handleSetSignUp={setSignUp} />
-        ) : (
-          <SignIn handleSetSignUp={setSignUp} />
-        ))}
-      {cookie === null || children} */}
-      {children}
+      {cookie !== null || (signUp ? <SignUp handleSetSignUp={setSignUp} /> : <SignIn handleSetSignUp={setSignUp} />)}
+      {cookie === null || children}
     </>
   );
 }
@@ -41,23 +35,33 @@ function Authentication({
 export default Authentication;
 
 export const SignIn = observer(({ handleSetSignUp }: IAuthProps) => {
-  //   const navigation = useNavigate();
+  const { authStore } = useStore()
+  const { handleUserSignIn } = authStore
+  const navigation = useNavigate();
 
   const [signIn, setSignIn] = useState({
     username: "",
     password: "",
   });
 
-  //   setSignIn({
-  //     username: "",
-  //     password: "",
-  //   });
+  const handleSignIn = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    handleUserSignIn(signIn).then(user => {
+      if (user) navigation('/dashboard');
+    });
+
+    setSignIn({
+      username: "",
+      password: ""
+    })
+  }
 
   return (
     <>
       <div className="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8 bg-[url('/src/assets/bg-image.jpg')]">
         <div className="max-w-lg mx-auto">
-          {/* <Logo className="mx-auto object-cover" /> */}
+          {/* <Logo className="object-cover mx-auto" /> */}
           <p className="max-w-md mx-auto mt-4 text-center text-gray-500">
             Welcome to <span className="font-bold">Money Smart Budget App</span>
           </p>
@@ -67,7 +71,9 @@ export const SignIn = observer(({ handleSetSignUp }: IAuthProps) => {
             <span>password: password</span>
           </p> */}
 
-          <form className="p-4 mt-6 mb-0 space-y-4 rounded-lg shadow-lg sm:p-6 lg:p-8 bg-white">
+          <form
+            onSubmit={handleSignIn}
+            className="p-4 mt-6 mb-0 space-y-4 bg-white rounded-lg shadow-lg sm:p-6 lg:p-8">
             <p className="text-lg font-medium text-center">
               Sign in to your account
             </p>
@@ -151,13 +157,7 @@ export const SignUp = observer(
       email: Yup.string()
         .email("use a valid email")
         .required("The email is required"),
-      studentNumber: Yup.string().required(
-        "The matriculation/registration number is required"
-      ),
       phoneNumber: Yup.string().required("The phone number is required"),
-      collegeCode: Yup.string().required("The college is required"),
-      departmentCode: Yup.string().required("The department is required"),
-      programCode: Yup.string().required("The program is required"),
     });
 
     return (

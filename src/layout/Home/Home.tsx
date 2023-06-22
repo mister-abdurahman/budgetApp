@@ -1,15 +1,16 @@
 import LogoImage from "../../assets/transparent-bg-image.png";
 import { BiCopyright } from "react-icons/bi";
 import { RiDashboardLine } from "react-icons/ri";
-import { FaUserGraduate } from "react-icons/fa";
+import { FaCoins, FaMoneyBill } from "react-icons/fa";
 import { useStore } from "../../data/stores/store";
-import { HiLogout, HiUserGroup } from "react-icons/hi";
+import { HiLogout } from "react-icons/hi";
 import Drawer from "../../components/Drawer/Drawer";
 import { Link, NavLink } from "react-router-dom";
 import Navbar, { NavbarCenterMenu, NavbarMenu } from "../Navbar/Navbar";
 import Dropdown from "../../components/Dropdown/Dropdown";
-import { BsGearWide } from "react-icons/bs";
+import { BsGearWide, BsWalletFill } from "react-icons/bs";
 import placeHolder from "../../assets/profile-image-placeholder.png";
+import { MdSavings } from "react-icons/md";
 // import UserInfo from "../../components/UserInfo/UserInfo";
 
 function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
@@ -21,31 +22,26 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
       name: "dashboard",
       url: "/dashboard",
       icon: <RiDashboardLine size={20} />,
-      roles: ["admin", "advisor", "student"],
     },
     {
-      name: "users",
-      url: "/users",
-      icon: <HiUserGroup size={20} />,
-      roles: ["admin"],
+      name: "budgets",
+      url: "/budgets",
+      icon: <BsWalletFill size={20} />,
     },
     {
-      name: "admins",
-      url: "/admins",
-      icon: <HiUserGroup size={20} />,
-      roles: ["admin"],
+      name: "savings",
+      url: "/savings",
+      icon: <MdSavings size={20} />,
     },
     {
-      name: "advisors",
-      url: "/advisors",
-      icon: <HiUserGroup size={20} />,
-      roles: ["admin"],
+      name: "incomes",
+      url: "/incomes",
+      icon: <FaMoneyBill size={20} />,
     },
     {
-      name: "students",
-      url: "/students",
-      icon: <FaUserGraduate size={20} />,
-      roles: ["admin", "advisor"],
+      name: "expenses",
+      url: "/expenses",
+      icon: <FaCoins size={20} />,
     },
   ];
 
@@ -123,8 +119,7 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
                   >
                     {x.icon}
                     <span className="text-sm font-medium capitalize ">
-                      {" "}
-                      {x.name}{" "}
+                      {" "} {x.name}{" "}
                     </span>
                   </NavLink>
                 );
