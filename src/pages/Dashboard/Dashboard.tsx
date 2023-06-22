@@ -2,9 +2,14 @@ import { useEffect, useState } from "react";
 import { useStore } from "../../data/stores/store";
 import UserInfo from "../../components/UserInfo/UserInfo";
 import { HiOutlineUsers } from "react-icons/hi";
-import Button from "../../components/Button";
-import { Link } from "react-router-dom";
 import MUITable, { Column } from "../../components/Table/Table";
+import Modal from "../../components/Modal/Modal";
+import ProfileDetail from "../Profile/ProfileDetail";
+import { BsWallet2, BsWalletFill } from "react-icons/bs";
+import { MdSavings, MdWallet } from "react-icons/md";
+import { FaMoneyBill } from "react-icons/fa";
+import LinearProgressWithLabel from "../../components/LinearProgress/LinearProgress";
+import List, { ListRow } from "../../components/List/List";
 
 function Dashboard() {
   const {
@@ -45,41 +50,68 @@ function Dashboard() {
     <div className='space-y-6'>
       <UserInfo type="vertical" handleModal={handleOpenModal} user={user} />
 
-      <div className="grid grid-cols-3 gap-5">
-        <div className="grid items-center overflow-hidden bg-white rounded-lg shadow-md">
+      <div className="flex flex-wrap grid-cols-3 gap-5">
+        <div className="grid items-center overflow-hidden bg-white rounded-lg shadow-md w-80">
           <div className="flex items-center gap-3 p-5 bg-white">
-            <div className="grid w-12 h-12 text-white rounded-lg bg-neutral place-items-center"><HiOutlineUsers size={20} /></div>
+            <div className="grid w-12 h-12 text-white rounded-lg bg-neutral place-items-center"><MdSavings size={20} /></div>
             <div className="grow">
-              <div className="text-sm text-gray-500">Total Students</div>
+              <div className="font-semibold text-gray-500 text-md">Savings</div>
+              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">100,000</h1>
             </div>
-            <Link to='/students'><Button>View All</Button></Link>
           </div>
         </div>
 
-        <div className="grid items-center overflow-hidden bg-white rounded-lg shadow-md">
+        <div className="grid items-center overflow-hidden bg-white rounded-lg shadow-md w-80">
           <div className="flex items-center gap-3 p-5">
-            <div className="grid w-12 h-12 text-white rounded-lg bg-success place-items-center"><HiOutlineUsers size={20} /></div>
+            <div className="grid w-12 h-12 text-white rounded-lg bg-success place-items-center"><MdSavings size={20} /></div>
             <div className="grow">
-              <div className="text-sm text-gray-500">Student with complete document</div>
+              <div className="font-semibold text-gray-500 text-md">Income</div>
+              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">200,000</h1>
+
             </div>
-            <Link to='/students'><Button>View All</Button></Link>
           </div>
         </div>
 
-        <div className="grid items-center overflow-hidden bg-white rounded-lg shadow-md">
+        <div className="grid items-center overflow-hidden bg-white rounded-lg shadow-md w-80">
           <div className="flex items-center gap-3 p-5 bg-white">
-            <div className="grid w-12 h-12 text-white rounded-lg bg-rose-600 place-items-center"><HiOutlineUsers size={20} /></div>
+            <div className="grid w-12 h-12 text-white rounded-lg bg-rose-600 place-items-center"><FaMoneyBill size={20} /></div>
             <div className="grow">
-              <div className="text-sm text-gray-500">Student with uncomplete <br /> document</div>
+              <div className="font-semibold text-gray-500 text-md">Expenses</div>
+              <div className="text-lg font-semibold text-gray-700"></div>
+              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">150,000</h1>
             </div>
-            <Link to='/students'><Button>View All</Button></Link>
           </div>
         </div>
-
       </div>
-      <MUITable columns={columns} rows={expenseArrays} />
 
-      {/* <Modal page={<Edit handleModal={handleCloseModal} title={"Profile"} isDetail={true} />} isOpen={isOpen} /> */}
+      <div className="p-2 px-4 text-white rounded-md bg-neutral-700 w-96">
+        <h1>Budget Left</h1>
+        <LinearProgressWithLabel value={30} />
+      </div>
+
+      <div className="space-y-3">
+        <div className="font-semibold text-md">Recent Budget</div>
+
+        <List className="w-96">
+          <ListRow className="font-semibold">
+            <BsWalletFill size={20} className='text-neutral' />
+            <div className="grow">
+              <h1>May - 2013</h1>
+            </div>
+            <h1>2000</h1>
+          </ListRow>
+          <ListRow className="font-semibold">
+            <BsWalletFill size={20} className='text-neutral' />
+            <div className="grow">
+              <h1>June - 2013</h1>
+            </div>
+            <h1>2000</h1>
+          </ListRow>
+        </List>
+
+
+        <Modal page={<ProfileDetail handleModal={handleCloseModal} title={"Profile"} />} isOpen={isOpen} />
+      </div>
     </div>
   )
 }

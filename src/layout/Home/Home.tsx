@@ -4,14 +4,15 @@ import { FaCoins, FaMoneyBill } from "react-icons/fa";
 import { useStore } from "../../data/stores/store";
 import { HiLogout } from "react-icons/hi";
 import Drawer from "../../components/Drawer/Drawer";
-import { Link, NavLink } from "react-router-dom";
+import {  Link, NavLink } from "react-router-dom";
 import Navbar, { NavbarCenterMenu, NavbarMenu } from "../Navbar/Navbar";
 import Dropdown from "../../components/Dropdown/Dropdown";
-import { BsGearWide, BsWallet2, BsWalletFill } from "react-icons/bs";
+import { BsGearWide, BsWalletFill } from "react-icons/bs";
 import { GiDart } from "react-icons/gi";
 import placeHolder from "../../assets/profile-image-placeholder.png";
 import { MdSavings } from "react-icons/md";
 import './style.css';
+import Button from "../../components/Button/Button";
 
 function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
   const { authStore } = useStore();
@@ -76,7 +77,7 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
           <Navbar className='col-span-12'>
             <HiLogout onClick={() => signOut()} className='text-3xl lg:hidden' />
             <NavbarCenterMenu>
-              {/* <button className='font-semibold btn btn-md btn-ghost'><Link to="/dashboard">Dashboard</Link></button> */}
+              <Button className='py-2 ml-4 font-semibold'><Link to="/dashboard">Create Budget</Link></Button>
             </NavbarCenterMenu>
             <NavbarMenu>
               {/* <MdNotifications size={25} /> */}
