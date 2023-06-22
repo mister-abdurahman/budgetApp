@@ -1,20 +1,15 @@
 import { useStore } from "../../data/stores/store";
-import { Form, Formik } from "formik";
-import { BiPlusCircle, BiSearch } from "react-icons/bi";
-import CheckboxGroup from "../../components/CheckboxGroup/CheckboxGroup";
 import { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import Modal from "../../components/Modal";
 import Button from "../../components/Button/Button";
-import { BsLink } from "react-icons/bs";
-import UserInfo from "../../components/UserInfo/UserInfo";
 import MUITable, { Column } from "../../components/Table/Table";
 import BudgetDetails from "./BudgetDetails";
 
-export function Budgets() {
+export function Budget() {
   const {
     authStore: { user },
-    budgetStore: { load_budgets, budgetArrays },
+    budgetStore: { load_budgets, budgetArrays, set_budget_modal, modal:bdModal },
   } = useStore();
   // const {
   //     advisorStore: { load_advisors, select_advisor_by_id, savingsArrays },
@@ -25,14 +20,12 @@ export function Budgets() {
     load_budgets();
   }, [load_budgets]);
 
-  const [isOpen, setIsOpen] = useState(false);
-
   const handleOpenModal = (state: boolean, id?: string) => {
-    setIsOpen(state);
+    set_budget_modal(state);
   };
 
   const handleCloseModal = (state: boolean) => {
-    setIsOpen(state);
+    set_budget_modal(state);
   };
 
   const columns: Column[] = [
@@ -44,7 +37,7 @@ export function Budgets() {
   return (
     <div className="space-y-3">
       {/* <UserInfo type="vertical" handleModal={handleOpenModal} user={user} /> */}
-      <div className="bg-white rounded-lg p-4 flex gap-3 items-center shadow-sm">
+      <div className="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm">
         <div className="grow">
           <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
             <span className="capitalize">Budget</span>{" "}
@@ -63,10 +56,10 @@ export function Budgets() {
             isDetail={true}
           />
         }
-        isOpen={isOpen}
+        isOpen={bdModal}
       />
     </div>
   );
 }
 
-export default observer(Budgets);
+export default observer(Budget);

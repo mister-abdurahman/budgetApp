@@ -52,6 +52,7 @@ export default class BudgetStore {
 
   load_budgets = async () => {
     try {
+      store.commonStore.setLoading(true);
       const budgets = await apiHandler.Budgets.list();
 
       budgets.forEach((budget: IBudget) => {
@@ -59,10 +60,13 @@ export default class BudgetStore {
           this.budgets.set(budget.id, budget);
         });
       });
+
+      store.commonStore.setLoading(false);
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         store.commonStore.setAlert({ type: "error", message: error.message });
         console.log(error.message);
+        store.commonStore.setLoading(false);
       }
     }
   };
@@ -93,4 +97,8 @@ export default class BudgetStore {
       console.log(error);
     }
   };
+
+  set_budget_modal = (state: boolean) => {
+    this.modal = state
+  }
 }

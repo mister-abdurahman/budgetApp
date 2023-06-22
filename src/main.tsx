@@ -4,10 +4,10 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { StoreContext, store } from "./data/stores/store.ts";
 import App from "./App.tsx";
 import Dashboard from "./pages/Dashboard/Dashboard.tsx";
-import { Savings } from "./pages/Savings/Savings.tsx";
-import { Expenses } from "./pages/Expenses/Expenses.tsx";
-import { Budgets } from "./pages/Budget/Budget.tsx";
-import { Incomes } from "./pages/Income/Income.tsx";
+import Savings from "./pages/Savings/Savings.tsx";
+import Expenses from "./pages/Expenses/Expenses.tsx";
+import Budget from "./pages/Budget/Budget.tsx";
+import Income from "./pages/Income/Income.tsx";
 
 const router = createBrowserRouter([
   {
@@ -32,11 +32,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/incomes",
-        element: <Incomes />,
+        element: <Income />,
       },
       {
         path: "/budgets",
-        element: <Budgets />,
+        element: <Budget />,
       },
     ],
   },
