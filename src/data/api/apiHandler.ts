@@ -1,6 +1,8 @@
 import axios, { AxiosResponse } from "axios";
 import { IUser } from "../stores/userStore";
 import { IIncome } from "../stores/IncomeStore";
+import { IBudget } from "../stores/BudgetStore";
+import { IExpense } from "../stores/ExpenseStore";
 
 // axios.defaults.baseURL = "https://localhost:7151/api";
 axios.defaults.baseURL = "https://api-fgbmfi-clone.azurewebsites.net/api";
@@ -44,9 +46,35 @@ const Incomes = {
   delete: (id: string) => request.delete<IIncome>(`/incomes/${id}`),
 };
 
+//////////////////
+///// Budgets //////
+//////////////////
+const Budgets = {
+  list: (param?: string) => request.get<IBudget[]>(`/budgets?${param || ""}`),
+  detail: (id: number) => request.get<IBudget>(`/budgets/${id}`),
+  create: (budget: IBudget) => request.post<IBudget>(`/budgets`, budget),
+  update: (id: string, budget: IBudget) =>
+    request.post<IBudget>(`/budgets/${id}`, budget),
+  delete: (id: string) => request.delete<IBudget>(`/budgets/${id}`),
+};
+
+//////////////////
+///// Expenses //////
+//////////////////
+const Expenses = {
+  list: (param?: string) => request.get<IExpense[]>(`/expenses?${param || ""}`),
+  detail: (id: number) => request.get<IExpense>(`/expenses/${id}`),
+  create: (expense: IExpense) => request.post<IExpense>(`/expenses`, expense),
+  update: (id: string, expense: IExpense) =>
+    request.post<IExpense>(`/expenses/${id}`, expense),
+  delete: (id: string) => request.delete<IExpense>(`/expenses/${id}`),
+};
+
 const apiHandler = {
   Users,
   Incomes,
+  Budgets,
+  Expenses,
 };
 
 export default apiHandler;
