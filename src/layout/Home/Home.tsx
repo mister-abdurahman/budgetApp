@@ -104,7 +104,7 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
               </Dropdown>
             </NavbarMenu>
           </Navbar>
-          <SideNav className="sticky self-start hidden bg-neutral lg:block">
+          {/* <SideNav className="sticky self-start hidden bg-neutral lg:block">
             <div className="space-y-2 rounded-xl">
               {sideMenu.map((x, index) => {
                 const menu = (
@@ -126,7 +126,7 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
                 return menu;
               })}
             </div>
-          </SideNav>
+          </SideNav> */}
           <main className="p-6 overflow-y-auto bg-gray-100 ">{children}</main>
           <Footer />
         </div>
@@ -214,12 +214,10 @@ export const Footer = () => {
   return (
     <footer className="sticky inset-x-0 bottom-0 grid col-span-12 p-1 text-white border-t border-gray-100 bg-neutral place-items-center">
       <p className="hidden text-xs text-left ms-2 sm:grid sm:place-items-center">
-        <strong className="block font-medium">
-          Designed By Awogo Blessing
-        </strong>
+        <strong className="block font-medium">Designed By Olaoluwa</strong>
         <span className="flex items-end gap-1 text-base-100">
           <BiCopyright />
-          copyright 2023 - {new Date().getFullYear()}
+          copyright 2023
         </span>
       </p>
     </footer>
