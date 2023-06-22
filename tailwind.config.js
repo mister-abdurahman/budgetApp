@@ -12,7 +12,7 @@ export default {
     themes: [
       {
         mytheme: {
-          neutral: "#36D399",
+          neutral: "#ac6cc7",
           "base-100": "#FFFFFF",
           success: "#36D399",
         },
