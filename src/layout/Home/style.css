@@ -40,19 +40,15 @@
 
 header {
   grid-area: hd;
-  /* background-color: red */
 }
 
 aside {
   grid-area: sd;
-  /* background-color: violet */
 }
 main {
   grid-area: main;
-  /* background-color: green */
 }
 
 footer {
   grid-area: ft;
-  /* background-color: yellow */
 }

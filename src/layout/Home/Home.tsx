@@ -1,4 +1,3 @@
-import LogoImage from "../../assets/transparent-bg-image.png";
 import { BiCopyright } from "react-icons/bi";
 import { RiDashboardLine } from "react-icons/ri";
 import { FaCoins, FaMoneyBill } from "react-icons/fa";
@@ -8,10 +7,11 @@ import Drawer from "../../components/Drawer/Drawer";
 import { Link, NavLink } from "react-router-dom";
 import Navbar, { NavbarCenterMenu, NavbarMenu } from "../Navbar/Navbar";
 import Dropdown from "../../components/Dropdown/Dropdown";
-import { BsGearWide, BsWalletFill } from "react-icons/bs";
+import { BsGearWide, BsWallet2, BsWalletFill } from "react-icons/bs";
+import { GiDart } from "react-icons/gi";
 import placeHolder from "../../assets/profile-image-placeholder.png";
 import { MdSavings } from "react-icons/md";
-// import UserInfo from "../../components/UserInfo/UserInfo";
+import './style.css';
 
 function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
   const { authStore } = useStore();
@@ -51,7 +51,7 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
         sideMenu={
           <>
             {sideMenu.map((x, index) => {
-              const menu = (
+              return (
                 <NavLink
                   key={index}
                   to={x.url}
@@ -73,16 +73,10 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
         }
       >
         <div className="w-screen h-screen cs-grid">
-          <Navbar className="col-span-12">
-            <Logo />
-            <HiLogout
-              onClick={() => signOut()}
-              className="text-3xl lg:hidden"
-            />
+          <Navbar className='col-span-12'>
+            <HiLogout onClick={() => signOut()} className='text-3xl lg:hidden' />
             <NavbarCenterMenu>
-              <button className="font-semibold btn btn-md btn-ghost">
-                <Link to="/dashboard">Dashboard</Link>
-              </button>
+              {/* <button className='font-semibold btn btn-md btn-ghost'><Link to="/dashboard">Dashboard</Link></button> */}
             </NavbarCenterMenu>
             <NavbarMenu>
               {/* <MdNotifications size={25} /> */}
@@ -90,44 +84,37 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
                 dropDownStyle="dropdown-end"
                 icon={<BsGearWide size={25} />}
                 isButton={false}
-              ></Dropdown>
+              >
+              </Dropdown>
               <Dropdown
                 dropDownStyle="dropdown-end"
                 icon={<UserInfo />}
                 isButton={false}
               >
-                <li onClick={() => signOut()}>
-                  <a>
-                    <HiLogout /> Sign out
-                  </a>
-                </li>
+                <li onClick={() => signOut()}><a><HiLogout /> Sign out</a></li>
               </Dropdown>
             </NavbarMenu>
           </Navbar>
-          {/* <SideNav className="sticky self-start hidden bg-neutral lg:block">
-            <div className="space-y-2 rounded-xl">
-              {sideMenu.map((x, index) => {
-                const menu = (
-                  <NavLink
-                    key={index}
-                    to={x.url}
-                    className={({ isActive }) =>
-                      isActive
-                        ? "flex items-center gap-2 px-4 py-2 text-neutral bg-white"
-                        : "flex items-center gap-2 px-4 py-2 text-white hover:bg-gray-100 hover:text-gray-700"
-                    }
-                  >
-                    {x.icon}
-                    <span className="text-sm font-medium capitalize ">
-                      {" "} {x.name}{" "}
-                    </span>
-                  </NavLink>
-                );
-                return menu;
-              })}
-            </div>
-          </SideNav> */}
-          <main className="p-6 overflow-y-auto bg-gray-100 ">{children}</main>
+          <SideNav className='sticky self-start hidden space-y-2 bg-neutral-700 lg:block'>
+            <Logo />
+            {sideMenu.map((x, index) => {
+                const menu = <NavLink
+                  key={index}
+                  to={x.url}
+                  className={({ isActive }) =>
+                    isActive ? "flex items-center text-xl gap-6 px-4 py-3 text-neutral bg-white" : "flex items-center gap-6 px-4 py-3 text-white hover:bg-gray-100 hover:text-gray-700"
+                  }
+                >
+                  {x.icon}
+                  <span className="text-sm font-medium capitalize "> {x.name} </span>
+                </NavLink>
+
+                return menu
+              })}              
+          </SideNav>
+          <main className='h-full p-6 overflow-y-auto bg-gray-100'>
+            {children}
+          </main>
           <Footer />
         </div>
       </Drawer>
@@ -140,9 +127,9 @@ export const Logo = (props: any) => {
   return (
     <div
       {...props}
-      className={`flex items-center justify-center ${props.className}`}
+      className={`flex items-center justify-center gap-2 font-bold stroke-2 text-white m-4 p-4 mb-10 ${props.className}`}
     >
-      <img className="h-10" src={LogoImage} />
+      <GiDart size={30} /> <span className="text-lg text-white">MoneySmart</span> 
     </div>
   );
 };
@@ -158,7 +145,7 @@ export const SideNav = (props: ISideNav) => {
       className={`flex h-full flex-col justify-between border-e ${className}`}
     >
       <div className="">
-        <nav aria-label="Main Nav" className="flex flex-col mt-6 space-y-1">
+        <nav aria-label="Main Nav" className="flex flex-col space-y-1">
           {children}
         </nav>
       </div>
@@ -207,12 +194,12 @@ export const UserInfo = () => {
 };
 
 interface ISideNav extends React.HTMLAttributes<HTMLDivElement> {
-  children?: JSX.Element[] | JSX.Element;
+  children?: any;
 }
 
 export const Footer = () => {
   return (
-    <footer className="sticky inset-x-0 bottom-0 grid col-span-12 p-1 text-white border-t border-gray-100 bg-neutral place-items-center">
+    <footer className="sticky inset-x-0 bottom-0 grid col-span-12 p-1 text-white border-t border-gray-100 bg-neutral-700 place-items-center h-fit">
       <p className="hidden text-xs text-left ms-2 sm:grid sm:place-items-center">
         <strong className="block font-medium">Designed By Olaoluwa</strong>
         <span className="flex items-end gap-1 text-base-100">
