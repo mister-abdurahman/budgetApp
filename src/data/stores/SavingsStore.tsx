@@ -3,14 +3,14 @@ import apiHandler from "../api/apiHandler";
 import axios from "axios";
 import { store } from "./store";
 
-export interface IBudget {
+export interface ISavings {
   id: number;
   description: string;
   amount: number;
   date: string;
 }
 
-const dummyBudget = [
+const dummySavings = [
   {
     id: 1,
     description: "my money",
@@ -25,36 +25,29 @@ const dummyBudget = [
   },
 ];
 
-const budget: IBudget = {
-  id: 0,
-  description: "",
-  amount: 0,
-  date: "",
-};
-
-export default class BudgetStore {
-  budget: IBudget = budget;
-  budgets = new Map<number, IBudget>();
+export default class SavingsStore {
+  saving: ISavings | null = null;
+  savings = new Map<number, ISavings>();
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  get budgetArrays() {
+  get expenseArrays() {
     if (store.commonStore.offline) {
-      return Array.from(dummyBudget.values());
+      return Array.from(dummySavings.values());
     } else {
-      return Array.from(this.budgets.values());
+      return Array.from(this.savings.values());
     }
   }
 
-  load_budgets = async () => {
+  load_savings = async () => {
     try {
-      const budgets = await apiHandler.Budgets.list();
+      const savings = await apiHandler.Savings.list();
 
-      budgets.forEach((budget: IBudget) => {
+      savings.forEach((saving: ISavings) => {
         runInAction(() => {
-          this.budgets.set(budget.id, budget);
+          this.savings.set(saving.id, saving);
         });
       });
     } catch (error) {
@@ -65,28 +58,28 @@ export default class BudgetStore {
     }
   };
 
-  get_budget_by_id = async (id: number) => {
+  get_expense_by_id = async (id: number) => {
     if (store.commonStore.offline) {
-      this.budget = dummyBudget.find((budget) => budget.id === id) || budget;
+      this.saving = dummySavings.find((saving) => saving.id === id) || null;
     }
 
     try {
-      this.budget = await apiHandler.Incomes.detail(id);
-      return this.budget;
+      this.saving = await apiHandler.Savings.detail(id);
+      return this.saving;
     } catch (error) {
       console.log(error);
     }
   };
 
-  create_budget = async (budget: IBudget) => {
+  create_expense = async (saving: ISavings) => {
     try {
-      budget = await apiHandler.Budgets.create(budget);
+      saving = await apiHandler.Savings.create(saving);
 
       runInAction(() => {
-        this.budgets.set(budget.id, budget);
+        this.savings.set(saving.id, saving);
       });
 
-      return this.budget;
+      return this.saving;
     } catch (error) {
       console.log(error);
     }

@@ -3,8 +3,9 @@ import { UserStore } from "./userStore";
 import CommonStore from "./commonStore";
 import AuthStore from "./authStore";
 import BudgetStore from "./budgetStore";
-import ExpenseStore from "./expenseStore";
+import ExpenseStore from "./ExpenseStore";
 import IncomeStore from "./IncomeStore";
+import SavingsStore from "./SavingsStore";
 
 interface IStore {
   commonStore: CommonStore;
@@ -13,6 +14,7 @@ interface IStore {
   budgetStore: BudgetStore;
   expenseStore: ExpenseStore;
   incomeStore: IncomeStore;
+  savingsStore: SavingsStore;
 }
 
 export const store: IStore = {
@@ -22,6 +24,7 @@ export const store: IStore = {
   budgetStore: new BudgetStore(),
   expenseStore: new ExpenseStore(),
   incomeStore: new IncomeStore(),
+  savingsStore: new SavingsStore(),
 };
 
 export const StoreContext = createContext(store);

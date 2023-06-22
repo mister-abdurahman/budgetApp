@@ -1,11 +1,12 @@
 import axios, { AxiosResponse } from "axios";
 import { IUser } from "../stores/userStore";
 import { IIncome } from "../stores/IncomeStore";
+import { IExpense } from "../stores/ExpenseStore";
+import { ISavings } from "../stores/SavingsStore";
 import { IBudget } from "../stores/budgetStore";
-import { IExpense } from "../stores/expenseStore";
 
-axios.defaults.baseURL = "https://localhost:7265/api/v1";
-// axios.defaults.baseURL = "https://api-fgbmfi-clone.azurewebsites.net/api";
+// axios.defaults.baseURL = "https://localhost:7265/api/v1";
+axios.defaults.baseURL = "https://api-fgbmfi-clone.azurewebsites.net/api/v1";
 
 const responseBody = (res: AxiosResponse) => res.data;
 
@@ -70,11 +71,24 @@ const Expenses = {
   delete: (id: string) => request.delete<IExpense>(`/expenses/${id}`),
 };
 
+//////////////////
+///// Savings //////
+//////////////////
+const Savings = {
+  list: (param?: string) => request.get<ISavings[]>(`/savings?${param || ""}`),
+  detail: (id: number) => request.get<ISavings>(`/savings/${id}`),
+  create: (saving: ISavings) => request.post<ISavings>(`/savings`, saving),
+  update: (id: string, saving: ISavings) =>
+    request.post<ISavings>(`/savings/${id}`, saving),
+  delete: (id: string) => request.delete<ISavings>(`/savings/${id}`),
+};
+
 const apiHandler = {
   Users,
   Incomes,
   Budgets,
   Expenses,
+  Savings,
 };
 
 export default apiHandler;

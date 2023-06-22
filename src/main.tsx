@@ -4,6 +4,10 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { StoreContext, store } from "./data/stores/store.ts";
 import App from "./App.tsx";
 import Dashboard from "./pages/Dashboard/Dashboard.tsx";
+import { Savings } from "./pages/Savings/Savings.tsx";
+import { Expenses } from "./pages/Expenses/Expenses.tsx";
+import { Budgets } from "./pages/Budget/Budget.tsx";
+import { Incomes } from "./pages/Income/Income.tsx";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +24,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/savings",
-        element: <div>savings</div>,
+        element: <Savings />,
+      },
+      {
+        path: "/expenses",
+        element: <Expenses />,
+      },
+      {
+        path: "/incomes",
+        element: <Incomes />,
+      },
+      {
+        path: "/budgets",
+        element: <Budgets />,
       },
     ],
   },

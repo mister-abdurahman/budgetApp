@@ -1,25 +1,20 @@
-import { HiSortDescending } from "react-icons/hi";
-import Avatar from "../../components/Avatar";
-import Dropdown from "../../components/Dropdown";
-import List, { ListRow } from "../../components/List/List";
 import { useStore } from "../../data/stores/store";
-import TextInput from "../../components/Form/TextInput";
 import { Form, Formik } from "formik";
 import { BiPlusCircle, BiSearch } from "react-icons/bi";
 import CheckboxGroup from "../../components/CheckboxGroup/CheckboxGroup";
 import { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
-// import AdvisorEdit from "./AdvisorEdit";
 import Modal from "../../components/Modal";
 import Button from "../../components/Button/Button";
 import { BsLink } from "react-icons/bs";
 import UserInfo from "../../components/UserInfo/UserInfo";
 import MUITable, { Column } from "../../components/Table/Table";
+import BudgetDetails from "./BudgetDetails";
 
-export function Savings() {
+export function Budgets() {
   const {
     authStore: { user },
-    savingsStore: { load_savings, savings },
+    budgetStore: { load_budgets, budgetArrays },
   } = useStore();
   // const {
   //     advisorStore: { load_advisors, select_advisor_by_id, savingsArrays },
@@ -27,14 +22,8 @@ export function Savings() {
   // } = useStore()
 
   useEffect(() => {
-    load_savings();
-  }, [user]);
-
-  const budgetArray = [
-    { id: "1", name: "Ileya savings", date: "2-12-2020" },
-    { id: "2", name: "New House", date: "2-12-2020" },
-    { id: "3", name: "Wedding Plan", date: "2-12-2020" },
-  ];
+    load_budgets();
+  }, [load_budgets]);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -53,12 +42,31 @@ export function Savings() {
   ];
 
   return (
-    <>
-      <UserInfo type="vertical" handleModal={handleOpenModal} user={user} />
-      <br />
+    <div className="space-y-3">
+      {/* <UserInfo type="vertical" handleModal={handleOpenModal} user={user} /> */}
+      <div className="bg-white rounded-lg p-4 flex gap-3 items-center shadow-sm">
+        <div className="grow">
+          <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+            <span className="capitalize">Budget</span>{" "}
+          </h1>
+        </div>
+        <Button onClick={() => handleOpenModal(true, user.id)} className="">
+          Create Budget
+        </Button>
+      </div>
       <MUITable columns={columns} rows={budgetArrays} />
-    </>
+      <Modal
+        page={
+          <BudgetDetails
+            handleModal={handleCloseModal}
+            title={"New Budget"}
+            isDetail={true}
+          />
+        }
+        isOpen={isOpen}
+      />
+    </div>
   );
 }
 
-export default observer(Savings);
+export default observer(Budgets);

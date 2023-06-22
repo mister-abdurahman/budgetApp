@@ -10,7 +10,7 @@ interface IAlert {
 //Mobx
 export default class CommonStore {
   alerts = new Map<string, IAlert>();
-  offline = true;
+  offline = false;
   loading = false;
 
   constructor() {
