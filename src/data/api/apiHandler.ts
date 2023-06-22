@@ -1,8 +1,8 @@
 import axios, { AxiosResponse } from "axios";
 import { IUser } from "../stores/userStore";
 import { IIncome } from "../stores/IncomeStore";
-import { IBudget } from "../stores/BudgetStore";
-import { IExpense } from "../stores/ExpenseStore";
+import { IBudget } from "../stores/budgetStore";
+import { IExpense } from "../stores/expenseStore";
 
 axios.defaults.baseURL = "https://localhost:7265/api/v1";
 // axios.defaults.baseURL = "https://api-fgbmfi-clone.azurewebsites.net/api";

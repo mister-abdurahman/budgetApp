@@ -4,14 +4,16 @@ import UserInfo from "../../components/UserInfo/UserInfo";
 import { HiOutlineUsers } from "react-icons/hi";
 import Button from "../../components/Button";
 import { Link } from "react-router-dom";
+import MUITable, { Column } from "../../components/Table/Table";
 
 function Dashboard() {
   const {
     authStore: { user },
-
+    expenseStore: { load_expenses, expenseArrays }
   } = useStore()
 
   useEffect(() => {
+    load_expenses();
     console.log(user);
   }, [user])
 
@@ -25,6 +27,20 @@ function Dashboard() {
   const handleCloseModal = (state: boolean) => {
     setIsOpen(state);
   }
+
+  const columns: Column[] = [
+    { id: 'description', label: 'Description', minWidth: 170 },
+    { id: 'amount', label: 'Amount', minWidth: 170 },
+    { id: 'budgetId', label: 'Budget Id', minWidth: 170 },
+    // {
+    //   id: 'density',
+    //   label: 'Density',
+    //   minWidth: 170,
+    //   align: 'right',
+    //   format: (value: number) => value.toFixed(2),
+    // },
+  ];
+
   return (
     <div className='space-y-6'>
       <UserInfo type="vertical" handleModal={handleOpenModal} user={user} />
@@ -61,7 +77,7 @@ function Dashboard() {
         </div>
 
       </div>
-
+      <MUITable columns={columns} rows={expenseArrays} />
 
       {/* <Modal page={<Edit handleModal={handleCloseModal} title={"Profile"} isDetail={true} />} isOpen={isOpen} /> */}
     </div>
