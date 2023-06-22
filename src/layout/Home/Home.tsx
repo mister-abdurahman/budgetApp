@@ -128,7 +128,7 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
                     </span>
                   </NavLink>
                 );
-                return null;
+                return menu;
               })}
             </div>
           </SideNav>

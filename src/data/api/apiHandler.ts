@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { IUser } from "../stores/userStore";
+import { IIncome } from "../stores/IncomeStore";
 
 // axios.defaults.baseURL = "https://localhost:7151/api";
 axios.defaults.baseURL = "https://api-fgbmfi-clone.azurewebsites.net/api";
@@ -31,8 +32,21 @@ const Users = {
     ),
 };
 
+//////////////////
+///// Incomes //////
+//////////////////
+const Incomes = {
+  list: (param?: string) => request.get<IIncome[]>(`/incomes?${param || ""}`),
+  detail: (id: number) => request.get<IIncome>(`/incomes/${id}`),
+  create: (income: IIncome) => request.post<IIncome>(`/incomes`, income),
+  update: (id: string, income: IIncome) =>
+    request.post<IIncome>(`/incomes/${id}`, income),
+  delete: (id: string) => request.delete<IIncome>(`/incomes/${id}`),
+};
+
 const apiHandler = {
   Users,
+  Incomes,
 };
 
 export default apiHandler;
