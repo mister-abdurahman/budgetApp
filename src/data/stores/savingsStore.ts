@@ -25,15 +25,22 @@ const dummySavings = [
   },
 ];
 
+const saving: ISavings = {
+  id: 0,
+  description: "",
+  amount: 0,
+  date: "",
+};
+
 export default class SavingsStore {
-  saving: ISavings | null = null;
+  saving: ISavings = saving;
   savings = new Map<number, ISavings>();
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  get expenseArrays() {
+  get savingsArrays() {
     if (store.commonStore.offline) {
       return Array.from(dummySavings.values());
     } else {
@@ -58,9 +65,9 @@ export default class SavingsStore {
     }
   };
 
-  get_expense_by_id = async (id: number) => {
+  get_savings_by_id = async (id: number) => {
     if (store.commonStore.offline) {
-      this.saving = dummySavings.find((saving) => saving.id === id) || null;
+      this.saving = dummySavings.find((saving) => saving.id === id) || saving;
     }
 
     try {
@@ -71,7 +78,7 @@ export default class SavingsStore {
     }
   };
 
-  create_expense = async (saving: ISavings) => {
+  create_savings = async (saving: ISavings) => {
     try {
       saving = await apiHandler.Savings.create(saving);
 

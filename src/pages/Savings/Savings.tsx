@@ -15,11 +15,12 @@ import Button from "../../components/Button/Button";
 import { BsLink } from "react-icons/bs";
 import UserInfo from "../../components/UserInfo/UserInfo";
 import MUITable, { Column } from "../../components/Table/Table";
+import SavingsDetails from "./SavingsDetails";
 
 export function Savings() {
   const {
     authStore: { user },
-    savingsStore: { load_savings, savings },
+    savingsStore: { load_savings, savings, savingsArrays },
   } = useStore();
   // const {
   //     advisorStore: { load_advisors, select_advisor_by_id, savingsArrays },
@@ -28,22 +29,18 @@ export function Savings() {
 
   useEffect(() => {
     load_savings();
-  }, [user]);
-
-  const budgetArray = [
-    { id: "1", name: "Ileya savings", date: "2-12-2020" },
-    { id: "2", name: "New House", date: "2-12-2020" },
-    { id: "3", name: "Wedding Plan", date: "2-12-2020" },
-  ];
+  }, [load_savings]);
 
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpenModal = (state: boolean, id?: string) => {
-    setIsOpen(state);
+    // set_budget_modal(state);
+    setIsOpen(true);
   };
 
   const handleCloseModal = (state: boolean) => {
-    setIsOpen(state);
+    // set_budget_modal(state);
+    setIsOpen(false);
   };
 
   const columns: Column[] = [
@@ -53,11 +50,30 @@ export function Savings() {
   ];
 
   return (
-    <>
-      <UserInfo type="vertical" handleModal={handleOpenModal} user={user} />
-      <br />
-      <MUITable columns={columns} rows={budgetArrays} />
-    </>
+    <div className="space-y-3">
+      {/* <UserInfo type="vertical" handleModal={handleOpenModal} user={user} /> */}
+      <div className="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm">
+        <div className="grow">
+          <h1 className="text-2xl font-bold text-gray-900 sm:text-2xl">
+            <span className="capitalize">Savings</span>{" "}
+          </h1>
+        </div>
+        <Button onClick={() => handleOpenModal(true, user.id)} className="">
+          Create Savings
+        </Button>
+      </div>
+      <MUITable columns={columns} rows={savingsArrays} />
+      <Modal
+        page={
+          <SavingsDetails
+            handleModal={handleCloseModal}
+            title={"New Savings"}
+            isDetail={true}
+          />
+        }
+        isOpen={isOpen}
+      />
+    </div>
   );
 }
 
