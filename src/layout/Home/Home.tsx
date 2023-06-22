@@ -15,7 +15,10 @@ import './style.css';
 import Button from "../../components/Button/Button";
 
 function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
-  const { authStore } = useStore();
+  const { 
+    authStore,
+    budgetStore: {modal, set_budget_modal},
+   } = useStore();
   const { signOut } = authStore;
 
   const sideMenu = [
@@ -77,7 +80,7 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
           <Navbar className='col-span-12'>
             <HiLogout onClick={() => signOut()} className='text-3xl lg:hidden' />
             <NavbarCenterMenu>
-              <Button className='py-2 ml-4 font-semibold'><Link to="/dashboard">Create Budget</Link></Button>
+              <Button className='py-2 ml-4 font-semibold' onClick={() => set_budget_modal(true)}>Create Budget</Button>
             </NavbarCenterMenu>
             <NavbarMenu>
               {/* <MdNotifications size={25} /> */}

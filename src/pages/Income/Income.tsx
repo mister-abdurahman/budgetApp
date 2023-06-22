@@ -6,7 +6,6 @@ import { useStore } from "../../data/stores/store";
 import TextInput from "../../components/Form/TextInput";
 import { Form, Formik } from "formik";
 import { BiPlusCircle, BiSearch } from "react-icons/bi";
-import CheckboxGroup from "../../components/CheckboxGroup/CheckboxGroup";
 import { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 // import AdvisorEdit from "./AdvisorEdit";
@@ -14,7 +13,7 @@ import Modal from "../../components/Modal";
 import Button from "../../components/Button/Button";
 import { BsLink } from "react-icons/bs";
 
-export function Incomes() {
+export function Income() {
   // const {
   //     advisorStore: { load_advisors, select_advisor_by_id, savingsArrays },
   //     levelStore: { load_levels, levelArrays },
@@ -122,4 +121,4 @@ export function Incomes() {
   );
 }
 
-export default observer(Incomes);
+export default observer(Income);
