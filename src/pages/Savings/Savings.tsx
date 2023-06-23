@@ -21,6 +21,7 @@ export function Savings() {
   const {
     authStore: { user },
     savingsStore: { load_savings, savings, savingsArrays },
+    budgetStore: { load_budgets, budgetArrays },
   } = useStore();
   // const {
   //     advisorStore: { load_advisors, select_advisor_by_id, savingsArrays },
@@ -29,6 +30,7 @@ export function Savings() {
 
   useEffect(() => {
     load_savings();
+    load_budgets();
   }, [load_savings]);
 
   const [isOpen, setIsOpen] = useState(false);
