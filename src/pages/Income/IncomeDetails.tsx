@@ -73,7 +73,7 @@ function IncomeEdit({
             ✕
           </label>
           <h1 className="text-xl font-bold mb-4">
-            {title || (income.id !== 0 ? "Update Savings" : "Create Savings")}
+            {title || (income.id !== 0 ? "Update Income" : "Create Income")}
           </h1>
           <TextInput
             type="text"

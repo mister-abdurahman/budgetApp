@@ -52,15 +52,18 @@ export default class IncomeStore {
 
   load_incomes = async () => {
     try {
+      store.commonStore.setLoading(true);
       const incomes = await apiHandler.Incomes.list();
 
       incomes.forEach((income: IIncome) => {
         runInAction(() => {
           this.incomes.set(income.id, income);
         });
+        store.commonStore.setLoading(false);
       });
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
+        store.commonStore.setLoading(false);
         store.commonStore.setAlert({ type: "error", message: error.message });
         console.log(error.message);
       }
@@ -73,23 +76,28 @@ export default class IncomeStore {
     }
 
     try {
+      store.commonStore.setLoading(true);
       this.income = await apiHandler.Incomes.detail(id);
       return this.income;
     } catch (error) {
+      store.commonStore.setLoading(false);
       console.log(error);
     }
   };
 
   create_income = async (income: IIncome) => {
     try {
+      store.commonStore.setLoading(true);
       income = await apiHandler.Incomes.create(income);
 
       runInAction(() => {
         this.incomes.set(income.id, income);
       });
+      store.commonStore.setLoading(false);
 
       return this.income;
     } catch (error) {
+      store.commonStore.setLoading(false);
       console.log(error);
     }
   };
