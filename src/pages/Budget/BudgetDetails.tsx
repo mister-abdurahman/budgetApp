@@ -1,5 +1,5 @@
-import { useStore } from "../../data/stores/store"
-import { observer } from "mobx-react-lite"
+import { useStore } from "../../data/stores/store";
+import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
 import { Form, Formik, FormikHelpers } from "formik";
 import Select from "../../components/Form/Select";
@@ -15,8 +15,15 @@ import { ISavings } from "../../data/stores/SavingsStore";
 import { IExpense } from "../../data/stores/ExpenseStore";
 import Button from "../../components/Button";
 
-
-function BudgetEdit({ handleModal, title, isDetail }: { handleModal: (state: boolean) => void, title?: string, isDetail?: boolean }) {
+function BudgetEdit({
+  handleModal,
+  title,
+  isDetail,
+}: {
+  handleModal: (state: boolean) => void;
+  title?: string;
+  isDetail?: boolean;
+}) {
   const {
     budgetStore: { budget, create_budget, incomes, expenses, savings, add_income, income, expense, saving, set_income },
   } = useStore()
@@ -44,35 +51,21 @@ function BudgetEdit({ handleModal, title, isDetail }: { handleModal: (state: boo
 
   const validation = () => {
     const create = {
-      username: Yup.string().required('first name is required'),
-      password: Yup.string().required('first name is required'),
-      confirmPassword: Yup.string().oneOf([Yup.ref('password')], 'Passwords must match'),
-      firstName: Yup.string().required('first name is required'),
-      lastName: Yup.string().required('lastname is required'),
-      email: Yup.string().email("use a valid email").required('The email is required'),
-      phoneNumber: Yup.string().required('phone number is required'),
-      collegeCode: Yup.string().required('college is required'),
-      departmentCode: Yup.string().required('department is required'),
-      programCode: Yup.string().required('program is required'),
-      levelCode: Yup.string().required('level is required'),
-    }
+      description: Yup.string().required("This field is required"),
+      amount: Yup.number().required("This field is required"),
+      date: Yup.date().required("This field is required"),
+    };
 
     const update = {
-      username: Yup.string().required('first name is required'),
-      firstName: Yup.string().required('first name is required'),
-      lastName: Yup.string().required('lastname is required'),
-      email: Yup.string().email("use a valid email").required('The email is required'),
-      phoneNumber: Yup.string().required('phone number is required'),
-      collegeCode: Yup.string().required('college is required'),
-      departmentCode: Yup.string().required('department is required'),
-      programCode: Yup.string().required('program is required'),
-      levelCode: Yup.string().required('level is required'),
-    }
+      description: Yup.string().required("This field is required"),
+      amount: Yup.number().required("This field is required"),
+      date: Yup.date().required("This field is required"),
+    };
 
-    return budget.id === 0 ? update : create
-  }
+    return budget.id === 0 ? update : create;
+  };
 
-  const validationScheme = Yup.object(validation())
+  const validationScheme = Yup.object(validation());
 
   return (
     <>
@@ -84,8 +77,8 @@ function BudgetEdit({ handleModal, title, isDetail }: { handleModal: (state: boo
           values: IBudget,
           { setSubmitting }: FormikHelpers<IBudget>
         ) => {
-          create_budget(values).then(() => navigation(0));
           console.log(values);
+          create_budget(values).then(() => navigation(0));
           setSubmitting(false);
         }}
       >
@@ -203,7 +196,7 @@ function BudgetEdit({ handleModal, title, isDetail }: { handleModal: (state: boo
         </Form>
       </Formik>
     </>
-  )
+  );
 }
 
-export default observer(BudgetEdit)
+export default observer(BudgetEdit);

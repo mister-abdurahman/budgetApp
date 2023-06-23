@@ -53,7 +53,7 @@ export function Budget() {
       {/* <UserInfo type="vertical" handleModal={handleOpenModal} user={user} /> */}
       <div className="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm">
         <div className="grow">
-          <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+          <h1 className="text-2xl font-bold text-gray-900 sm:text-2xl">
             <span className="capitalize">Budget</span>{" "}
           </h1>
         </div>
