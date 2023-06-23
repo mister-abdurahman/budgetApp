@@ -7,6 +7,7 @@ import TextInput from "../../components/Form/TextInput";
 import { IBudget } from "../../data/stores/budgetStore";
 import * as Yup from "yup";
 import { Expenses } from "../Expenses/Expenses";
+import { useEffect } from "react";
 
 function SavingsEdit({
   handleModal,
@@ -19,8 +20,12 @@ function SavingsEdit({
 }) {
   const {
     savingsStore: { saving, create_savings },
-    budgetStore: { budgetArrays },
+    budgetStore: { load_budgets, budgetArrays },
   } = useStore();
+
+  // useEffect(() => {
+  //   load_budgets();
+  // }, [load_budgets]);
 
   const navigation = useNavigate();
 
@@ -86,12 +91,12 @@ function SavingsEdit({
                 name="amount"
               />
               <Select
-                id="description"
-                name="description"
+                id="budgetId"
+                name="budgetId"
                 options={budgetArrays}
                 optionSetter={(data) => data.description}
                 valueSetter={(data) => data.id}
-                label="Description"
+                label="Budget"
                 disabled={saving.id !== 0}
               />
               <TextInput type="date" label="Date" id="date" name="date" />

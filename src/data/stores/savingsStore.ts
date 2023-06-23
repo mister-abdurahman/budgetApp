@@ -50,15 +50,18 @@ export default class SavingsStore {
 
   load_savings = async () => {
     try {
+      store.commonStore.setLoading(true);
       const savings = await apiHandler.Savings.list();
 
       savings.forEach((saving: ISavings) => {
         runInAction(() => {
           this.savings.set(saving.id, saving);
         });
+        store.commonStore.setLoading(false);
       });
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
+        store.commonStore.setLoading(false);
         store.commonStore.setAlert({ type: "error", message: error.message });
         console.log(error.message);
       }
@@ -71,23 +74,28 @@ export default class SavingsStore {
     }
 
     try {
+      store.commonStore.setLoading(true);
       this.saving = await apiHandler.Savings.detail(id);
+      store.commonStore.setLoading(false);
       return this.saving;
     } catch (error) {
+      store.commonStore.setLoading(false);
       console.log(error);
     }
   };
 
   create_savings = async (saving: ISavings) => {
     try {
+      store.commonStore.setLoading(true);
       saving = await apiHandler.Savings.create(saving);
 
       runInAction(() => {
         this.savings.set(saving.id, saving);
       });
-
+      store.commonStore.setLoading(false);
       return this.saving;
     } catch (error) {
+      store.commonStore.setLoading(false);
       console.log(error);
     }
   };
