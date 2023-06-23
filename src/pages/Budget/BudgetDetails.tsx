@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Form, Formik, FormikHelpers } from "formik";
 import TextInput from "../../components/Form/TextInput";
 import { IBudget } from "../../data/stores/budgetStore";
-import * as Yup from 'yup'
+import * as Yup from "yup";
 import List, { ListRow } from "../../components/List/List";
 import { FaCoins, FaMoneyBill } from "react-icons/fa";
 import { MdAdd, MdDelete, MdSavings } from "react-icons/md";
@@ -140,11 +140,13 @@ function BudgetEdit({
             </div>
 
             <div>
-              <h1 className="flex items-center gap-3 mb-2 text-lg font-bold"><FaCoins size={20} className='text-neutral' /> Expenses</h1>
-              <List >
+              <h1 className="flex items-center gap-3 mb-2 text-lg font-bold">
+                <FaCoins size={20} className="text-neutral" /> Expenses
+              </h1>
+              <List>
                 {expenses.map((x, index) => (
                   <ListRow key={index} className="font-semibold">
-                    <FaCoins size={20} className='text-neutral' />
+                    <FaCoins size={20} className="text-neutral" />
                     <div className="grow">
                       <h1>{x.description}</h1>
                     </div>
@@ -222,8 +224,16 @@ function BudgetEdit({
 
           <div className="modal-action">
             {/* if there is a button in form, it will close the modal */}
-            <button type="submit" className="btn btn-neutral">Save</button>
-            <button type="button" className="btn" onClick={() => handleModal(false)}>Close</button>
+            <button type="submit" className="btn btn-neutral">
+              Save
+            </button>
+            <button
+              type="button"
+              className="btn"
+              onClick={() => handleModal(false)}
+            >
+              Close
+            </button>
           </div>
         </Form>
       </Formik>

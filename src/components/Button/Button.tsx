@@ -1,10 +1,10 @@
-interface IButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>{
-    title?: string;
-    children?: JSX.Element[] | JSX.Element | string;
-    icon?: JSX.Element
+interface IButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  title?: string;
+  children?: JSX.Element[] | JSX.Element | string;
+  icon?: JSX.Element;
 }
 function Button(props: IButtonProps) {
-    const{title, icon, className, children} = props
+  const { title, icon, className, children } = props;
   return (
     <button
       {...props}
@@ -12,9 +12,9 @@ function Button(props: IButtonProps) {
       tabIndex={0}
     >
       <span className="text-sm font-medium"> {title || children} </span>
-      {icon ?? icon }
+      {icon ?? icon}
     </button>
-  )
+  );
 }
 
-export default Button
+export default Button;

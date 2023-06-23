@@ -79,8 +79,11 @@ export default class SavingsStore {
       store.commonStore.setLoading(false);
       return this.saving;
     } catch (error) {
-      store.commonStore.setLoading(false);
-      console.log(error);
+      if (axios.isAxiosError(error) && error.response) {
+        store.commonStore.setAlert({ type: "error", message: error.message });
+        store.commonStore.setLoading(false);
+        throw new Error(error.response.data);
+      }
     }
   };
 
@@ -95,8 +98,29 @@ export default class SavingsStore {
       store.commonStore.setLoading(false);
       return this.saving;
     } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        store.commonStore.setAlert({ type: "error", message: error.message });
+        store.commonStore.setLoading(false);
+        throw new Error(error.response.data);
+      }
+    }
+  };
+
+  delete_savings = async (savingId: number) => {
+    try {
+      store.commonStore.setLoading(true);
+      await apiHandler.Savings.delete(savingId);
+
+      runInAction(() => {
+        this.savings.delete(savingId);
+      });
       store.commonStore.setLoading(false);
-      console.log(error);
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        store.commonStore.setAlert({ type: "error", message: error.message });
+        store.commonStore.setLoading(false);
+        throw new Error(error.response.data);
+      }
     }
   };
 }

@@ -10,6 +10,13 @@ export interface IIncome {
   date: string;
 }
 
+const income: IIncome = {
+  id: 0,
+  description: "",
+  amount: 0,
+  date: "",
+};
+
 const dummyIncome = [
   {
     id: 1,
@@ -28,7 +35,7 @@ const dummyIncome = [
 ];
 
 export default class IncomeStore {
-  income: IIncome | null = null;
+  income: IIncome = income;
   incomes = new Map<number, IIncome>();
 
   constructor() {
@@ -45,6 +52,7 @@ export default class IncomeStore {
 
   load_incomes = async () => {
     try {
+      store.commonStore.setLoading(true);
       const incomes = await apiHandler.Incomes.list();
 
       incomes.forEach((income: IIncome) => {
@@ -52,8 +60,10 @@ export default class IncomeStore {
           this.incomes.set(income.id, income);
         });
       });
+      store.commonStore.setLoading(false);
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
+        store.commonStore.setLoading(false);
         store.commonStore.setAlert({ type: "error", message: error.message });
         console.log(error.message);
       }
@@ -62,28 +72,58 @@ export default class IncomeStore {
 
   get_income_by_id = async (id: number) => {
     if (store.commonStore.offline) {
-      this.income = dummyIncome.find((income) => income.id === id) || null;
+      this.income = dummyIncome.find((income) => income.id === id) || income;
     }
 
     try {
+      store.commonStore.setLoading(true);
       this.income = await apiHandler.Incomes.detail(id);
+      store.commonStore.setLoading(false);
       return this.income;
     } catch (error) {
-      console.log(error);
+      if (axios.isAxiosError(error) && error.response) {
+        store.commonStore.setAlert({ type: "error", message: error.message });
+        store.commonStore.setLoading(false);
+        throw new Error(error.response.data);
+      }
     }
   };
 
-  create_college = async (income: IIncome) => {
+  create_income = async (income: IIncome) => {
     try {
+      store.commonStore.setLoading(true);
       income = await apiHandler.Incomes.create(income);
 
       runInAction(() => {
         this.incomes.set(income.id, income);
       });
+      store.commonStore.setLoading(false);
 
       return this.income;
     } catch (error) {
-      console.log(error);
+      if (axios.isAxiosError(error) && error.response) {
+        store.commonStore.setAlert({ type: "error", message: error.message });
+        store.commonStore.setLoading(false);
+        throw new Error(error.response.data);
+      }
+    }
+  };
+
+  delete_income = async (incomeId: number) => {
+    try {
+      store.commonStore.setLoading(true);
+      await apiHandler.Incomes.delete(incomeId);
+
+      runInAction(() => {
+        this.incomes.delete(incomeId);
+      });
+      store.commonStore.setLoading(false);
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        store.commonStore.setAlert({ type: "error", message: error.message });
+        store.commonStore.setLoading(false);
+        throw new Error(error.response.data);
+      }
     }
   };
 }

@@ -27,7 +27,7 @@ const Users = {
   list: (param?: string) => request.get<IUser[]>(`/users?${param || ""}`),
   detail: (id: string) => request.get<IUser>(`/users/${id}`),
   create: (user: IUser) => request.post<IUser>(`/users`, user),
-  delete: (id: string) => request.delete<IUser>(`/users/${id}`),
+  delete: (id: number) => request.delete<IUser>(`/users/${id}`),
   login: (username: string, password: string) =>
     request.post<IUser | null>(
       `/users/login?username=${username}&password=${password}`,
@@ -44,7 +44,7 @@ const Incomes = {
   create: (income: IIncome) => request.post<IIncome>(`/incomes`, income),
   update: (id: string, income: IIncome) =>
     request.post<IIncome>(`/incomes/${id}`, income),
-  delete: (id: string) => request.delete<IIncome>(`/incomes/${id}`),
+  delete: (id: number) => request.delete<IIncome>(`/incomes/${id}`),
 };
 
 //////////////////
@@ -56,7 +56,7 @@ const Budgets = {
   create: (budget: IBudget) => request.post<IBudget>(`/budgets`, budget),
   update: (id: string, budget: IBudget) =>
     request.post<IBudget>(`/budgets/${id}`, budget),
-  delete: (id: string) => request.delete<IBudget>(`/budgets/${id}`),
+  delete: (id: number) => request.delete<IBudget>(`/budgets/${id}`),
 };
 
 //////////////////
@@ -68,7 +68,7 @@ const Expenses = {
   create: (expense: IExpense) => request.post<IExpense>(`/expenses`, expense),
   update: (id: string, expense: IExpense) =>
     request.post<IExpense>(`/expenses/${id}`, expense),
-  delete: (id: string) => request.delete<IExpense>(`/expenses/${id}`),
+  delete: (id: number) => request.delete<IExpense>(`/expenses/${id}`),
 };
 
 //////////////////
@@ -80,7 +80,7 @@ const Savings = {
   create: (saving: ISavings) => request.post<ISavings>(`/savings`, saving),
   update: (id: string, saving: ISavings) =>
     request.post<ISavings>(`/savings/${id}`, saving),
-  delete: (id: string) => request.delete<ISavings>(`/savings/${id}`),
+  delete: (id: number) => request.delete<ISavings>(`/savings/${id}`),
 };
 
 const apiHandler = {

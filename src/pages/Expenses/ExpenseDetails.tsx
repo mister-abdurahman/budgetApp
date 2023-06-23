@@ -9,7 +9,7 @@ import * as Yup from "yup";
 import { Expenses } from "../Expenses/Expenses";
 import { useEffect } from "react";
 
-function IncomeEdit({
+function ExpenseEdit({
   handleModal,
   title,
   isDetail,
@@ -19,7 +19,7 @@ function IncomeEdit({
   isDetail?: boolean;
 }) {
   const {
-    incomeStore: { income, create_income },
+    expenseStore: { expense, create_expense },
     budgetStore: { load_budgets, budgetArrays },
   } = useStore();
 
@@ -44,7 +44,7 @@ function IncomeEdit({
       budgetId: Yup.string().required("This field is required"),
     };
 
-    return income.id === 0 ? update : create;
+    return expense.id === 0 ? update : create;
   };
 
   const validationScheme = Yup.object(validation());
@@ -54,13 +54,13 @@ function IncomeEdit({
       <Formik
         validationSchema={validationScheme}
         enableReinitialize
-        initialValues={income}
+        initialValues={expense}
         onSubmit={(
           values: IBudget,
           { setSubmitting }: FormikHelpers<IBudget>
         ) => {
           console.log(values);
-          create_income(values).then(() => navigation(0));
+          create_expense(values).then(() => navigation(0));
           setSubmitting(false);
         }}
       >
@@ -73,16 +73,16 @@ function IncomeEdit({
             ✕
           </label>
           <h1 className="text-xl font-bold mb-4">
-            {title || (income.id !== 0 ? "Update Income" : "Create Income")}
+            {title || (expense.id !== 0 ? "Update Income" : "Create Income")}
           </h1>
           <TextInput
             type="text"
             label="Description"
             id="description"
             name="description"
-            disabled={income.id !== 0}
+            disabled={expense.id !== 0}
           />
-          {income.id === 0 && (
+          {expense.id === 0 && (
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <TextInput
                 type="number"
@@ -97,7 +97,7 @@ function IncomeEdit({
                 optionSetter={(data) => data.description}
                 valueSetter={(data) => data.id}
                 label="Budget"
-                disabled={income.id !== 0}
+                disabled={expense.id !== 0}
               />
               <TextInput type="date" label="Date" id="date" name="date" />
             </div>
@@ -120,4 +120,4 @@ function IncomeEdit({
   );
 }
 
-export default observer(IncomeEdit);
+export default observer(ExpenseEdit);

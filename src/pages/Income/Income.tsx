@@ -6,119 +6,104 @@ import { useStore } from "../../data/stores/store";
 import TextInput from "../../components/Form/TextInput";
 import { Form, Formik } from "formik";
 import { BiPlusCircle, BiSearch } from "react-icons/bi";
+import CheckboxGroup from "../../components/CheckboxGroup/CheckboxGroup";
 import { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 // import AdvisorEdit from "./AdvisorEdit";
 import Modal from "../../components/Modal";
 import Button from "../../components/Button/Button";
 import { BsLink } from "react-icons/bs";
+import UserInfo from "../../components/UserInfo/UserInfo";
+import MUITable, { Column } from "../../components/Table/Table";
+import IncomeDetails from "./IncomeDetails";
+import { MdDelete } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
-export function Income() {
+export function Incomes() {
+  const {
+    authStore: { user },
+    incomeStore: { load_incomes, incomes, incomeArrays, delete_income },
+    budgetStore: { load_budgets, budgetArrays },
+  } = useStore();
   // const {
-  //     advisorStore: { load_advisors, select_advisor_by_id, savingsArrays },
+  //     advisorStore: { load_advisors, select_advisor_by_id, incomeArrays },
   //     levelStore: { load_levels, levelArrays },
   // } = useStore()
+  const navigation = useNavigate();
 
-  // useEffect(() => {
-  //     load_advisors();
-  //     load_levels();
-  // }, [load_advisors, load_levels])
-
-  const savingsArrays = [
-    { id: "1", name: "Ileya savings", date: "2-12-2020" },
-    { id: "2", name: "New House", date: "2-12-2020" },
-    { id: "3", name: "Wedding Plan", date: "2-12-2020" },
-  ];
+  useEffect(() => {
+    load_incomes();
+    load_budgets();
+  }, [load_incomes]);
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleModal = (state: boolean, id?: number) => {
-    // state && select_advisor_by_id(id || 0)
-    setIsOpen(state);
+  const handleOpenModal = (state: boolean, id?: string) => {
+    // set_budget_modal(state);
+    setIsOpen(true);
   };
 
-  return (
-    <div className="">
-      <div className="space-y-4">
-        <h4 className="text-center bg-#ac6cc7 p-2 font-semibold">Incomes</h4>
-        <Formik
-          initialValues={{}}
-          onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-              setSubmitting(false);
-            }, 500);
-          }}
+  const handleCloseModal = (state: boolean) => {
+    // set_budget_modal(state);
+    setIsOpen(false);
+  };
+
+  const handleDeleteIncome = (id: number) => {
+    delete_income(id).then(() => navigation(0));
+  };
+
+  const columns: Column[] = [
+    {
+      id: "action",
+      align: "left",
+      label: "S/N",
+      minWidth: 120,
+      render: (index, row) => <h1>{index + 1}</h1>,
+    },
+    { id: "description", label: "Description", minWidth: 180 },
+    { id: "amount", label: "Amount", minWidth: 100 },
+    {
+      id: "action",
+      align: "right",
+      label: "Action",
+      minWidth: 140,
+      render: (index, row) => (
+        <Button
+          onClick={() => handleDeleteIncome(row.id)}
+          icon={<MdDelete size={20} />}
         >
-          <Form className="flex items-center justify-between gap-2">
-            <div className="flex gap-5">
-              <TextInput
-                label=""
-                id="search"
-                name="search"
-                placeholder="search"
-                type="TextIconInput"
-                icon={<BiSearch />}
-              />
-              <Button
-                type="button"
-                onClick={() => handleModal(true)}
-                icon={<BiPlusCircle className="w-5 h-5" />}
-              >
-                <p className="text-sm font-medium">Create</p>
-              </Button>
-            </div>
+          Delete
+        </Button>
+      ),
+    },
+  ];
 
-            <div className="flex items-center gap-3">
-              <HiSortDescending size={20} />
-              <Dropdown
-                title="Level"
-                dropDownStyle="dropdown-end"
-                className="capitalize rounded-sm btn-sm"
-              >
-                {/* <CheckboxGroup name="Level" data={[1,2,3].map(x => x)} /> */}
-              </Dropdown>
-            </div>
-          </Form>
-        </Formik>
-        <List>
-          {savingsArrays.map((advisor, index) => {
-            return (
-              <ListRow key={index}>
-                {/* <Avatar imageUrl={advisor.imageUrl} size="xs" /> */}
-                <div className="flex flex-wrap items-center flex-1 gap-6 my-auto lg:gap-6 lg:flex-nowrap">
-                  <div className="w-40">
-                    <h1 className="font-bold text-gray-800 capitalize lg:font-semibold lg:text-sm">
-                      {advisor.name}
-                    </h1>
-                    <h1 className="text-sm text-gray-400-100">
-                      {advisor.date}
-                    </h1>
-                  </div>
-                  <div className="text-xs badge badge-neutral">Advisor</div>
-                  <h1 className="text-sm font-semibold text-gray-800 capitalize">
-                    {advisor.name}
-                  </h1>
-                  {/* <h1 className="text-sm font-semibold text-gray-800 capitalize">{advisor.departmentName}</h1>
-                                    <h1 className="text-sm font-semibold text-gray-800 capitalize">{advisor.programName}</h1> */}
-
-                  {/* <div className="text-xs badge badge-error">uncompleted</div> */}
-                </div>
-                <Button
-                  className="justify-center btn-wide lg:w-fit"
-                  onClick={() => handleModal(true, 21)}
-                  icon={<BsLink className="w-5 h-5" />}
-                >
-                  <p className="text-sm font-medium">View</p>
-                </Button>
-              </ListRow>
-            );
-          })}
-        </List>
-        <Modal page={<h1></h1>} isOpen={isOpen} />
+  return (
+    <div className="space-y-3">
+      {/* <UserInfo type="vertical" handleModal={handleOpenModal} user={user} /> */}
+      <div className="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm">
+        <div className="grow">
+          <h1 className="text-2xl font-bold text-gray-900 sm:text-2xl">
+            <span className="capitalize">Incomes</span>{" "}
+          </h1>
+        </div>
+        <Button onClick={() => handleOpenModal(true, user.id)} className="">
+          Create Incomes
+        </Button>
       </div>
+      <MUITable columns={columns} rows={incomeArrays} />
+      <Modal
+        page={
+          <IncomeDetails
+            handleModal={handleCloseModal}
+            title={"New Incomes"}
+            isDetail={true}
+          />
+        }
+        isOpen={isOpen}
+      />
     </div>
   );
 }
 
-export default observer(Income);
+export default observer(Incomes);

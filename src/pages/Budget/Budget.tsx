@@ -7,16 +7,25 @@ import MUITable, { Column } from "../../components/Table/Table";
 import BudgetDetails from "./BudgetDetails";
 import { GiCancel } from "react-icons/gi";
 import { MdCancel, MdDelete, MdDeleteForever } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 export function Budget() {
   const {
     authStore: { user },
-    budgetStore: { load_budgets, budgetArrays, set_budget_modal, modal: bdModal },
+    budgetStore: {
+      load_budgets,
+      delete_budget,
+      budgetArrays,
+      set_budget_modal,
+      modal: bdModal,
+    },
   } = useStore();
   // const {
   //     advisorStore: { load_advisors, select_advisor_by_id, savingsArrays },
   //     levelStore: { load_levels, levelArrays },
   // } = useStore()
+
+  const navigation = useNavigate();
 
   useEffect(() => {
     load_budgets();
@@ -31,20 +40,33 @@ export function Budget() {
   };
 
   const handleDeleteBudget = (id: number) => {
-    console.log(id);
-    
-  }
+    console.log(typeof id);
+    delete_budget(id).then(() => navigation(0));
+  };
 
   const columns: Column[] = [
-    { id: "description", label: "Description", minWidth: 170 },
-    { id: "amount", label: "Amount", minWidth: 170 },
-    { id: "budgetId", label: "Budget Id", minWidth: 170 },
     {
-      id: "action", 
+      id: "action",
+      align: "left",
+      label: "S/N",
+      minWidth: 120,
+      render: (index, row) => <h1>{index + 1}</h1>,
+    },
+    { id: "description", label: "Description", minWidth: 180 },
+    { id: "amount", label: "Amount", minWidth: 100 },
+    {
+      id: "action",
       align: "right",
-      label: "Action", 
-      minWidth: 170, 
-      render: (row) => <Button className="bg-rose-800" onClick={() => handleDeleteBudget(row.id)} icon={<MdDelete size={20} />}>Delete</Button>
+      label: "Action",
+      minWidth: 140,
+      render: (index, row) => (
+        <Button
+          onClick={() => handleDeleteBudget(row.id)}
+          icon={<MdDelete size={20} />}
+        >
+          Delete
+        </Button>
+      ),
     },
   ];
 

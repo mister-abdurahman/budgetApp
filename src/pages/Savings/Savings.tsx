@@ -16,17 +16,21 @@ import { BsLink } from "react-icons/bs";
 import UserInfo from "../../components/UserInfo/UserInfo";
 import MUITable, { Column } from "../../components/Table/Table";
 import SavingsDetails from "./SavingsDetails";
+import { MdDelete } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 export function Savings() {
   const {
     authStore: { user },
-    savingsStore: { load_savings, savings, savingsArrays },
+    savingsStore: { load_savings, savings, savingsArrays, delete_savings },
     budgetStore: { load_budgets, budgetArrays },
   } = useStore();
   // const {
   //     advisorStore: { load_advisors, select_advisor_by_id, savingsArrays },
   //     levelStore: { load_levels, levelArrays },
   // } = useStore()
+
+  const navigation = useNavigate();
 
   useEffect(() => {
     load_savings();
@@ -45,10 +49,34 @@ export function Savings() {
     setIsOpen(false);
   };
 
+  const handleDeleteSavings = (id: number) => {
+    delete_savings(id).then(() => navigation(0));
+  };
+
   const columns: Column[] = [
-    { id: "description", label: "Description", minWidth: 170 },
-    { id: "amount", label: "Amount", minWidth: 170 },
-    { id: "budgetId", label: "Budget Id", minWidth: 170 },
+    {
+      id: "action",
+      align: "left",
+      label: "S/N",
+      minWidth: 120,
+      render: (index, row) => <h1>{index + 1}</h1>,
+    },
+    { id: "description", label: "Description", minWidth: 180 },
+    { id: "amount", label: "Amount", minWidth: 100 },
+    {
+      id: "action",
+      align: "right",
+      label: "Action",
+      minWidth: 140,
+      render: (index, row) => (
+        <Button
+          onClick={() => handleDeleteSavings(row.id)}
+          icon={<MdDelete size={20} />}
+        >
+          Delete
+        </Button>
+      ),
+    },
   ];
 
   return (
