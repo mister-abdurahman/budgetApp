@@ -36,7 +36,8 @@ export function Budget() {
   const columns: Column[] = [
     { id: "description", label: "Description", minWidth: 170 },
     { id: "amount", label: "Amount", minWidth: 170 },
-    { id: "budgetId", label: "Budget Id", minWidth: 170 },
+    // { id: "budgetId", label: "Budget Id", minWidth: 170 },
+    { id: "action", label: "Action", minWidth: 170 },
   ];
 
   return (

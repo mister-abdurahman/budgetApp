@@ -7,6 +7,7 @@ import TextInput from "../../components/Form/TextInput";
 import { IBudget } from "../../data/stores/budgetStore";
 import * as Yup from "yup";
 import { Expenses } from "../Expenses/Expenses";
+import { store } from "../../data/stores/store";
 
 function BudgetEdit({
   handleModal,

@@ -77,28 +77,34 @@ export default class BudgetStore {
     }
 
     try {
+      store.commonStore.setLoading(true);
       this.budget = await apiHandler.Incomes.detail(id);
+      store.commonStore.setLoading(false);
       return this.budget;
     } catch (error) {
+      store.commonStore.setLoading(false);
       console.log(error);
     }
   };
 
   create_budget = async (budget: IBudget) => {
     try {
+      store.commonStore.setLoading(true);
       budget = await apiHandler.Budgets.create(budget);
 
       runInAction(() => {
         this.budgets.set(budget.id, budget);
       });
+      store.commonStore.setLoading(false);
 
       return this.budget;
     } catch (error) {
+      store.commonStore.setLoading(false);
       console.log(error);
     }
   };
 
   set_budget_modal = (state: boolean) => {
-    this.modal = state
-  }
+    this.modal = state;
+  };
 }
