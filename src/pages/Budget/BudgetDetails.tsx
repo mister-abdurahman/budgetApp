@@ -2,18 +2,16 @@ import { useStore } from "../../data/stores/store";
 import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
 import { Form, Formik, FormikHelpers } from "formik";
-import Select from "../../components/Form/Select";
 import TextInput from "../../components/Form/TextInput";
 import { IBudget } from "../../data/stores/budgetStore";
 import * as Yup from "yup";
 import List, { ListRow } from "../../components/List/List";
 import { FaCoins, FaMoneyBill } from "react-icons/fa";
-import { MdAdd, MdSavings } from "react-icons/md";
-import { useState } from "react";
+import { MdAdd, MdDelete, MdSavings } from "react-icons/md";
 import { IIncome } from "../../data/stores/IncomeStore";
-import { ISavings } from "../../data/stores/savingsStore";
-import { IExpense } from "../../data/stores/expenseStore";
 import Button from "../../components/Button";
+import { IExpense } from "../../data/stores/expenseStore";
+import { ISavings } from "../../data/stores/savingsStore";
 
 function BudgetEdit({
   handleModal,
@@ -26,49 +24,47 @@ function BudgetEdit({
 }) {
   const {
     budgetStore: {
-      budget,
-      create_budget,
-      incomes,
-      expenses,
-      savings,
-      add_income,
-      income,
-      expense,
-      saving,
-      set_income,
+      budget, create_budget,
+      incomes, income, add_income, set_income, remove_income,
+      expenses, expense, add_expense, set_expense, remove_expense,
+      savings, saving, add_saving, set_saving, remove_saving,
+      budget_calculation, saving_calculation, available_fund_calculation
     },
-  } = useStore();
+  } = useStore()
 
   const navigation = useNavigate();
 
-  const handleIncome = (new_income?: IIncome) => {
-    if (new_income?.amount === 0 || new_income?.description === null) return;
+  const handleIncome = (new_income: IIncome) => {
+    if (new_income.amount === 0 || new_income.description === null) return;
 
     add_income(new_income);
-    set_income({ id: 0, description: "", amount: 0, date: "" });
-    console.log(income);
-  };
+    set_income({ id: 0, description: "", amount: 0, date: "", })
 
-  const handleExpenses = () => {
-    expenses.push(expense);
-  };
+  }
 
-  // useEffect(() => {
-  //   console.log(id);
+  const handleExpense = (new_expense: IExpense) => {
+    if (new_expense.amount === 0 || new_expense.description === null) return;
 
-  //   id && get_budget_by_user_id(id);
-  // }, [get_budget_by_user_id, id])
+    add_expense(new_expense);
+    set_expense({ id: 0, description: "", amount: 0, date: "", })
+
+  }
+
+  const handleSaving = (new_saving?: ISavings) => {
+    if (new_saving?.amount === 0 || new_saving?.description === null) return;
+
+    add_saving(new_saving);
+    set_saving({ id: 0, description: "", amount: 0, date: "", })
+  }
 
   const validation = () => {
     const create = {
       description: Yup.string().required("This field is required"),
-      amount: Yup.number().required("This field is required"),
       date: Yup.date().required("This field is required"),
     };
 
     const update = {
       description: Yup.string().required("This field is required"),
-      amount: Yup.number().required("This field is required"),
       date: Yup.date().required("This field is required"),
     };
 
@@ -88,74 +84,58 @@ function BudgetEdit({
           { setSubmitting }: FormikHelpers<IBudget>
         ) => {
           console.log(values);
-          create_budget(values).then(() => navigation(0));
+          create_budget(values)
+          .then(() => navigation(0));
           setSubmitting(false);
         }}
       >
-        <Form method="dialog" className="modal-box">
-          <label
-            htmlFor="modal"
-            className="absolute btn btn-sm btn-circle btn-ghost right-2 top-2"
-            onClick={() => handleModal(false)}
-          >
-            ✕
-          </label>
-          <h1 className="mb-4 text-xl font-bold">
-            {title || (budget.id !== 0 ? "Update Budget" : "Create Budget")}
-          </h1>
+        <Form method="dialog" className="space-y-5 modal-box"
+        >
+          <div>
+            <label htmlFor="modal" className="absolute btn btn-sm btn-circle btn-ghost right-2 top-2" onClick={() => handleModal(false)}>✕</label>
+            <h1 className="mb-4 text-xl font-bold">{title || (budget.id !== 0 ? "Update Budget" : "Create Budget")}</h1>
+          </div>
+
+          <div>
+            <TextInput type='text' label='Budget Description' id='description' name='description' />
+            <TextInput type='date' label='Date' id='date' name='date' />
+          </div>
+
           <div className="space-y-4">
             <div>
-              <h1 className="flex items-center gap-3 mb-2 text-lg font-bold">
-                <FaMoneyBill size={20} className="text-neutral" /> Income
-              </h1>
-              <List>
-                <List>
-                  {incomes.map((x, index) => (
-                    <ListRow key={index} className="font-semibold">
-                      <FaCoins size={20} className="text-neutral" />
-                      <div className="grow">
-                        <h1>{x.description}</h1>
-                      </div>
-                      <h1>{x.amount}</h1>
-                    </ListRow>
-                  ))}
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                    <div className="w-full form-control">
-                      <input
-                        onChange={(e) => {
-                          console.log(e.target.value);
-                          set_income({
-                            ...income,
-                            description: e.target.value,
-                          });
-                        }}
-                        type="text"
-                        className="w-full input input-bordered"
-                        placeholder="Enter Income"
-                      />
+              <h1 className="flex items-center gap-3 mb-2 text-lg font-bold"><FaMoneyBill size={20} className='text-neutral' /> Income</h1>
+              <List >
+                {incomes.map((x, index) => (
+                  <ListRow key={index} className="font-semibold">
+                    <FaMoneyBill size={20} className='text-neutral' />
+                    <div className="grow">
+                      <h1>{x.description}</h1>
                     </div>
-                    <div className="w-full form-control">
-                      <input
-                        type="number"
-                        onChange={(e) => {
-                          console.log(e.target.value);
-                          set_income({ ...income, amount: e.target.value });
-                        }}
-                        className="w-full input input-bordered"
-                        placeholder="Enter Amount"
-                      />
-                    </div>
-
-                    <Button
-                      type="button"
-                      className="self-end h-12"
-                      onClick={() => handleIncome(income)}
-                      icon={<MdAdd />}
-                    >
-                      Add
-                    </Button>
+                    <h1>{x.amount}</h1>
+                    <MdDelete className="cursor-pointer" onClick={() => remove_income(index)} />
+                  </ListRow>
+                ))}
+                <div className="grid grid-cols-1 gap-4 mt-3 sm:grid-cols-3">
+                  <div className="w-full form-control">
+                    <input
+                      type="text"
+                      value={income.description}
+                      onChange={(e) => set_income({ ...income, description: e.target.value })}
+                      className="w-full input input-bordered"
+                      placeholder="Enter Income"
+                    />
                   </div>
-                </List>
+                  <div className="w-full form-control">
+                    <input
+                      type="number"
+                      value={income.amount}
+                      onChange={(e) => set_income({ ...income, amount: parseInt(e.target.value) })}
+                      className="w-full input input-bordered"
+                      placeholder="Enter Amount"
+                    />
+                  </div>
+                  <Button type="button" className="self-end h-12" onClick={() => handleIncome(income)} icon={<MdAdd />}>Add</Button>
+                </div>
               </List>
             </div>
 
@@ -171,97 +151,77 @@ function BudgetEdit({
                       <h1>{x.description}</h1>
                     </div>
                     <h1>{x.amount}</h1>
+                    <MdDelete className="cursor-pointer" onClick={() => remove_expense(index)} />
                   </ListRow>
                 ))}
-                <Formik
-                  enableReinitialize
-                  initialValues={income}
-                  onSubmit={(
-                    values: IIncome,
-                    { setSubmitting }: FormikHelpers<IIncome>
-                  ) => {
-                    handleIncome(values);
-                    console.log(values);
-                    setSubmitting(false);
-                  }}
-                >
-                  <Form method="dialog">
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                      <TextInput
-                        type="text"
-                        id="description"
-                        name="description"
-                      />
-                      <TextInput type="number" id="amount" name="amount" />
-                      <Button
-                        type="submit"
-                        className="self-end h-12"
-                        icon={<MdAdd />}
-                      >
-                        Add
-                      </Button>
-                    </div>
-                  </Form>
-                </Formik>
+                <div className="grid grid-cols-1 gap-4 mt-3 sm:grid-cols-3">
+                  <div className="w-full form-control">
+                    <input
+                      type="text"
+                      value={expense.description}
+                      onChange={(e) => set_expense({ ...expense, description: e.target.value })}
+                      className="w-full input input-bordered"
+                      placeholder="Enter Income"
+                    />
+                  </div>
+                  <div className="w-full form-control">
+                    <input
+                      type="number"
+                      value={expense.amount}
+                      onChange={(e) => set_expense({ ...expense, amount: parseInt(e.target.value) })}
+                      className="w-full input input-bordered"
+                      placeholder="Enter Amount"
+                    />
+                  </div>
+                  <Button type="button" className="self-end h-12" onClick={() => handleExpense(expense)} icon={<MdAdd />}>Add</Button>
+                </div>
               </List>
             </div>
 
             <div>
-              <h1 className="flex items-center gap-3 mb-2 text-lg font-bold">
-                <MdSavings size={20} className="text-neutral" /> Savings
-              </h1>
-              <List>
-                {expenses.map((x) => (
-                  <ListRow className="font-semibold">
-                    <FaCoins size={20} className="text-neutral" />
+              <h1 className="flex items-center gap-3 mb-2 text-lg font-bold"><MdSavings size={20} className='text-neutral' /> Savings</h1>
+              <List >
+                {savings.map((x, index) => (
+                  <ListRow key={index} className="font-semibold">
+                    <MdSavings size={20} className='text-neutral' />
                     <div className="grow">
                       <h1>{x.description}</h1>
                     </div>
                     <h1>{x.amount}</h1>
+                    <MdDelete className="cursor-pointer" onClick={() => remove_saving(index)} />
                   </ListRow>
                 ))}
+                <div className="grid grid-cols-1 gap-4 mt-3 sm:grid-cols-3">
+                  <div className="w-full form-control">
+                    <input
+                      type="text"
+                      value={saving.description}
+                      onChange={(e) => set_saving({ ...saving, description: e.target.value })}
+                      className="w-full input input-bordered"
+                      placeholder="Enter Income"
+                    />
+                  </div>
+                  <div className="w-full form-control">
+                    <input
+                      type="number"
+                      value={saving.amount}
+                      onChange={(e) => { console.log(e.target.value); set_saving({ ...saving, amount: parseInt(e.target.value) }) }}
+                      className="w-full input input-bordered"
+                      placeholder="Enter Amount"
+                    />
+                  </div>
+                  <Button type="button" className="self-end h-12" onClick={() => handleSaving(saving)} icon={<MdAdd />}>Add</Button>
+                </div>
               </List>
             </div>
 
-            <h1 className="text-3xl font-semibold mt-">Total Expenses: 3000</h1>
+          </div>
+          <div className="flex flex-wrap justify-between gap-5">
+            <h1 className="text-xl font-bold mt-">Available Funds: {available_fund_calculation()}</h1>
+            <h1 className="text-xl font-bold mt-">Saving: {saving_calculation()}</h1>
+            <h1 className="text-xl font-bold mt-">Budget: {budget_calculation()}</h1>
           </div>
 
-          <TextInput
-            type="text"
-            label="Username"
-            id="username"
-            name="username"
-            disabled={budget.id !== 0}
-          />
-          <TextInput
-            type="email"
-            label="Email Addresss"
-            id="email"
-            name="email"
-            disabled={budget.id !== 0}
-          />
-          <TextInput
-            type="text"
-            label="Phone Number"
-            id="phoneNumber"
-            name="phoneNumber"
-          />
-          {budget.id === 0 && (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <TextInput
-                type="password"
-                label="Password"
-                id="password"
-                name="password"
-              />
-              <TextInput
-                type="password"
-                label="Confirm Password"
-                id="confirmPassword"
-                name="confirmPassword"
-              />
-            </div>
-          )}
           <div className="modal-action">
             {/* if there is a button in form, it will close the modal */}
             <button type="submit" className="btn btn-neutral">
