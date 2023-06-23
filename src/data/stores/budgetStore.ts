@@ -11,6 +11,9 @@ export interface IBudget {
   description: string;
   amount: number;
   date: string;
+  incomes?: IIncome[];
+  expenses?: IExpense[];
+  savings?: ISavings[];
 }
 
 const dummyBudget = [
@@ -66,6 +69,8 @@ export default class BudgetStore {
   expenses: IExpense[] = []
   savings: ISavings[] = []
 
+  availableFunds = 0;
+
   modal = false;
 
   constructor() {
@@ -120,6 +125,13 @@ export default class BudgetStore {
   create_budget = async (budget: IBudget) => {
     try {
       store.commonStore.setLoading(true);
+
+      budget.incomes = this.incomes;
+      budget.expenses = this.expenses;
+      budget.savings = this.savings;
+
+      console.log(budget);
+
       budget = await apiHandler.Budgets.create(budget);
 
       runInAction(() => {
@@ -136,7 +148,40 @@ export default class BudgetStore {
 
   set_budget_modal = (state: boolean) => this.modal = state
 
-  set_income = (newIncome: any) => { console.log(newIncome); this.income = newIncome}
+  set_income = (newIncome: IIncome) => { this.income = newIncome }
 
-  add_income = (income: any) => this.incomes.push(income)  
+  add_income = (income: IIncome) => { income.date = new Date().toJSON(); this.incomes.push(income) }
+
+  remove_income = (index: any) => this.incomes.splice(index, 1)
+
+  set_expense = (newExpense: IExpense) => { this.expense = newExpense }
+
+  add_expense = (expense: IExpense) => { expense.date = new Date().toJSON(); this.expenses.push(expense) }
+
+  remove_expense = (index: any) => this.expenses.splice(index, 1)
+
+  set_saving = (newSaving: any) => { this.saving = newSaving }
+
+  add_saving = (saving: any) => { saving.date = new Date().toJSON(); this.savings.push(saving) }
+
+  remove_saving = (index: any) => this.savings.splice(index, 1)
+
+  available_fund_calculation = () => {
+    const income = this.incomes.reduce((accu, { amount }) => { return accu + amount }, 0)
+    const expense = this.expenses.reduce((accu, { amount }) => { return accu + amount }, 0)
+
+    this.availableFunds = income - expense
+
+    return this.availableFunds;
+  }
+
+  saving_calculation = () => {
+    const saving = this.savings.reduce((accu, { amount }) => { return accu + amount }, 0)
+    return saving;
+  }
+
+  budget_calculation = () => {
+    const saving = this.savings.reduce((accu, { amount }) => { return accu + amount }, 0)
+    return this.available_fund_calculation() - saving;
+  }
 }

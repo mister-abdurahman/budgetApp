@@ -1,12 +1,12 @@
 import axios, { AxiosResponse } from "axios";
 import { IUser } from "../stores/userStore";
 import { IIncome } from "../stores/IncomeStore";
-import { IExpense } from "../stores/ExpenseStore";
-import { ISavings } from "../stores/SavingsStore";
+import { IExpense } from "../stores/expenseStore";
+import { ISavings } from "../stores/savingsStore";
 import { IBudget } from "../stores/budgetStore";
 
-// axios.defaults.baseURL = "https://localhost:7265/api/v1";
-axios.defaults.baseURL = "https://api-fgbmfi-clone.azurewebsites.net/api/v1";
+axios.defaults.baseURL = "https://localhost:7265/api/v1";
+// axios.defaults.baseURL = "https://api-fgbmfi-clone.azurewebsites.net/api/v1";
 
 const responseBody = (res: AxiosResponse) => res.data;
 
