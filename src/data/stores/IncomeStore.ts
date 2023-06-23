@@ -59,8 +59,8 @@ export default class IncomeStore {
         runInAction(() => {
           this.incomes.set(income.id, income);
         });
-        store.commonStore.setLoading(false);
       });
+      store.commonStore.setLoading(false);
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         store.commonStore.setLoading(false);
@@ -78,10 +78,14 @@ export default class IncomeStore {
     try {
       store.commonStore.setLoading(true);
       this.income = await apiHandler.Incomes.detail(id);
+      store.commonStore.setLoading(false);
       return this.income;
     } catch (error) {
-      store.commonStore.setLoading(false);
-      console.log(error);
+      if (axios.isAxiosError(error) && error.response) {
+        store.commonStore.setAlert({ type: "error", message: error.message });
+        store.commonStore.setLoading(false);
+        throw new Error(error.response.data);
+      }
     }
   };
 
@@ -97,8 +101,29 @@ export default class IncomeStore {
 
       return this.income;
     } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        store.commonStore.setAlert({ type: "error", message: error.message });
+        store.commonStore.setLoading(false);
+        throw new Error(error.response.data);
+      }
+    }
+  };
+
+  delete_income = async (incomeId: number) => {
+    try {
+      store.commonStore.setLoading(true);
+      await apiHandler.Incomes.delete(incomeId);
+
+      runInAction(() => {
+        this.incomes.delete(incomeId);
+      });
       store.commonStore.setLoading(false);
-      console.log(error);
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        store.commonStore.setAlert({ type: "error", message: error.message });
+        store.commonStore.setLoading(false);
+        throw new Error(error.response.data);
+      }
     }
   };
 }

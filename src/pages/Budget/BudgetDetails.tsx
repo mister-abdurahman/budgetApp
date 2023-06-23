@@ -5,14 +5,14 @@ import { Form, Formik, FormikHelpers } from "formik";
 import Select from "../../components/Form/Select";
 import TextInput from "../../components/Form/TextInput";
 import { IBudget } from "../../data/stores/budgetStore";
-import * as Yup from 'yup'
+import * as Yup from "yup";
 import List, { ListRow } from "../../components/List/List";
 import { FaCoins, FaMoneyBill } from "react-icons/fa";
 import { MdAdd, MdSavings } from "react-icons/md";
 import { useState } from "react";
 import { IIncome } from "../../data/stores/IncomeStore";
-import { ISavings } from "../../data/stores/SavingsStore";
-import { IExpense } from "../../data/stores/ExpenseStore";
+import { ISavings } from "../../data/stores/savingsStore";
+import { IExpense } from "../../data/stores/expenseStore";
 import Button from "../../components/Button";
 
 function BudgetEdit({
@@ -25,8 +25,19 @@ function BudgetEdit({
   isDetail?: boolean;
 }) {
   const {
-    budgetStore: { budget, create_budget, incomes, expenses, savings, add_income, income, expense, saving, set_income },
-  } = useStore()
+    budgetStore: {
+      budget,
+      create_budget,
+      incomes,
+      expenses,
+      savings,
+      add_income,
+      income,
+      expense,
+      saving,
+      set_income,
+    },
+  } = useStore();
 
   const navigation = useNavigate();
 
@@ -34,14 +45,13 @@ function BudgetEdit({
     if (new_income?.amount === 0 || new_income?.description === null) return;
 
     add_income(new_income);
-    set_income({ id: 0, description: "", amount: 0, date: "", })
+    set_income({ id: 0, description: "", amount: 0, date: "" });
     console.log(income);
-
-  }
+  };
 
   const handleExpenses = () => {
     expenses.push(expense);
-  }
+  };
 
   // useEffect(() => {
   //   console.log(id);
@@ -82,18 +92,27 @@ function BudgetEdit({
           setSubmitting(false);
         }}
       >
-        <Form method="dialog" className="modal-box"
-        >
-          <label htmlFor="modal" className="absolute btn btn-sm btn-circle btn-ghost right-2 top-2" onClick={() => handleModal(false)}>✕</label>
-          <h1 className="mb-4 text-xl font-bold">{title || (budget.id !== 0 ? "Update Budget" : "Create Budget")}</h1>
+        <Form method="dialog" className="modal-box">
+          <label
+            htmlFor="modal"
+            className="absolute btn btn-sm btn-circle btn-ghost right-2 top-2"
+            onClick={() => handleModal(false)}
+          >
+            ✕
+          </label>
+          <h1 className="mb-4 text-xl font-bold">
+            {title || (budget.id !== 0 ? "Update Budget" : "Create Budget")}
+          </h1>
           <div className="space-y-4">
             <div>
-              <h1 className="flex items-center gap-3 mb-2 text-lg font-bold"><FaMoneyBill size={20} className='text-neutral' /> Income</h1>
-              <List >
-                <List >
+              <h1 className="flex items-center gap-3 mb-2 text-lg font-bold">
+                <FaMoneyBill size={20} className="text-neutral" /> Income
+              </h1>
+              <List>
+                <List>
                   {incomes.map((x, index) => (
                     <ListRow key={index} className="font-semibold">
-                      <FaCoins size={20} className='text-neutral' />
+                      <FaCoins size={20} className="text-neutral" />
                       <div className="grow">
                         <h1>{x.description}</h1>
                       </div>
@@ -103,7 +122,13 @@ function BudgetEdit({
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                     <div className="w-full form-control">
                       <input
-                        onChange={(e) => { console.log(e.target.value); set_income({ ...income, description: e.target.value }) }}
+                        onChange={(e) => {
+                          console.log(e.target.value);
+                          set_income({
+                            ...income,
+                            description: e.target.value,
+                          });
+                        }}
                         type="text"
                         className="w-full input input-bordered"
                         placeholder="Enter Income"
@@ -112,25 +137,36 @@ function BudgetEdit({
                     <div className="w-full form-control">
                       <input
                         type="number"
-                        onChange={(e) => { console.log(e.target.value); set_income({ ...income, amount: e.target.value }) }}
+                        onChange={(e) => {
+                          console.log(e.target.value);
+                          set_income({ ...income, amount: e.target.value });
+                        }}
                         className="w-full input input-bordered"
                         placeholder="Enter Amount"
                       />
                     </div>
 
-
-                    <Button type="button" className="self-end h-12" onClick={() => handleIncome(income)} icon={<MdAdd />}>Add</Button>
+                    <Button
+                      type="button"
+                      className="self-end h-12"
+                      onClick={() => handleIncome(income)}
+                      icon={<MdAdd />}
+                    >
+                      Add
+                    </Button>
                   </div>
                 </List>
               </List>
             </div>
 
             <div>
-              <h1 className="flex items-center gap-3 mb-2 text-lg font-bold"><FaCoins size={20} className='text-neutral' /> Expenses</h1>
-              <List >
+              <h1 className="flex items-center gap-3 mb-2 text-lg font-bold">
+                <FaCoins size={20} className="text-neutral" /> Expenses
+              </h1>
+              <List>
                 {expenses.map((x, index) => (
                   <ListRow key={index} className="font-semibold">
-                    <FaCoins size={20} className='text-neutral' />
+                    <FaCoins size={20} className="text-neutral" />
                     <div className="grow">
                       <h1>{x.description}</h1>
                     </div>
@@ -149,12 +185,21 @@ function BudgetEdit({
                     setSubmitting(false);
                   }}
                 >
-                  <Form method="dialog"
-                  >
+                  <Form method="dialog">
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                      <TextInput type='text' id='description' name='description' />
-                      <TextInput type='number' id='amount' name='amount' />
-                      <Button type="submit" className="self-end h-12" icon={<MdAdd />}>Add</Button>
+                      <TextInput
+                        type="text"
+                        id="description"
+                        name="description"
+                      />
+                      <TextInput type="number" id="amount" name="amount" />
+                      <Button
+                        type="submit"
+                        className="self-end h-12"
+                        icon={<MdAdd />}
+                      >
+                        Add
+                      </Button>
                     </div>
                   </Form>
                 </Formik>
@@ -162,11 +207,13 @@ function BudgetEdit({
             </div>
 
             <div>
-              <h1 className="flex items-center gap-3 mb-2 text-lg font-bold"><MdSavings size={20} className='text-neutral' /> Savings</h1>
-              <List >
-                {expenses.map(x => (
+              <h1 className="flex items-center gap-3 mb-2 text-lg font-bold">
+                <MdSavings size={20} className="text-neutral" /> Savings
+              </h1>
+              <List>
+                {expenses.map((x) => (
                   <ListRow className="font-semibold">
-                    <FaCoins size={20} className='text-neutral' />
+                    <FaCoins size={20} className="text-neutral" />
                     <div className="grow">
                       <h1>{x.description}</h1>
                     </div>
@@ -179,19 +226,54 @@ function BudgetEdit({
             <h1 className="text-3xl font-semibold mt-">Total Expenses: 3000</h1>
           </div>
 
-
-
-          <TextInput type='text' label='Username' id='username' name='username' disabled={budget.id !== 0} />
-          <TextInput type='email' label='Email Addresss' id='email' name='email' disabled={budget.id !== 0} />
-          <TextInput type='text' label='Phone Number' id='phoneNumber' name='phoneNumber' />
-          {budget.id === 0 && <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <TextInput type='password' label='Password' id='password' name='password' />
-            <TextInput type='password' label='Confirm Password' id='confirmPassword' name='confirmPassword' />
-          </div>}
+          <TextInput
+            type="text"
+            label="Username"
+            id="username"
+            name="username"
+            disabled={budget.id !== 0}
+          />
+          <TextInput
+            type="email"
+            label="Email Addresss"
+            id="email"
+            name="email"
+            disabled={budget.id !== 0}
+          />
+          <TextInput
+            type="text"
+            label="Phone Number"
+            id="phoneNumber"
+            name="phoneNumber"
+          />
+          {budget.id === 0 && (
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <TextInput
+                type="password"
+                label="Password"
+                id="password"
+                name="password"
+              />
+              <TextInput
+                type="password"
+                label="Confirm Password"
+                id="confirmPassword"
+                name="confirmPassword"
+              />
+            </div>
+          )}
           <div className="modal-action">
             {/* if there is a button in form, it will close the modal */}
-            <button type="submit" className="btn btn-neutral">Save</button>
-            <button type="button" className="btn" onClick={() => handleModal(false)}>Close</button>
+            <button type="submit" className="btn btn-neutral">
+              Save
+            </button>
+            <button
+              type="button"
+              className="btn"
+              onClick={() => handleModal(false)}
+            >
+              Close
+            </button>
           </div>
         </Form>
       </Formik>

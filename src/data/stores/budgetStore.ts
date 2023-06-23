@@ -3,8 +3,8 @@ import apiHandler from "../api/apiHandler";
 import axios from "axios";
 import { store } from "./store";
 import { IIncome } from "./IncomeStore";
-import { IExpense } from "./ExpenseStore";
-import { ISavings } from "./SavingsStore";
+import { IExpense } from "./expenseStore";
+import { ISavings } from "./savingsStore";
 
 export interface IBudget {
   id: number;
@@ -59,12 +59,12 @@ const saving: ISavings = {
 export default class BudgetStore {
   budget: IBudget = budget;
   budgets = new Map<number, IBudget>();
-  income: IIncome = income
-  expense: IExpense = expense
-  saving: ISavings = saving
-  incomes: IIncome[] = []
-  expenses: IExpense[] = []
-  savings: ISavings[] = []
+  income: IIncome = income;
+  expense: IExpense = expense;
+  saving: ISavings = saving;
+  incomes: IIncome[] = [];
+  expenses: IExpense[] = [];
+  savings: ISavings[] = [];
 
   modal = false;
 
@@ -112,8 +112,11 @@ export default class BudgetStore {
       store.commonStore.setLoading(false);
       return this.budget;
     } catch (error) {
-      store.commonStore.setLoading(false);
-      console.log(error);
+      if (axios.isAxiosError(error) && error.response) {
+        store.commonStore.setAlert({ type: "error", message: error.message });
+        store.commonStore.setLoading(false);
+        throw new Error(error.response.data);
+      }
     }
   };
 
@@ -129,14 +132,38 @@ export default class BudgetStore {
 
       return this.budget;
     } catch (error) {
-      store.commonStore.setLoading(false);
-      console.log(error);
+      if (axios.isAxiosError(error) && error.response) {
+        store.commonStore.setAlert({ type: "error", message: error.message });
+        store.commonStore.setLoading(false);
+        throw new Error(error.response.data);
+      }
     }
   };
 
-  set_budget_modal = (state: boolean) => this.modal = state
+  delete_budget = async (budgetId: number) => {
+    try {
+      store.commonStore.setLoading(true);
+      await apiHandler.Budgets.delete(budgetId);
 
-  set_income = (newIncome: any) => { console.log(newIncome); this.income = newIncome}
+      runInAction(() => {
+        this.budgets.delete(budgetId);
+      });
+      store.commonStore.setLoading(false);
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        store.commonStore.setAlert({ type: "error", message: error.message });
+        store.commonStore.setLoading(false);
+        throw new Error(error.response.data);
+      }
+    }
+  };
 
-  add_income = (income: any) => this.incomes.push(income)  
+  set_budget_modal = (state: boolean) => (this.modal = state);
+
+  set_income = (newIncome: any) => {
+    console.log(newIncome);
+    this.income = newIncome;
+  };
+
+  add_income = (income: any) => this.incomes.push(income);
 }

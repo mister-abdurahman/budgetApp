@@ -1,17 +1,16 @@
-import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-
+import * as React from "react";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
 
 interface ITableProps {
   columns: Column[];
-  rows: any[]
+  rows: any[];
 }
 
 export interface Column {
@@ -20,7 +19,7 @@ export interface Column {
   minWidth?: number;
   align?: "left" | "right" | "center";
   format?: (value: number) => string;
-  render?: (data: any) => any;
+  render?: (index: number, data: any) => any;
 }
 
 export default function MUITable({ columns, rows }: ITableProps) {
@@ -31,13 +30,15 @@ export default function MUITable({ columns, rows }: ITableProps) {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
 
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+    <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -65,17 +66,15 @@ export default function MUITable({ columns, rows }: ITableProps) {
                       return (
                         <>
                           <TableCell key={column.id} align={column.align}>
-                            {column.render ? (column.render(row)) :
-                              (column.format && typeof value === 'number'
-                                ? column.format(value)
-                                : value)}
+                            {column.render
+                              ? column.render(index, row)
+                              : column.format && typeof value === "number"
+                              ? column.format(value)
+                              : value}
                           </TableCell>
-
                         </>
                       );
                     })}
-
-
                   </TableRow>
                 );
               })}
