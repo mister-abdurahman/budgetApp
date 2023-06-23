@@ -13,6 +13,9 @@ import placeHolder from "../../assets/profile-image-placeholder.png";
 import { MdSavings } from "react-icons/md";
 import './style.css';
 import Button from "../../components/Button/Button";
+import Modal from "../../components/Modal";
+import BudgetDetails from "../../pages/Budget/BudgetDetails";
+import { observer } from "mobx-react-lite";
 
 function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
   const { 
@@ -121,11 +124,21 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
           </main>
           <Footer />
         </div>
+        <Modal
+        page={
+          <BudgetDetails
+            handleModal={set_budget_modal}
+            title={"New Budget"}
+            isDetail={true}
+          />
+        }
+        isOpen={modal}
+      />
       </Drawer>
     </>
   );
 }
-export default Home;
+export default observer(Home);
 
 export const Logo = (props: any) => {
   return (

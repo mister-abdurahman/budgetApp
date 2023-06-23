@@ -5,7 +5,6 @@ import { store } from "./store";
 
 export interface IIncome {
   id: number;
-  name: string;
   description: string;
   amount: number;
   date: string;

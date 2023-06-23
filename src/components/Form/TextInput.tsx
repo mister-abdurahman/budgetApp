@@ -4,7 +4,7 @@ import { MdWarning } from "react-icons/md";
 
 export interface ITextInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string;
+  label?: string;
   valueSetter?: () => void;
   type?: string;
   icon?: JSX.Element;
@@ -34,7 +34,7 @@ function TextInput(props: ITextInputProps) {
           {meta.touched && meta.error ? (
             <label className="label">
               {/* <span className="label-text-alt"></span> */}
-              <span className="text-xs leading-3 text-rose-700 flex gap-2 items-center">
+              <span className="flex items-center gap-2 text-xs leading-3 text-rose-700">
                 {meta.error}
                 <MdWarning />
               </span>

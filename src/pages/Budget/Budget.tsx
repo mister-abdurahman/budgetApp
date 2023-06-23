@@ -5,11 +5,13 @@ import Modal from "../../components/Modal";
 import Button from "../../components/Button/Button";
 import MUITable, { Column } from "../../components/Table/Table";
 import BudgetDetails from "./BudgetDetails";
+import { GiCancel } from "react-icons/gi";
+import { MdCancel, MdDelete, MdDeleteForever } from "react-icons/md";
 
 export function Budget() {
   const {
     authStore: { user },
-    budgetStore: { load_budgets, budgetArrays, set_budget_modal, modal:bdModal },
+    budgetStore: { load_budgets, budgetArrays, set_budget_modal, modal: bdModal },
   } = useStore();
   // const {
   //     advisorStore: { load_advisors, select_advisor_by_id, savingsArrays },
@@ -28,10 +30,22 @@ export function Budget() {
     set_budget_modal(state);
   };
 
+  const handleDeleteBudget = (id: number) => {
+    console.log(id);
+    
+  }
+
   const columns: Column[] = [
     { id: "description", label: "Description", minWidth: 170 },
     { id: "amount", label: "Amount", minWidth: 170 },
     { id: "budgetId", label: "Budget Id", minWidth: 170 },
+    {
+      id: "action", 
+      align: "right",
+      label: "Action", 
+      minWidth: 170, 
+      render: (row) => <Button className="bg-rose-800" onClick={() => handleDeleteBudget(row.id)} icon={<MdDelete size={20} />}>Delete</Button>
+    },
   ];
 
   return (

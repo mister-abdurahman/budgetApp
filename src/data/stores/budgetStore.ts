@@ -2,6 +2,9 @@ import { makeAutoObservable, runInAction } from "mobx";
 import apiHandler from "../api/apiHandler";
 import axios from "axios";
 import { store } from "./store";
+import { IIncome } from "./IncomeStore";
+import { IExpense } from "./ExpenseStore";
+import { ISavings } from "./SavingsStore";
 
 export interface IBudget {
   id: number;
@@ -32,9 +35,36 @@ const budget: IBudget = {
   date: "",
 };
 
+const income: IIncome = {
+  id: 0,
+  description: "",
+  amount: 0,
+  date: "",
+};
+
+const expense: IExpense = {
+  id: 0,
+  description: "",
+  amount: 0,
+  date: "",
+};
+
+const saving: ISavings = {
+  id: 0,
+  description: "",
+  amount: 0,
+  date: "",
+};
+
 export default class BudgetStore {
   budget: IBudget = budget;
   budgets = new Map<number, IBudget>();
+  income: IIncome = income
+  expense: IExpense = expense
+  saving: ISavings = saving
+  incomes: IIncome[] = []
+  expenses: IExpense[] = []
+  savings: ISavings[] = []
 
   modal = false;
 
@@ -98,7 +128,9 @@ export default class BudgetStore {
     }
   };
 
-  set_budget_modal = (state: boolean) => {
-    this.modal = state
-  }
+  set_budget_modal = (state: boolean) => this.modal = state
+
+  set_income = (newIncome: any) => { console.log(newIncome); this.income = newIncome}
+
+  add_income = (income: any) => this.incomes.push(income)  
 }

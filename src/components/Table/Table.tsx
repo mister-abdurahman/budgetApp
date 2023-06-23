@@ -18,8 +18,9 @@ export interface Column {
   id: string;
   label: string;
   minWidth?: number;
-  align?: 'right';
+  align?: "left" | "right" | "center";
   format?: (value: number) => string;
+  render?: (data: any) => any;
 }
 
 export default function MUITable({ columns, rows }: ITableProps) {
@@ -43,9 +44,9 @@ export default function MUITable({ columns, rows }: ITableProps) {
             <TableRow>
               {columns.map((column) => (
                 <TableCell
-                sx={{backgroundColor: "#ac6cc7", color: "white"}}
+                  sx={{ backgroundColor: "#ac6cc7", color: "white" }}
                   key={column.id}
-                  align={column.align}
+                  align={column.align || "left"}
                   style={{ minWidth: column.minWidth }}
                 >
                   {column.label}
@@ -56,19 +57,25 @@ export default function MUITable({ columns, rows }: ITableProps) {
           <TableBody>
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
+              .map((row, index) => {
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
+                        <>
+                          <TableCell key={column.id} align={column.align}>
+                            {column.render ? (column.render(row)) :
+                              (column.format && typeof value === 'number'
+                                ? column.format(value)
+                                : value)}
+                          </TableCell>
+
+                        </>
                       );
                     })}
+
+
                   </TableRow>
                 );
               })}
