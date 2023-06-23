@@ -10,6 +10,13 @@ export interface IIncome {
   date: string;
 }
 
+const income: IIncome = {
+  id: 0,
+  description: "",
+  amount: 0,
+  date: "",
+};
+
 const dummyIncome = [
   {
     id: 1,
@@ -28,7 +35,7 @@ const dummyIncome = [
 ];
 
 export default class IncomeStore {
-  income: IIncome | null = null;
+  income: IIncome = income;
   incomes = new Map<number, IIncome>();
 
   constructor() {
@@ -62,7 +69,7 @@ export default class IncomeStore {
 
   get_income_by_id = async (id: number) => {
     if (store.commonStore.offline) {
-      this.income = dummyIncome.find((income) => income.id === id) || null;
+      this.income = dummyIncome.find((income) => income.id === id) || income;
     }
 
     try {
@@ -73,7 +80,7 @@ export default class IncomeStore {
     }
   };
 
-  create_college = async (income: IIncome) => {
+  create_income = async (income: IIncome) => {
     try {
       income = await apiHandler.Incomes.create(income);
 
