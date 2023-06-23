@@ -89,6 +89,10 @@ export default class IncomeStore {
     }
   };
 
+  select_income_by_id = (id: number) => {
+    this.income = this.incomes.get(id) || income;
+  };
+
   create_income = async (income: IIncome) => {
     try {
       store.commonStore.setLoading(true);

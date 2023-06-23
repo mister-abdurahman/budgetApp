@@ -7,7 +7,6 @@ import TextInput from "../../components/Form/TextInput";
 import { IBudget } from "../../data/stores/budgetStore";
 import * as Yup from "yup";
 import { Expenses } from "../Expenses/Expenses";
-import { useEffect } from "react";
 
 function SavingsEdit({
   handleModal,
@@ -20,12 +19,8 @@ function SavingsEdit({
 }) {
   const {
     savingsStore: { saving, create_savings },
-    budgetStore: { load_budgets, budgetArrays },
+    budgetStore: { budgetArrays },
   } = useStore();
-
-  // useEffect(() => {
-  //   load_budgets();
-  // }, [load_budgets]);
 
   const navigation = useNavigate();
 
@@ -82,30 +77,42 @@ function SavingsEdit({
             name="description"
             disabled={saving.id !== 0}
           />
-          {saving.id === 0 && (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <TextInput
+              type="number"
+              label="Amount"
+              id="amount"
+              name="amount"
+              disabled={saving.id !== 0}
+            />
+            <Select
+              id="budgetId"
+              name="budgetId"
+              options={budgetArrays}
+              optionSetter={(data) => data.description}
+              valueSetter={(data) => data.id}
+              label="Budget"
+              disabled={saving.id !== 0}
+            />
+            {saving.id == 0 && (
+              <TextInput type="date" label="Date" id="date" name="date" />
+            )}
+            {saving.id !== 0 && (
               <TextInput
-                type="number"
-                label="Amount"
-                id="amount"
-                name="amount"
-              />
-              <Select
-                id="budgetId"
-                name="budgetId"
-                options={budgetArrays}
-                optionSetter={(data) => data.description}
-                valueSetter={(data) => data.id}
-                label="Budget"
+                type="text"
+                label="Date"
+                id="date"
+                name="date"
                 disabled={saving.id !== 0}
               />
-              <TextInput type="date" label="Date" id="date" name="date" />
-            </div>
-          )}
+            )}
+          </div>
           <div className="modal-action">
-            <button type="submit" className="btn btn-neutral">
-              Save
-            </button>
+            {saving.id == 0 && (
+              <button type="submit" className="btn btn-neutral">
+                Save
+              </button>
+            )}
             <button
               type="button"
               className="btn"

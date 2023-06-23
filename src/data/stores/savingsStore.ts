@@ -87,6 +87,10 @@ export default class SavingsStore {
     }
   };
 
+  select_savings_by_id = (id: number) => {
+    this.saving = this.savings.get(id) || saving;
+  };
+
   create_savings = async (saving: ISavings) => {
     try {
       store.commonStore.setLoading(true);
