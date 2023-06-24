@@ -8,6 +8,7 @@ import { MdSavings } from "react-icons/md";
 import { FaMoneyBill } from "react-icons/fa";
 import LinearProgressWithLabel from "../../components/LinearProgress/LinearProgress";
 import List, { ListRow } from "../../components/List/List";
+import { Chart } from "../../components/Chart/Chart";
 
 function Dashboard() {
   const {
@@ -94,38 +95,47 @@ function Dashboard() {
           </div>
         </div>
       </div>
+      <div className="flex flex-wrap gap-4">
+        <div className="flex-1 space-y-5">
+          <div className="p-2 px-4 text-white rounded-md bg-neutral-700 max-w-96">
+            <h1>Budget Left</h1>
+            <LinearProgressWithLabel value={30} />
+          </div>
 
-      <div className="p-2 px-4 text-white rounded-md bg-neutral-700 w-96">
-        <h1>Budget Left</h1>
-        <LinearProgressWithLabel value={30} />
-      </div>
+          <div className="space-y-3">
+            <div className="font-semibold text-md">Recent Budget</div>
 
-      <div className="space-y-3">
-        <div className="font-semibold text-md">Recent Budget</div>
+            <List className="w-96">
+              <ListRow className="font-semibold">
+                <BsWalletFill size={20} className="text-neutral" />
+                <div className="grow">
+                  <h1>May - 2013</h1>
+                </div>
+                <h1>2000</h1>
+              </ListRow>
+              <ListRow className="font-semibold">
+                <BsWalletFill size={20} className="text-neutral" />
+                <div className="grow">
+                  <h1>June - 2013</h1>
+                </div>
+                <h1>2000</h1>
+              </ListRow>
+            </List>
 
-        <List className="w-96">
-          <ListRow className="font-semibold">
-            <BsWalletFill size={20} className="text-neutral" />
-            <div className="grow">
-              <h1>May - 2013</h1>
-            </div>
-            <h1>2000</h1>
-          </ListRow>
-          <ListRow className="font-semibold">
-            <BsWalletFill size={20} className="text-neutral" />
-            <div className="grow">
-              <h1>June - 2013</h1>
-            </div>
-            <h1>2000</h1>
-          </ListRow>
-        </List>
-
-        <Modal
-          page={
-            <ProfileDetail handleModal={handleCloseModal} title={"Profile"} />
-          }
-          isOpen={isOpen}
-        />
+            <Modal
+              page={
+                <ProfileDetail
+                  handleModal={handleCloseModal}
+                  title={"Profile"}
+                />
+              }
+              isOpen={isOpen}
+            />
+          </div>
+        </div>
+        <div className="flex-1 bg-white p-4 rounded-md">
+          <Chart />
+        </div>
       </div>
     </div>
   );
