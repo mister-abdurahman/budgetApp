@@ -6,7 +6,7 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-export async function tester(data: any) {
+export async function AppInsight(data: any) {
   const chatCompletion = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
     messages: [
@@ -18,5 +18,5 @@ export async function tester(data: any) {
       },
     ],
   });
-  return chatCompletion.data.choices[0].message;
+  return chatCompletion.data.choices[0].message?.content;
 }
