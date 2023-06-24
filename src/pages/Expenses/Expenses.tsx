@@ -141,7 +141,6 @@ export function Expenses() {
         page={
           <ExpenseDetails
             handleModal={handleCloseModal}
-            title={"New Expenses"}
             isDetail={true}
           />
         }

@@ -145,7 +145,6 @@ function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
           page={
             <BudgetDetails
               handleModal={set_budget_modal}
-              title={"New Budget"}
               isDetail={true}
             />
           }

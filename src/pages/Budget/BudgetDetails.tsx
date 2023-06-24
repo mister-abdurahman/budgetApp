@@ -80,7 +80,7 @@ function BudgetEdit({
       date: Yup.date().required("This field is required"),
     };
 
-    return budget.id === 0 ? update : create;
+    return budget.id !== 0 ? update : create;
   };
 
   const validationScheme = Yup.object(validation());
@@ -319,9 +319,9 @@ function BudgetEdit({
 
           <div className="modal-action">
             {/* if there is a button in form, it will close the modal */}
-            <button type="submit" className="btn btn-neutral">
+            {budget.id === 0 && <button type="submit" className="btn btn-neutral">
               Save
-            </button>
+            </button>}
             <button
               type="button"
               className="btn"
