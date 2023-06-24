@@ -5,6 +5,7 @@ import { store } from "./store";
 import { IIncome } from "./IncomeStore";
 import { IExpense } from "./expenseStore";
 import { ISavings } from "./savingsStore";
+import moment from "moment";
 
 export interface IBudget {
   id: number;
@@ -108,6 +109,7 @@ export default class BudgetStore {
 
       budgets.forEach((budget: IBudget) => {
         runInAction(() => {
+          budget.date = moment().format('MMMM Do YYYY, h:mm:ss a');
           this.budgets.set(budget.id, budget);
         });
       });
@@ -146,6 +148,10 @@ export default class BudgetStore {
         throw new Error(error.response.data);
       }
     }
+  };
+
+  select_budget_by_id = (id: number) => {
+    this.budget = this.budgets.get(id) || budget;
   };
 
   get_total_budget = async () => {

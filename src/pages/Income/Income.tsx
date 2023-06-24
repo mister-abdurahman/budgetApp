@@ -21,10 +21,7 @@ export function Incomes() {
     },
     budgetStore: { load_budgets },
   } = useStore();
-  // const {
-  //     advisorStore: { load_advisors, select_advisor_by_id, incomeArrays },
-  //     levelStore: { load_levels, levelArrays },
-  // } = useStore()
+  
   const navigation = useNavigate();
 
   useEffect(() => {
@@ -35,9 +32,8 @@ export function Incomes() {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpenModal = (state: boolean, id?: number) => {
-    console.log(state);
     select_income_by_id(id || 0);
-    setIsOpen(true);
+    setIsOpen(state);
   };
 
   const handleCloseModal = (state: boolean) => {

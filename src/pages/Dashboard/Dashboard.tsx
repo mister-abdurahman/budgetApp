@@ -19,8 +19,7 @@ function Dashboard() {
 
   useEffect(() => {
     get_total_budget();
-    console.log(user);
-  }, [user]);
+  }, [get_total_budget]);
 
   const [isOpen, setIsOpen] = useState(false);
 

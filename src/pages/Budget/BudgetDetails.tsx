@@ -121,7 +121,18 @@ function BudgetEdit({
               id="description"
               name="description"
             />
-            <TextInput type="date" label="Date" id="date" name="date" />
+            {budget.id !== 0 && (
+              <TextInput
+                type="text"
+                label="Date"
+                id="date"
+                name="date"
+                disabled
+              />
+            )}
+            {budget.id == 0 && (
+              <TextInput type="date" label="Date" id="date" name="date" />
+            )}
           </div>
 
           <div className="space-y-4">
