@@ -5,6 +5,7 @@ import { store } from "./store";
 import { IIncome } from "./IncomeStore";
 import { IExpense } from "./expenseStore";
 import { ISavings } from "./savingsStore";
+import moment from "moment";
 
 export interface IBudget {
   id: number;
@@ -13,7 +14,10 @@ export interface IBudget {
   date: string;
   incomes?: IIncome[];
   expenses?: IExpense[];
-  savings?: ISavings[];
+  savings?: ISavings[];  
+  totalIncome?: number,
+  totalExpenses?: number,
+  totalSavings?: number
 }
 
 export interface ITotalBudget {
@@ -22,7 +26,7 @@ export interface ITotalBudget {
   savings: number;
 }
 
-const dummyBudget = [
+const dummyBudget: IBudget[] = [
   {
     id: 1,
     description: "my money",
@@ -86,6 +90,7 @@ export default class BudgetStore {
   savings: ISavings[] = [];
 
   availableFunds = 0;
+  availableFundPercentage = 0
 
   modal = false;
 
@@ -103,11 +108,13 @@ export default class BudgetStore {
 
   load_budgets = async (param?: string) => {
     try {
+      this.budgets.clear();
       store.commonStore.setLoading(true);
       const budgets = await apiHandler.Budgets.list(param);
 
       budgets.forEach((budget: IBudget) => {
         runInAction(() => {
+          budget.date = moment().format('MMMM Do YYYY, h:mm:ss a');
           this.budgets.set(budget.id, budget);
         });
       });
@@ -146,6 +153,13 @@ export default class BudgetStore {
         throw new Error(error.response.data);
       }
     }
+  };
+
+  select_budget_by_id = (id: number) => {
+    this.budget = this.budgets.get(id) || budget;
+    this.incomes = this.budget.incomes!                                                                                               
+    this.expenses = this.budget.expenses!
+    this.savings = this.budget.savings!
   };
 
   get_total_budget = async () => {
@@ -247,5 +261,11 @@ export default class BudgetStore {
   budget_calculation = () => {
     const saving = this.savings.reduce((accu, { amount }) => { return accu + amount }, 0)
     return this.available_fund_calculation() - saving;
+  }
+
+  available_fund_percentage = () => {
+    const budget = {...this.budgetArrays[0]};
+    const available_funds = ((budget.totalIncome || 0) - (budget.totalExpenses || 0))
+    this.availableFundPercentage = (available_funds/(budget.totalIncome || 0))*100
   }
 }

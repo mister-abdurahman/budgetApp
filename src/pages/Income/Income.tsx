@@ -31,6 +31,7 @@ export function Incomes() {
   const handleOpenModal = (state: boolean, id?: number) => {
     select_income_by_id(id || 0);
     setIsOpen(state);
+    setIsOpen(state);
   };
 
   const handleCloseModal = (state: boolean) => {

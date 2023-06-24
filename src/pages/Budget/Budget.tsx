@@ -5,13 +5,17 @@ import Modal from "../../components/Modal";
 import Button from "../../components/Button/Button";
 import MUITable, { Column } from "../../components/Table/Table";
 import BudgetDetails from "./BudgetDetails";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdSavings } from "react-icons/md";
 import { GiWallet } from "react-icons/gi";
+import { BsLink } from "react-icons/bs";
+import { FaCoins } from "react-icons/fa";
+import { BiMoney } from "react-icons/bi";
 
 export function Budget() {
   const {
     budgetStore: {
       load_budgets,
+      select_budget_by_id,
       delete_budget,
       budgetArrays,
       set_budget_modal,
@@ -23,8 +27,12 @@ export function Budget() {
     load_budgets();
   }, [load_budgets]);
 
-  const handleOpenModal = (state: boolean) => {
+  const handleOpenModal = (state: boolean, id?: number) => {
+    console.log(id);
+    
+    select_budget_by_id(id || 0);
     set_budget_modal(state);
+    
   };
 
   const handleCloseModal = (state: boolean) => {
@@ -48,20 +56,50 @@ export function Budget() {
       },
     },
     {
-      id: "description",
-      label: "Description",
-      minWidth: 180,
-      render: (index, data) => {
+      id: "description", label: "Description", minWidth: 180, render: (index, data) => {
         console.log(index);
+        
         return (
           <div className="flex items-center gap-3">
-            <GiWallet className="text-neutral" size={20} />
+            <GiWallet className="text-neutral" size={20}  />
             {data.description}
           </div>
         );
       },
     },
-    { id: "amount", label: "Amount", minWidth: 100 },
+    {
+      id: "total_expenses", label: "Total Expenses", minWidth: 180, render: (index, data) => {
+        console.log(index);
+
+        return (
+          <div className="flex items-center gap-3">
+            <FaCoins className="text-neutral" size={20} />
+            {data.totalExpenses}
+          </div>
+        )
+      }
+    },
+    {
+      id: "total_expenses", label: "Total Incomes", minWidth: 180, render: (index, data) => {
+        console.log(index);
+        return (
+          <div className="flex items-center gap-3">
+            <BiMoney className="text-neutral" size={20} />
+            {data.totalIncome}
+          </div>
+        )
+      }
+    },
+    {
+      id: "total_expenses", label: "Total Savings", minWidth: 180, render: (index, data) => {
+        return (
+          <div className="flex items-center gap-3">
+            <MdSavings className="text-neutral" size={20} />
+            {data.totalSavings}
+          </div>
+        )
+      }
+    },
     {
       id: "action",
       align: "right",
@@ -70,12 +108,21 @@ export function Budget() {
       render: (index, row) => {
         console.log(index);
         return (
-          <Button
-            onClick={() => handleDeleteBudget(row.id)}
-            icon={<MdDelete size={20} />}
-          >
-            Delete
-          </Button>
+          <>
+            <Button
+              className="m-2"
+              onClick={() => handleOpenModal(true, row.id)}
+              icon={<BsLink className="w-5 h-5" />}
+            >
+              View
+            </Button>
+            <Button
+              onClick={() => handleDeleteBudget(row.id)}
+              icon={<MdDelete size={20} />}
+            >
+              Delete
+            </Button>
+          </>
         );
       },
     },

@@ -30,6 +30,7 @@
     "mobx": "^6.9.0",
     "mobx-react": "^7.6.0",
     "mobx-react-lite": "^3.4.3",
+    "moment": "^2.29.4",
     "nanostores": "^0.8.1",
     "openai": "^3.3.0",
     "postcss": "^8.4.23",

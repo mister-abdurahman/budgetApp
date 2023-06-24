@@ -10,17 +10,20 @@ import LinearProgressWithLabel from "../../components/LinearProgress/LinearProgr
 import List, { ListRow } from "../../components/List/List";
 import { observer } from "mobx-react-lite";
 import { Chart } from "../../components/Chart/Chart";
+import { BiArrowFromLeft } from "react-icons/bi";
+import Button from "../../components/Button/Button";
+import { Link } from "react-router-dom";
 
 function Dashboard() {
   const {
     authStore: { user },
-    budgetStore: { get_total_budget, total_budget },
+    budgetStore: { load_budgets, get_total_budget, total_budget, budgetArrays, available_fund_percentage, availableFundPercentage },
   } = useStore();
 
   useEffect(() => {
     get_total_budget();
-    console.log(user);
-  }, [user]);
+    load_budgets("take=5").then(() => available_fund_percentage())
+  }, [get_total_budget]);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -94,28 +97,24 @@ function Dashboard() {
       <div className="flex flex-wrap gap-4">
         <div className="flex-1 space-y-5">
           <div className="p-2 px-4 text-white rounded-md bg-neutral-700 max-w-96">
-            <h1>Budget Left</h1>
-            <LinearProgressWithLabel value={30} />
+            <h1>Available Funds</h1>
+            <LinearProgressWithLabel value={availableFundPercentage} />
           </div>
 
           <div className="space-y-3">
             <div className="font-semibold text-md">Recent Budget</div>
 
             <List className="w-96">
-              <ListRow className="font-semibold">
+              {budgetArrays.map((x, index)=> {
+                return(<ListRow key={index} className="font-semibold">
                 <BsWalletFill size={20} className="text-neutral" />
                 <div className="grow">
-                  <h1>May - 2013</h1>
+                  <h1 className="capitalize">{x.description}</h1>
                 </div>
-                <h1>2000</h1>
-              </ListRow>
-              <ListRow className="font-semibold">
-                <BsWalletFill size={20} className="text-neutral" />
-                <div className="grow">
-                  <h1>June - 2013</h1>
-                </div>
-                <h1>2000</h1>
-              </ListRow>
+                <h1>{((x.totalIncome || 0) - (x.totalExpenses || 0)) - (x.totalSavings || 0)}</h1>
+              </ListRow>)
+              })}            
+              <Link to="/budgets"><Button className="w-full" icon={<BiArrowFromLeft/>} >View More</Button></Link>
             </List>
 
             <Modal

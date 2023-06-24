@@ -121,7 +121,18 @@ function BudgetEdit({
               id="description"
               name="description"
             />
-            <TextInput type="date" label="Date" id="date" name="date" />
+            {budget.id !== 0 && (
+              <TextInput
+                type="text"
+                label="Date"
+                id="date"
+                name="date"
+                disabled
+              />
+            )}
+            {budget.id == 0 && (
+              <TextInput type="date" label="Date" id="date" name="date" />
+            )}
           </div>
 
           <div className="space-y-4">
@@ -136,7 +147,7 @@ function BudgetEdit({
                     <div className="grow">
                       <h1>{x.description}</h1>
                     </div>
-                    <h1>{x.amount}</h1>
+                    <h1>&#8358;{x.amount}</h1>
                     <MdDelete
                       className="cursor-pointer"
                       onClick={() => remove_income(index)}
@@ -152,7 +163,7 @@ function BudgetEdit({
                         set_income({ ...income, description: e.target.value })
                       }
                       className="w-full input input-bordered"
-                      placeholder="Enter Income"
+                      placeholder="Income Description"
                     />
                   </div>
                   <div className="w-full form-control">
@@ -192,7 +203,7 @@ function BudgetEdit({
                     <div className="grow">
                       <h1>{x.description}</h1>
                     </div>
-                    <h1>{x.amount}</h1>
+                    <h1>&#8358;{x.amount}</h1>
                     <MdDelete
                       className="cursor-pointer"
                       onClick={() => remove_expense(index)}
@@ -208,7 +219,7 @@ function BudgetEdit({
                         set_expense({ ...expense, description: e.target.value })
                       }
                       className="w-full input input-bordered"
-                      placeholder="Enter Income"
+                      placeholder="Expense Description"
                     />
                   </div>
                   <div className="w-full form-control">
@@ -248,7 +259,7 @@ function BudgetEdit({
                     <div className="grow">
                       <h1>{x.description}</h1>
                     </div>
-                    <h1>{x.amount}</h1>
+                    <h1>&#8358;{x.amount}</h1>
                     <MdDelete
                       className="cursor-pointer"
                       onClick={() => remove_saving(index)}
@@ -264,7 +275,7 @@ function BudgetEdit({
                         set_saving({ ...saving, description: e.target.value })
                       }
                       className="w-full input input-bordered"
-                      placeholder="Enter Income"
+                      placeholder="Saving Description"
                     />
                   </div>
                   <div className="w-full form-control">
@@ -296,13 +307,13 @@ function BudgetEdit({
           </div>
           <div className="flex flex-wrap justify-between gap-5">
             <h1 className="text-xl font-bold mt-">
-              Available Funds: {available_fund_calculation()}
+              Available Funds: &#8358;{available_fund_calculation()}
             </h1>
             <h1 className="text-xl font-bold mt-">
-              Saving: {saving_calculation()}
+              Saving: &#8358;{saving_calculation()}
             </h1>
             <h1 className="text-xl font-bold mt-">
-              Budget: {budget_calculation()}
+              Budget: &#8358;{budget_calculation()}
             </h1>
           </div>
 
