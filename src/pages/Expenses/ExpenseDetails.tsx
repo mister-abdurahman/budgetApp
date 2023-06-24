@@ -82,30 +82,44 @@ function ExpenseEdit({
             name="description"
             disabled={expense.id !== 0}
           />
-          {expense.id === 0 && (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <TextInput
-                type="number"
-                label="Amount"
-                id="amount"
-                name="amount"
-              />
-              <Select
-                id="budgetId"
-                name="budgetId"
-                options={budgetArrays}
-                optionSetter={(data) => data.description}
-                valueSetter={(data) => data.id}
-                label="Budget"
-                disabled={expense.id !== 0}
-              />
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <TextInput
+              type="number"
+              label="Amount"
+              id="amount"
+              name="amount"
+              disabled={expense.id !== 0}
+            />
+            <Select
+              id="budgetId"
+              name="budgetId"
+              options={budgetArrays}
+              optionSetter={(data) => data.description}
+              valueSetter={(data) => data.id}
+              label="Budget"
+              disabled={expense.id !== 0}
+            />
+            {expense.id == 0 && (
               <TextInput type="date" label="Date" id="date" name="date" />
-            </div>
-          )}
+            )}
+            {expense.id !== 0 && (
+              <TextInput
+                type="text"
+                label="Date"
+                id="date"
+                name="date"
+                disabled
+              />
+            )}
+          </div>
+
           <div className="modal-action">
-            <button type="submit" className="btn btn-neutral">
-              Save
-            </button>
+            {expense.id == 0 && (
+              <button type="submit" className="btn btn-neutral">
+                Save
+              </button>
+            )}
             <button
               type="button"
               className="btn"

@@ -14,29 +14,28 @@ import List, { ListRow } from "../../components/List/List";
 function Dashboard() {
   const {
     authStore: { user },
-    expenseStore: { load_expenses, expenseArrays }
-  } = useStore()
+    expenseStore: { load_expenses, expenseArrays },
+  } = useStore();
 
   useEffect(() => {
     load_expenses();
     console.log(user);
-  }, [user])
+  }, [user]);
 
-
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleOpenModal = (state: boolean, id?: string) => {
     setIsOpen(state);
-  }
+  };
 
   const handleCloseModal = (state: boolean) => {
     setIsOpen(state);
-  }
+  };
 
   const columns: Column[] = [
-    { id: 'description', label: 'Description', minWidth: 170 },
-    { id: 'amount', label: 'Amount', minWidth: 170 },
-    { id: 'budgetId', label: 'Budget Id', minWidth: 170 },
+    { id: "description", label: "Description", minWidth: 170 },
+    { id: "amount", label: "Amount", minWidth: 170 },
+    { id: "budgetId", label: "Budget Id", minWidth: 170 },
     // {
     //   id: 'density',
     //   label: 'Density',
@@ -47,38 +46,51 @@ function Dashboard() {
   ];
 
   return (
-    <div className='space-y-6'>
+    <div className="space-y-6">
       <UserInfo type="vertical" handleModal={handleOpenModal} user={user} />
 
       <div className="flex flex-wrap grid-cols-3 gap-5">
         <div className="grid items-center overflow-hidden bg-white rounded-lg shadow-md w-80">
           <div className="flex items-center gap-3 p-5 bg-white">
-            <div className="grid w-12 h-12 text-white rounded-lg bg-neutral place-items-center"><MdSavings size={20} /></div>
+            <div className="grid w-12 h-12 text-white rounded-lg bg-neutral place-items-center">
+              <MdSavings size={20} />
+            </div>
             <div className="grow">
               <div className="font-semibold text-gray-500 text-md">Savings</div>
-              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">100,000</h1>
+              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+                100,000
+              </h1>
             </div>
           </div>
         </div>
 
         <div className="grid items-center overflow-hidden bg-white rounded-lg shadow-md w-80">
           <div className="flex items-center gap-3 p-5">
-            <div className="grid w-12 h-12 text-white rounded-lg bg-success place-items-center"><MdSavings size={20} /></div>
+            <div className="grid w-12 h-12 text-white rounded-lg bg-success place-items-center">
+              <MdSavings size={20} />
+            </div>
             <div className="grow">
               <div className="font-semibold text-gray-500 text-md">Income</div>
-              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">200,000</h1>
-
+              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+                200,000
+              </h1>
             </div>
           </div>
         </div>
 
         <div className="grid items-center overflow-hidden bg-white rounded-lg shadow-md w-80">
           <div className="flex items-center gap-3 p-5 bg-white">
-            <div className="grid w-12 h-12 text-white rounded-lg bg-rose-600 place-items-center"><FaMoneyBill size={20} /></div>
+            <div className="grid w-12 h-12 text-white rounded-lg bg-rose-600 place-items-center">
+              <FaMoneyBill size={20} />
+            </div>
             <div className="grow">
-              <div className="font-semibold text-gray-500 text-md">Expenses</div>
+              <div className="font-semibold text-gray-500 text-md">
+                Expenses
+              </div>
               <div className="text-lg font-semibold text-gray-700"></div>
-              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">150,000</h1>
+              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+                150,000
+              </h1>
             </div>
           </div>
         </div>
@@ -94,14 +106,14 @@ function Dashboard() {
 
         <List className="w-96">
           <ListRow className="font-semibold">
-            <BsWalletFill size={20} className='text-neutral' />
+            <BsWalletFill size={20} className="text-neutral" />
             <div className="grow">
               <h1>May - 2013</h1>
             </div>
             <h1>2000</h1>
           </ListRow>
           <ListRow className="font-semibold">
-            <BsWalletFill size={20} className='text-neutral' />
+            <BsWalletFill size={20} className="text-neutral" />
             <div className="grow">
               <h1>June - 2013</h1>
             </div>
@@ -109,11 +121,15 @@ function Dashboard() {
           </ListRow>
         </List>
 
-
-        <Modal page={<ProfileDetail handleModal={handleCloseModal} title={"Profile"} />} isOpen={isOpen} />
+        <Modal
+          page={
+            <ProfileDetail handleModal={handleCloseModal} title={"Profile"} />
+          }
+          isOpen={isOpen}
+        />
       </div>
     </div>
-  )
+  );
 }
 
-export default Dashboard
+export default Dashboard;
