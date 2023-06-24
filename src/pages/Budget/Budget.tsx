@@ -53,19 +53,25 @@ export function Budget() {
       },
     },
     {
-      id: "description", label: "Description", minWidth: 180, render: (index, data) => {
+      id: "description",
+      label: "Description",
+      minWidth: 180,
+      render: (index, data) => {
         console.log(index);
-        
+
         return (
           <div className="flex items-center gap-3">
-            <GiWallet className="text-neutral" size={20}  />
+            <GiWallet className="text-neutral" size={20} />
             {data.description}
           </div>
         );
       },
     },
     {
-      id: "total_expenses", label: "Total Expenses", minWidth: 180, render: (index, data) => {
+      id: "total_expenses",
+      label: "Total Expenses",
+      minWidth: 180,
+      render: (index, data) => {
         console.log(index);
 
         return (
@@ -73,19 +79,22 @@ export function Budget() {
             <FaCoins className="text-neutral" size={20} />
             {data.totalExpenses}
           </div>
-        )
-      }
+        );
+      },
     },
     {
-      id: "total_expenses", label: "Total Incomes", minWidth: 180, render: (index, data) => {
+      id: "total_expenses",
+      label: "Total Incomes",
+      minWidth: 180,
+      render: (index, data) => {
         console.log(index);
         return (
           <div className="flex items-center gap-3">
             <BiMoney className="text-neutral" size={20} />
             {data.totalIncome}
           </div>
-        )
-      }
+        );
+      },
     },
     {
       id: "total_expenses", label: "Total Savings", minWidth: 180, render: (index, data) => {
@@ -95,8 +104,8 @@ export function Budget() {
             <MdSavings className="text-neutral" size={20} />
             {data.totalSavings}
           </div>
-        )
-      }
+        );
+      },
     },
     {
       id: "action",
