@@ -44,7 +44,7 @@ export function Incomes() {
   };
 
   const handleDeleteIncome = (id: number) => {
-    delete_income(id).then(() => navigation(0));
+    delete_income(id);
   };
 
   const columns: Column[] = [

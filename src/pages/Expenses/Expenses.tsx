@@ -47,7 +47,7 @@ export function Expenses() {
   };
 
   const handleDeleteExpense = (id: number) => {
-    delete_expense(id).then(() => navigation(0));
+    delete_expense(id);
   };
 
   const columns: Column[] = [

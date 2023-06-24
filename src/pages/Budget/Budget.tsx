@@ -39,7 +39,7 @@ export function Budget() {
 
   const handleDeleteBudget = (id: number) => {
     console.log(typeof id);
-    delete_budget(id).then(() => navigation(0));
+    delete_budget(id);
   };
 
   const columns: Column[] = [

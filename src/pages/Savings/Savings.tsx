@@ -43,7 +43,7 @@ export function Savings() {
   };
 
   const handleDeleteSavings = (id: number) => {
-    delete_savings(id).then(() => navigation(0));
+    delete_savings(id);
   };
 
   const columns: Column[] = [
