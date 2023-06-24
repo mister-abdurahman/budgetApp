@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AppInsight } from "../../data/services/openAI";
 import { useStore } from "../../data/stores/store";
+import { observer } from "mobx-react-lite";
 
 function BudgetInsight({
     handleModal,
@@ -14,7 +15,7 @@ function BudgetInsight({
             app_insight,
             insight
         },
-      } = useStore();
+    } = useStore();
 
     useEffect(() => {
         app_insight(data)
@@ -30,10 +31,12 @@ function BudgetInsight({
             >
                 ✕
             </label>
-            <h1 className="mb-4 text-xl font-bold">
-                Budget Insight
+            <h1 className="mb-4 text-xl font-bold ">
+                Budget Insight - Powered By AI
             </h1>
-            {insight}
+            <p className="whitespace-pre-wrap">
+                {insight}
+            </p>
             <div className="modal-action">
                 <button
                     type="button"
@@ -47,4 +50,4 @@ function BudgetInsight({
     )
 }
 
-export default BudgetInsight
+export default observer(BudgetInsight)

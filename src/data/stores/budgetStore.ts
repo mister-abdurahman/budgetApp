@@ -281,8 +281,15 @@ export default class BudgetStore {
     this.availableFundPercentage = (available_funds / (budget.totalIncome || 0)) * 100
   }
 
-  app_insight = async (data: any) => {
+  app_insight = async (input: any) => {
+    store.commonStore.setLoading(true);
+
+    const data = {
+      "income": this.incomes,
+      "expenses": this.expenses,
+      "savings": this.savings
+    }
     this.insight = await AppInsight(data) || "";
-    console.log(this.insight);    
+    store.commonStore.setLoading(false);
   }
 }

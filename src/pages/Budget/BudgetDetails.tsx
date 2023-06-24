@@ -321,11 +321,11 @@ function BudgetEdit({
               Budget: &#8358;{budget_calculation()}
             </h1>
           </div>
-          <Button onClick={() => setModal(true)}>Optimize Budget Using AI</Button>
+          <Button type="button" onClick={() => setModal(true)}>Optimize Budget Using AI</Button>
 
           <Modal
             page={
-              <BudgetInsight handleModal={setModal} />
+              <BudgetInsight data={budget} handleModal={setModal} />
             }
             isOpen={modal}
           />
