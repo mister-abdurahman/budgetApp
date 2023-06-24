@@ -8,9 +8,7 @@ import TextInput from "../../components/Form/TextInput";
 import * as Yup from "yup";
 import { IUser } from "../../data/stores/userStore";
 import { useStore } from "../../data/stores/store";
-import { Logo } from "../Home/Home";
 import { GiDart } from "react-icons/gi";
-// import { Logo } from "../Home/Home";
 
 interface IAuthProps {
   handleSetSignUp: (isSignUp: boolean) => void;
