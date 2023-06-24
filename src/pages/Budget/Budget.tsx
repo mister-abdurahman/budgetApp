@@ -6,7 +6,6 @@ import Button from "../../components/Button/Button";
 import MUITable, { Column } from "../../components/Table/Table";
 import BudgetDetails from "./BudgetDetails";
 import { MdDelete } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
 import { GiWallet } from "react-icons/gi";
 
 export function Budget() {
@@ -19,8 +18,6 @@ export function Budget() {
       modal: bdModal,
     },
   } = useStore();
-
-  const navigation = useNavigate();
 
   useEffect(() => {
     load_budgets();
@@ -51,14 +48,18 @@ export function Budget() {
       },
     },
     {
-      id: "description", label: "Description", minWidth: 180, render: (index, data) => {
+      id: "description",
+      label: "Description",
+      minWidth: 180,
+      render: (index, data) => {
+        console.log(index);
         return (
           <div className="flex items-center gap-3">
-            <GiWallet className="text-neutral" size={20}/>
+            <GiWallet className="text-neutral" size={20} />
             {data.description}
           </div>
-        )
-      }
+        );
+      },
     },
     { id: "amount", label: "Amount", minWidth: 100 },
     {
