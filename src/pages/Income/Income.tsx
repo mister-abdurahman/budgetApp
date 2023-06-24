@@ -7,7 +7,6 @@ import { BsLink } from "react-icons/bs";
 import MUITable, { Column } from "../../components/Table/Table";
 import IncomeDetails from "./IncomeDetails";
 import { MdDelete } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
 import { BiMoney } from "react-icons/bi";
 import { GiWallet } from "react-icons/gi";
 
@@ -21,8 +20,6 @@ export function Incomes() {
     },
     budgetStore: { load_budgets },
   } = useStore();
-  
-  const navigation = useNavigate();
 
   useEffect(() => {
     load_incomes();
@@ -34,15 +31,15 @@ export function Incomes() {
   const handleOpenModal = (state: boolean, id?: number) => {
     select_income_by_id(id || 0);
     setIsOpen(state);
+    setIsOpen(state);
   };
 
   const handleCloseModal = (state: boolean) => {
-    console.log(state);
-    setIsOpen(false);
+    setIsOpen(state);
   };
 
   const handleDeleteIncome = (id: number) => {
-    delete_income(id).then(() => navigation(0));
+    delete_income(id);
   };
 
   const columns: Column[] = [
@@ -57,37 +54,46 @@ export function Incomes() {
       },
     },
     {
-      id: "budget", label: "BudgetId", minWidth: 180, render: (index, data) => {
+      id: "budget",
+      label: "BudgetId",
+      minWidth: 180,
+      render: (index, data) => {
         console.log(index);
         return (
           <div className="flex items-center gap-3">
             <GiWallet className="text-neutral" size={20} />
             {data.budget.description}
           </div>
-        )
-      }
+        );
+      },
     },
     {
-      id: "description", label: "Description", minWidth: 180, render: (index, data) => {
+      id: "description",
+      label: "Description",
+      minWidth: 180,
+      render: (index, data) => {
         console.log(index);
         return (
           <div className="flex items-center gap-3">
             <BiMoney className="text-neutral" size={20} />
             {data.description}
           </div>
-        )
-      }
+        );
+      },
     },
     {
-      id: "amount", label: "Amount", minWidth: 100, render: (index, data) => {
+      id: "amount",
+      label: "Amount",
+      minWidth: 100,
+      render: (index, data) => {
         console.log(index);
         return (
           <div className="flex items-center gap-3">
             &#8358;
             {data.amount}
           </div>
-        )
-      }
+        );
+      },
     },
     {
       id: "action",
@@ -122,7 +128,8 @@ export function Incomes() {
       {/* <UserInfo type="vertical" handleModal={handleOpenModal} user={user} /> */}
       <div className="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm">
         <div className="grow">
-          <h1 className="flex items-center gap-3 text-2xl font-bold text-gray-900 sm:text-2xl"><BiMoney className="text-neutral" size={30} />
+          <h1 className="flex items-center gap-3 text-2xl font-bold text-gray-900 sm:text-2xl">
+            <BiMoney className="text-neutral" size={30} />
             <span className="capitalize">Incomes</span>{" "}
           </h1>
         </div>
