@@ -6,13 +6,9 @@ import Select from "../../components/Form/Select";
 import TextInput from "../../components/Form/TextInput";
 import { IBudget } from "../../data/stores/budgetStore";
 import * as Yup from "yup";
-import { Expenses } from "../Expenses/Expenses";
-import { useEffect } from "react";
 
 function IncomeEdit({
   handleModal,
-  title,
-  isDetail,
 }: {
   handleModal: (state: boolean) => void;
   title?: string;
@@ -20,7 +16,7 @@ function IncomeEdit({
 }) {
   const {
     incomeStore: { income, create_income },
-    budgetStore: { load_budgets, budgetArrays },
+    budgetStore: { budgetArrays },
   } = useStore();
 
   // useEffect(() => {

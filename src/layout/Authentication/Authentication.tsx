@@ -19,14 +19,19 @@ function Authentication({
 }: {
   children: JSX.Element[] | JSX.Element;
 }) {
-  const { authStore, commonStore } = useStore();
+  const { authStore } = useStore();
   const { cookie } = authStore;
 
   const [signUp, setSignUp] = useState(false);
 
   return (
     <>
-      {cookie !== null || (signUp ? <SignUp handleSetSignUp={setSignUp} /> : <SignIn handleSetSignUp={setSignUp} />)}
+      {cookie !== null ||
+        (signUp ? (
+          <SignUp handleSetSignUp={setSignUp} />
+        ) : (
+          <SignIn handleSetSignUp={setSignUp} />
+        ))}
       {cookie === null || children}
     </>
   );
@@ -35,8 +40,8 @@ function Authentication({
 export default Authentication;
 
 export const SignIn = observer(({ handleSetSignUp }: IAuthProps) => {
-  const { authStore } = useStore()
-  const { handleUserSignIn } = authStore
+  const { authStore } = useStore();
+  const { handleUserSignIn } = authStore;
   const navigation = useNavigate();
 
   const [signIn, setSignIn] = useState({
@@ -47,15 +52,15 @@ export const SignIn = observer(({ handleSetSignUp }: IAuthProps) => {
   const handleSignIn = (e: React.FormEvent) => {
     e.preventDefault();
 
-    handleUserSignIn(signIn).then(user => {
-      if (user) navigation('/dashboard');
+    handleUserSignIn(signIn).then((user) => {
+      if (user) navigation("/dashboard");
     });
 
     setSignIn({
       username: "",
-      password: ""
-    })
-  }
+      password: "",
+    });
+  };
 
   return (
     <>
@@ -73,7 +78,8 @@ export const SignIn = observer(({ handleSetSignUp }: IAuthProps) => {
 
           <form
             onSubmit={handleSignIn}
-            className="p-4 mt-6 mb-0 space-y-4 bg-white rounded-lg shadow-lg sm:p-6 lg:p-8">
+            className="p-4 mt-6 mb-0 space-y-4 bg-white rounded-lg shadow-lg sm:p-6 lg:p-8"
+          >
             <p className="text-lg font-medium text-center">
               Sign in to your account
             </p>

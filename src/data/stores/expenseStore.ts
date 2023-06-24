@@ -88,6 +88,10 @@ export default class ExpenseStore {
     }
   };
 
+  select_expense_by_id = (id: number) => {
+    this.expense = this.expenses.get(id) || expense;
+  };
+
   create_expense = async (expense: IExpense) => {
     try {
       store.commonStore.setLoading(true);

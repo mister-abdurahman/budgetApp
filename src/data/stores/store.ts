@@ -3,9 +3,9 @@ import { UserStore } from "./userStore";
 import CommonStore from "./commonStore";
 import AuthStore from "./authStore";
 import BudgetStore from "./budgetStore";
-import ExpenseStore from "./ExpenseStore";
+import ExpenseStore from "./expenseStore";
 import IncomeStore from "./IncomeStore";
-import SavingsStore from "./SavingsStore";
+import SavingsStore from "./savingsStore";
 
 interface IStore {
   commonStore: CommonStore;

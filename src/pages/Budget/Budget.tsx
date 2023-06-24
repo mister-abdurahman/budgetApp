@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 
 export function Budget() {
   const {
-    authStore: { user },
     budgetStore: {
       load_budgets,
       delete_budget,
@@ -30,7 +29,7 @@ export function Budget() {
     load_budgets();
   }, [load_budgets]);
 
-  const handleOpenModal = (state: boolean, id?: string) => {
+  const handleOpenModal = (state: boolean) => {
     set_budget_modal(state);
   };
 
@@ -49,7 +48,10 @@ export function Budget() {
       align: "left",
       label: "S/N",
       minWidth: 120,
-      render: (index, row) => <h1>{index + 1}</h1>,
+      render: (index, row) => {
+        console.log(row);
+        return <h1>{index + 1}</h1>;
+      },
     },
     { id: "description", label: "Description", minWidth: 180 },
     { id: "amount", label: "Amount", minWidth: 100 },
@@ -58,14 +60,17 @@ export function Budget() {
       align: "right",
       label: "Action",
       minWidth: 140,
-      render: (index, row) => (
-        <Button
-          onClick={() => handleDeleteBudget(row.id)}
-          icon={<MdDelete size={20} />}
-        >
-          Delete
-        </Button>
-      ),
+      render: (index, row) => {
+        console.log(index);
+        return (
+          <Button
+            onClick={() => handleDeleteBudget(row.id)}
+            icon={<MdDelete size={20} />}
+          >
+            Delete
+          </Button>
+        );
+      },
     },
   ];
 
@@ -78,7 +83,7 @@ export function Budget() {
             <span className="capitalize">Budget</span>{" "}
           </h1>
         </div>
-        <Button onClick={() => handleOpenModal(true, user.id)} className="">
+        <Button onClick={() => handleOpenModal(true)} className="">
           Create Budget
         </Button>
       </div>

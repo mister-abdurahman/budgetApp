@@ -6,12 +6,10 @@ import Select from "../../components/Form/Select";
 import TextInput from "../../components/Form/TextInput";
 import { IBudget } from "../../data/stores/budgetStore";
 import * as Yup from "yup";
-import { Expenses } from "../Expenses/Expenses";
 
 function SavingsEdit({
   handleModal,
   title,
-  isDetail,
 }: {
   handleModal: (state: boolean) => void;
   title?: string;
