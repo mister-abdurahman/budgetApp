@@ -2,12 +2,14 @@ import { makeAutoObservable, runInAction } from "mobx";
 import apiHandler from "../api/apiHandler";
 import axios from "axios";
 import { store } from "./store";
+import { IBudget } from "./budgetStore";
 
 export interface IExpense {
   id: number;
   description: string;
   amount: number;
   date: string;
+  budget?: IBudget
 }
 
 const expense: IExpense = {

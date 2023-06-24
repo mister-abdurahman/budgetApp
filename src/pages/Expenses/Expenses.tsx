@@ -8,6 +8,8 @@ import MUITable, { Column } from "../../components/Table/Table";
 import ExpenseDetails from "./ExpenseDetails";
 import { MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { FaCoins } from "react-icons/fa";
+import { GiWallet } from "react-icons/gi";
 
 export function Expenses() {
   const {
@@ -29,8 +31,8 @@ export function Expenses() {
 
   useEffect(() => {
     load_expenses();
-    load_budgets();
-  }, [load_expenses]);
+    load_budgets("getCompleteData=false");
+  }, [load_budgets, load_expenses]);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -61,8 +63,39 @@ export function Expenses() {
         return <h1>{index + 1}</h1>;
       },
     },
-    { id: "description", label: "Description", minWidth: 180 },
-    { id: "amount", label: "Amount", minWidth: 100 },
+    {
+      id: "budget", label: "BudgetId", minWidth: 180, render: (index, data) => {
+        console.log(index);
+        return (
+          <div className="flex items-center gap-3">
+            <GiWallet className="text-neutral" size={20} />
+            {data.budget.description}
+          </div>
+        )
+      }
+    },
+    {
+      id: "description", label: "Description", minWidth: 180, render: (index, data) => {
+        console.log(index);
+        return (
+          <div className="flex items-center gap-3">
+            <FaCoins className="text-neutral" size={20} />
+            {data.description}
+          </div>
+        )
+      }
+    },
+    {
+      id: "amount", label: "Amount", minWidth: 100, render: (index, data) => {
+        console.log(index);
+        return (
+          <div className="flex items-center gap-3">
+            &#8358;
+            {data.amount}
+          </div>
+        )
+      }
+    },
     {
       id: "action",
       align: "right",
@@ -73,7 +106,7 @@ export function Expenses() {
         return (
           <>
             <Button
-              className="m-4"
+              className="m-2"
               onClick={() => handleOpenModal(true, row.id)}
               icon={<BsLink className="w-5 h-5" />}
             >
@@ -96,7 +129,7 @@ export function Expenses() {
       {/* <UserInfo type="vertical" handleModal={handleOpenModal} user={user} /> */}
       <div className="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm">
         <div className="grow">
-          <h1 className="text-2xl font-bold text-gray-900 sm:text-2xl">
+          <h1 className="flex items-center gap-3 text-2xl font-bold text-gray-900 sm:text-2xl"><FaCoins className="text-neutral" size={30} />
             <span className="capitalize">Expenses</span>{" "}
           </h1>
         </div>

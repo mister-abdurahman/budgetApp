@@ -7,6 +7,7 @@ import MUITable, { Column } from "../../components/Table/Table";
 import BudgetDetails from "./BudgetDetails";
 import { MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { GiWallet } from "react-icons/gi";
 
 export function Budget() {
   const {
@@ -18,10 +19,6 @@ export function Budget() {
       modal: bdModal,
     },
   } = useStore();
-  // const {
-  //     advisorStore: { load_advisors, select_advisor_by_id, savingsArrays },
-  //     levelStore: { load_levels, levelArrays },
-  // } = useStore()
 
   const navigation = useNavigate();
 
@@ -53,7 +50,16 @@ export function Budget() {
         return <h1>{index + 1}</h1>;
       },
     },
-    { id: "description", label: "Description", minWidth: 180 },
+    {
+      id: "description", label: "Description", minWidth: 180, render: (index, data) => {
+        return (
+          <div className="flex items-center gap-3">
+            <GiWallet className="text-neutral" size={20}/>
+            {data.description}
+          </div>
+        )
+      }
+    },
     { id: "amount", label: "Amount", minWidth: 100 },
     {
       id: "action",
@@ -79,8 +85,9 @@ export function Budget() {
       {/* <UserInfo type="vertical" handleModal={handleOpenModal} user={user} /> */}
       <div className="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm">
         <div className="grow">
-          <h1 className="text-2xl font-bold text-gray-900 sm:text-2xl">
-            <span className="capitalize">Budget</span>{" "}
+          <h1 className="flex items-center gap-3 text-2xl font-bold text-gray-900 sm:text-2xl">
+            <GiWallet className="text-neutral" size={30} />
+            <span className="capitalize">Budget</span>
           </h1>
         </div>
         <Button onClick={() => handleOpenModal(true)} className="">

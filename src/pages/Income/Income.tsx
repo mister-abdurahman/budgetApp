@@ -8,6 +8,8 @@ import MUITable, { Column } from "../../components/Table/Table";
 import IncomeDetails from "./IncomeDetails";
 import { MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { BiMoney } from "react-icons/bi";
+import { GiWallet } from "react-icons/gi";
 
 export function Incomes() {
   const {
@@ -27,8 +29,8 @@ export function Incomes() {
 
   useEffect(() => {
     load_incomes();
-    load_budgets();
-  }, [load_incomes]);
+    load_budgets("getCompleteData=false");
+  }, [load_budgets, load_incomes]);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -58,8 +60,39 @@ export function Incomes() {
         return <h1>{index + 1}</h1>;
       },
     },
-    { id: "description", label: "Description", minWidth: 180 },
-    { id: "amount", label: "Amount", minWidth: 100 },
+    {
+      id: "budget", label: "BudgetId", minWidth: 180, render: (index, data) => {
+        console.log(index);
+        return (
+          <div className="flex items-center gap-3">
+            <GiWallet className="text-neutral" size={20} />
+            {data.budget.description}
+          </div>
+        )
+      }
+    },
+    {
+      id: "description", label: "Description", minWidth: 180, render: (index, data) => {
+        console.log(index);
+        return (
+          <div className="flex items-center gap-3">
+            <BiMoney className="text-neutral" size={20} />
+            {data.description}
+          </div>
+        )
+      }
+    },
+    {
+      id: "amount", label: "Amount", minWidth: 100, render: (index, data) => {
+        console.log(index);
+        return (
+          <div className="flex items-center gap-3">
+            &#8358;
+            {data.amount}
+          </div>
+        )
+      }
+    },
     {
       id: "action",
       align: "right",
@@ -70,7 +103,7 @@ export function Incomes() {
         return (
           <>
             <Button
-              className="m-4"
+              className="m-2"
               onClick={() => handleOpenModal(true, row.id)}
               icon={<BsLink className="w-5 h-5" />}
             >
@@ -93,7 +126,7 @@ export function Incomes() {
       {/* <UserInfo type="vertical" handleModal={handleOpenModal} user={user} /> */}
       <div className="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm">
         <div className="grow">
-          <h1 className="text-2xl font-bold text-gray-900 sm:text-2xl">
+          <h1 className="flex items-center gap-3 text-2xl font-bold text-gray-900 sm:text-2xl"><BiMoney className="text-neutral" size={30} />
             <span className="capitalize">Incomes</span>{" "}
           </h1>
         </div>
