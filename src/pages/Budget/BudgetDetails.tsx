@@ -88,7 +88,7 @@ function BudgetEdit({
 
   const validationScheme = Yup.object(validation());
 
-  const [modal, setModal] = useState(false)
+  const [modal, setModal] = useState(false);
 
   return (
     <>
@@ -321,20 +321,22 @@ function BudgetEdit({
               Budget: &#8358;{budget_calculation()}
             </h1>
           </div>
-          <Button type="button" onClick={() => setModal(true)}>Optimize Budget Using AI</Button>
+          <Button type="button" onClick={() => setModal(true)}>
+            Optimize Budget Using AI
+          </Button>
 
           <Modal
-            page={
-              <BudgetInsight data={budget} handleModal={setModal} />
-            }
+            page={<BudgetInsight handleModal={setModal} />}
             isOpen={modal}
           />
 
           <div className="modal-action">
             {/* if there is a button in form, it will close the modal */}
-            {budget.id === 0 && <button type="submit" className="btn btn-neutral">
-              Save
-            </button>}
+            {budget.id === 0 && (
+              <button type="submit" className="btn btn-neutral">
+                Save
+              </button>
+            )}
             <button
               type="button"
               className="btn"
