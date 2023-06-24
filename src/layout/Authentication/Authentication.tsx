@@ -8,6 +8,8 @@ import TextInput from "../../components/Form/TextInput";
 import * as Yup from "yup";
 import { IUser } from "../../data/stores/userStore";
 import { useStore } from "../../data/stores/store";
+import { Logo } from "../Home/Home";
+import { GiDart } from "react-icons/gi";
 // import { Logo } from "../Home/Home";
 
 interface IAuthProps {
@@ -64,9 +66,15 @@ export const SignIn = observer(({ handleSetSignUp }: IAuthProps) => {
 
   return (
     <>
-      <div className="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8 bg-[url('/src/assets/bg-image.jpg')]">
+      <div className="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
         <div className="max-w-lg mx-auto">
           {/* <Logo className="object-cover mx-auto" /> */}
+          <div
+            className={`flex items-center justify-center gap-2 font-bold stroke-2 text-gray-700 m-4 p-4 mb-5`}
+          >
+            <GiDart size={40} className="text-neutral" />{" "}
+            <span className="text-3xl text-neutral">MoneySmart</span>
+          </div>
           <p className="max-w-md mx-auto mt-4 text-center text-gray-500">
             Welcome to <span className="font-bold">Money Smart Budget App</span>
           </p>
@@ -170,7 +178,12 @@ export const SignUp = observer(
       <>
         <div className="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
           <div className="max-w-lg mx-auto">
-            {/* <Logo className="mx-auto" /> */}
+            <div
+              className={`flex items-center justify-center gap-2 font-bold stroke-2 text-gray-700 m-4 p-4 mb-5`}
+            >
+              <GiDart size={40} className="text-neutral" />{" "}
+              <span className="text-3xl text-neutral">MoneySmart</span>
+            </div>
 
             <p className="max-w-md mx-auto mt-4 text-center text-gray-500">
               Welcome to{" "}

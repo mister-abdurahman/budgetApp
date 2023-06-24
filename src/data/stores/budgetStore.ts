@@ -14,7 +14,7 @@ export interface IBudget {
   date: string;
   incomes?: IIncome[];
   expenses?: IExpense[];
-  savings?: ISavings[];  
+  savings?: ISavings[];
   totalIncome?: number,
   totalExpenses?: number,
   totalSavings?: number
@@ -114,7 +114,7 @@ export default class BudgetStore {
 
       budgets.forEach((budget: IBudget) => {
         runInAction(() => {
-          budget.date = moment().format('MMMM Do YYYY, h:mm:ss a');
+          budget.date = moment(budget.date).format('MMMM Do YYYY');
           this.budgets.set(budget.id, budget);
         });
       });
@@ -139,7 +139,7 @@ export default class BudgetStore {
       this.budget = await apiHandler.Budgets.detail(id);
 
       runInAction(() => {
-        this.incomes = this.budget.incomes!                                                                                               
+        this.incomes = this.budget.incomes!
         this.expenses = this.budget.expenses!
         this.savings = this.budget.savings!
         store.commonStore.setLoading(false);
@@ -156,10 +156,19 @@ export default class BudgetStore {
   };
 
   select_budget_by_id = (id: number) => {
-    this.budget = this.budgets.get(id) || budget;
-    this.incomes = this.budget.incomes!                                                                                               
-    this.expenses = this.budget.expenses!
-    this.savings = this.budget.savings!
+
+    if (id == 0) {
+      this.budget = budget
+      this.incomes = []
+      this.expenses = []
+      this.savings = []
+    }
+    else {
+      this.budget = this.budgets.get(id) || budget;
+      this.incomes = this.budget.incomes!
+      this.expenses = this.budget.expenses!
+      this.savings = this.budget.savings!
+    }
   };
 
   get_total_budget = async () => {
@@ -169,7 +178,7 @@ export default class BudgetStore {
 
       store.commonStore.setLoading(false);
       return this.budget;
-      
+
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         store.commonStore.setAlert({ type: "error", message: error.message });
@@ -264,8 +273,8 @@ export default class BudgetStore {
   }
 
   available_fund_percentage = () => {
-    const budget = {...this.budgetArrays[0]};
+    const budget = { ...this.budgetArrays[0] };
     const available_funds = ((budget.totalIncome || 0) - (budget.totalExpenses || 0))
-    this.availableFundPercentage = (available_funds/(budget.totalIncome || 0))*100
+    this.availableFundPercentage = (available_funds / (budget.totalIncome || 0)) * 100
   }
 }

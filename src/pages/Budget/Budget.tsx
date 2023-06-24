@@ -27,11 +27,9 @@ export function Budget() {
     load_budgets();
   }, [load_budgets]);
 
-  const handleOpenModal = (state: boolean, id?: number) => {
-    console.log(id);
-
+  const handleOpenModal = (state: boolean, id?: number) => {    
     select_budget_by_id(id || 0);
-    set_budget_modal(state);
+    set_budget_modal(state);    
   };
 
   const handleCloseModal = (state: boolean) => {
@@ -99,11 +97,8 @@ export function Budget() {
       },
     },
     {
-      id: "total_expenses",
-      label: "Total Savings",
-      minWidth: 180,
-      render: (index, data) => {
-        console.log(index);
+      id: "total_expenses", label: "Total Savings", minWidth: 180, render: (index, data) => {
+        console.log(index);        
         return (
           <div className="flex items-center gap-3">
             <MdSavings className="text-neutral" size={20} />
@@ -159,8 +154,6 @@ export function Budget() {
         page={
           <BudgetDetails
             handleModal={handleCloseModal}
-            title={"New Budget"}
-            isDetail={true}
           />
         }
         isOpen={bdModal}

@@ -140,7 +140,6 @@ export function Savings() {
         page={
           <SavingsDetails
             handleModal={handleCloseModal}
-            title={"New Savings"}
             isDetail={true}
           />
         }
