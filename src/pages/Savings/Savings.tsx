@@ -28,14 +28,12 @@ export function Savings() {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpenModal = (state: boolean, id?: number) => {
-    console.log(state);
     select_savings_by_id(id || 0);
-    setIsOpen(true);
+    setIsOpen(state);
   };
 
   const handleCloseModal = (state: boolean) => {
-    console.log(state);
-    setIsOpen(false);
+    setIsOpen(state);
   };
 
   const handleDeleteSavings = (id: number) => {

@@ -29,15 +29,12 @@ export function Expenses() {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpenModal = (state: boolean, id?: number) => {
-    // set_budget_modal(state);
-    console.log(state);
     select_expense_by_id(id || 0);
-    setIsOpen(true);
+    setIsOpen(state);
   };
 
-  const handleCloseModal = () => {
-    // set_budget_modal(state);
-    setIsOpen(false);
+  const handleCloseModal = (state: boolean) => {
+    setIsOpen(state);
   };
 
   const handleDeleteExpense = (id: number) => {

@@ -29,14 +29,12 @@ export function Incomes() {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpenModal = (state: boolean, id?: number) => {
-    console.log(state);
     select_income_by_id(id || 0);
-    setIsOpen(true);
+    setIsOpen(state);
   };
 
   const handleCloseModal = (state: boolean) => {
-    console.log(state);
-    setIsOpen(false);
+    setIsOpen(state);
   };
 
   const handleDeleteIncome = (id: number) => {
