@@ -33,11 +33,13 @@ export function Incomes() {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpenModal = (state: boolean, id?: number) => {
+    console.log(state);
     select_income_by_id(id || 0);
     setIsOpen(true);
   };
 
   const handleCloseModal = (state: boolean) => {
+    console.log(state);
     setIsOpen(false);
   };
 
@@ -51,7 +53,10 @@ export function Incomes() {
       align: "left",
       label: "S/N",
       minWidth: 120,
-      render: (index, row) => <h1>{index + 1}</h1>,
+      render: (index, row) => {
+        console.log(row);
+        return <h1>{index + 1}</h1>;
+      },
     },
     { id: "description", label: "Description", minWidth: 180 },
     { id: "amount", label: "Amount", minWidth: 100 },
@@ -60,23 +65,26 @@ export function Incomes() {
       align: "right",
       label: "Action",
       minWidth: 140,
-      render: (index, row) => (
-        <>
-          <Button
-            className="m-4"
-            onClick={() => handleOpenModal(true, row.id)}
-            icon={<BsLink className="w-5 h-5" />}
-          >
-            View
-          </Button>
-          <Button
-            onClick={() => handleDeleteIncome(row.id)}
-            icon={<MdDelete size={20} />}
-          >
-            Delete
-          </Button>
-        </>
-      ),
+      render: (index, row) => {
+        console.log(index);
+        return (
+          <>
+            <Button
+              className="m-4"
+              onClick={() => handleOpenModal(true, row.id)}
+              icon={<BsLink className="w-5 h-5" />}
+            >
+              View
+            </Button>
+            <Button
+              onClick={() => handleDeleteIncome(row.id)}
+              icon={<MdDelete size={20} />}
+            >
+              Delete
+            </Button>
+          </>
+        );
+      },
     },
   ];
 

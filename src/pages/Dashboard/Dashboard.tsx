@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useStore } from "../../data/stores/store";
 import UserInfo from "../../components/UserInfo/UserInfo";
-import { Column } from "../../components/Table/Table";
 import Modal from "../../components/Modal/Modal";
 import ProfileDetail from "../Profile/ProfileDetail";
 import { BsWalletFill } from "react-icons/bs";
@@ -24,6 +23,7 @@ function Dashboard() {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpenModal = (state: boolean, id?: string) => {
+    console.log(id);
     setIsOpen(state);
   };
 
