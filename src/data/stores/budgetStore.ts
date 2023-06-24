@@ -114,6 +114,9 @@ export default class BudgetStore {
     try {
       store.commonStore.setLoading(true);
       this.budget = await apiHandler.Incomes.detail(id);
+      this.incomes = this.budget.incomes!                                                                                               
+      this.expenses = this.budget.expenses!
+      this.savings = this.budget.savings!
       store.commonStore.setLoading(false);
       return this.budget;
     } catch (error) {
