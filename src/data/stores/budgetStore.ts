@@ -101,10 +101,10 @@ export default class BudgetStore {
     }
   }
 
-  load_budgets = async () => {
+  load_budgets = async (param?: string) => {
     try {
       store.commonStore.setLoading(true);
-      const budgets = await apiHandler.Budgets.list();
+      const budgets = await apiHandler.Budgets.list(param);
 
       budgets.forEach((budget: IBudget) => {
         runInAction(() => {
@@ -152,7 +152,7 @@ export default class BudgetStore {
     try {
       store.commonStore.setLoading(true);
       this.total_budget = await apiHandler.Budgets.total_budget();
-      
+
       store.commonStore.setLoading(false);
       return this.budget;
       

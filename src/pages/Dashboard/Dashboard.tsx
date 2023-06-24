@@ -58,9 +58,7 @@ function Dashboard() {
             </div>
             <div className="grow">
               <div className="font-semibold text-gray-500 text-md">Savings</div>
-              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
-                {total_budget.savings}
-              </h1>
+              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">&#8358;{total_budget.savings}</h1>
             </div>
           </div>
         </div>
@@ -72,9 +70,8 @@ function Dashboard() {
             </div>
             <div className="grow">
               <div className="font-semibold text-gray-500 text-md">Income</div>
-              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
-                {total_budget.incomes}
-              </h1>
+              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">&#8358;{total_budget.incomes}</h1>
+
             </div>
           </div>
         </div>
@@ -89,9 +86,7 @@ function Dashboard() {
                 Expenses
               </div>
               <div className="text-lg font-semibold text-gray-700"></div>
-              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
-                {total_budget.expenses}
-              </h1>
+              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">&#8358;{total_budget.expenses}</h1>
             </div>
           </div>
         </div>
@@ -134,7 +129,7 @@ function Dashboard() {
             />
           </div>
         </div>
-        <div className="flex-1 bg-white p-4 rounded-md">
+        <div className="flex-1 p-4 bg-white rounded-md">
           <Chart />
         </div>
       </div>
