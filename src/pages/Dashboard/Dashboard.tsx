@@ -17,12 +17,19 @@ import { Link } from "react-router-dom";
 function Dashboard() {
   const {
     authStore: { user },
-    budgetStore: { load_budgets, get_total_budget, total_budget, budgetArrays, available_fund_percentage, availableFundPercentage },
+    budgetStore: {
+      load_budgets,
+      get_total_budget,
+      total_budget,
+      budgetArrays,
+      available_fund_percentage,
+      availableFundPercentage,
+    },
   } = useStore();
 
   useEffect(() => {
     get_total_budget();
-    load_budgets("take=5").then(() => available_fund_percentage())
+    load_budgets("take=5").then(() => available_fund_percentage());
   }, [get_total_budget]);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -61,7 +68,9 @@ function Dashboard() {
             </div>
             <div className="grow">
               <div className="font-semibold text-gray-500 text-md">Savings</div>
-              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">&#8358;{total_budget.savings}</h1>
+              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+                &#8358;{total_budget.savings}
+              </h1>
             </div>
           </div>
         </div>
@@ -73,8 +82,9 @@ function Dashboard() {
             </div>
             <div className="grow">
               <div className="font-semibold text-gray-500 text-md">Income</div>
-              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">&#8358;{total_budget.incomes}</h1>
-
+              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+                &#8358;{total_budget.incomes}
+              </h1>
             </div>
           </div>
         </div>
@@ -89,7 +99,9 @@ function Dashboard() {
                 Expenses
               </div>
               <div className="text-lg font-semibold text-gray-700"></div>
-              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">&#8358;{total_budget.expenses}</h1>
+              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+                &#8358;{total_budget.expenses}
+              </h1>
             </div>
           </div>
         </div>
@@ -105,16 +117,26 @@ function Dashboard() {
             <div className="font-semibold text-md">Recent Budget</div>
 
             <List className="w-96">
-              {budgetArrays.map((x, index)=> {
-                return(<ListRow key={index} className="font-semibold">
-                <BsWalletFill size={20} className="text-neutral" />
-                <div className="grow">
-                  <h1 className="capitalize">{x.description}</h1>
-                </div>
-                <h1>{((x.totalIncome || 0) - (x.totalExpenses || 0)) - (x.totalSavings || 0)}</h1>
-              </ListRow>)
-              })}            
-              <Link to="/budgets"><Button className="w-full" icon={<BiArrowFromLeft/>} >View More</Button></Link>
+              {budgetArrays.map((x, index) => {
+                return (
+                  <ListRow key={index} className="font-semibold">
+                    <BsWalletFill size={20} className="text-neutral" />
+                    <div className="grow">
+                      <h1 className="capitalize">{x.description}</h1>
+                    </div>
+                    <h1>
+                      {(x.totalIncome || 0) -
+                        (x.totalExpenses || 0) -
+                        (x.totalSavings || 0)}
+                    </h1>
+                  </ListRow>
+                );
+              })}
+              <Link to="/budgets">
+                <Button className="w-full" icon={<BiArrowFromLeft />}>
+                  View More
+                </Button>
+              </Link>
             </List>
 
             <Modal
@@ -129,7 +151,7 @@ function Dashboard() {
           </div>
         </div>
         <div className="flex-1 p-4 bg-white rounded-md">
-          <Chart />
+          <Chart dataArray={budgetArrays} />
         </div>
       </div>
     </div>
