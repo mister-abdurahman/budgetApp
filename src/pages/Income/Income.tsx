@@ -1,19 +1,9 @@
-import { HiSortDescending } from "react-icons/hi";
-import Avatar from "../../components/Avatar";
-import Dropdown from "../../components/Dropdown";
-import List, { ListRow } from "../../components/List/List";
 import { useStore } from "../../data/stores/store";
-import TextInput from "../../components/Form/TextInput";
-import { Form, Formik } from "formik";
-import { BiPlusCircle, BiSearch } from "react-icons/bi";
-import CheckboxGroup from "../../components/CheckboxGroup/CheckboxGroup";
 import { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
-// import AdvisorEdit from "./AdvisorEdit";
 import Modal from "../../components/Modal";
 import Button from "../../components/Button/Button";
 import { BsLink } from "react-icons/bs";
-import UserInfo from "../../components/UserInfo/UserInfo";
 import MUITable, { Column } from "../../components/Table/Table";
 import IncomeDetails from "./IncomeDetails";
 import { MdDelete } from "react-icons/md";
@@ -21,14 +11,13 @@ import { useNavigate } from "react-router-dom";
 
 export function Incomes() {
   const {
-    authStore: { user },
     incomeStore: {
       load_incomes,
       select_income_by_id,
       incomeArrays,
       delete_income,
     },
-    budgetStore: { load_budgets, budgetArrays },
+    budgetStore: { load_budgets },
   } = useStore();
   // const {
   //     advisorStore: { load_advisors, select_advisor_by_id, incomeArrays },
@@ -44,13 +33,11 @@ export function Incomes() {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpenModal = (state: boolean, id?: number) => {
-    // set_budget_modal(state);
     select_income_by_id(id || 0);
     setIsOpen(true);
   };
 
   const handleCloseModal = (state: boolean) => {
-    // set_budget_modal(state);
     setIsOpen(false);
   };
 

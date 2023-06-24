@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { useStore } from "../../data/stores/store";
 import UserInfo from "../../components/UserInfo/UserInfo";
-import { HiOutlineUsers } from "react-icons/hi";
-import MUITable, { Column } from "../../components/Table/Table";
+import { Column } from "../../components/Table/Table";
 import Modal from "../../components/Modal/Modal";
 import ProfileDetail from "../Profile/ProfileDetail";
-import { BsWallet2, BsWalletFill } from "react-icons/bs";
-import { MdSavings, MdWallet } from "react-icons/md";
+import { BsWalletFill } from "react-icons/bs";
+import { MdSavings } from "react-icons/md";
 import { FaMoneyBill } from "react-icons/fa";
 import LinearProgressWithLabel from "../../components/LinearProgress/LinearProgress";
 import List, { ListRow } from "../../components/List/List";
@@ -14,7 +13,7 @@ import List, { ListRow } from "../../components/List/List";
 function Dashboard() {
   const {
     authStore: { user },
-    expenseStore: { load_expenses, expenseArrays },
+    expenseStore: { load_expenses },
   } = useStore();
 
   useEffect(() => {
@@ -32,18 +31,18 @@ function Dashboard() {
     setIsOpen(state);
   };
 
-  const columns: Column[] = [
-    { id: "description", label: "Description", minWidth: 170 },
-    { id: "amount", label: "Amount", minWidth: 170 },
-    { id: "budgetId", label: "Budget Id", minWidth: 170 },
-    // {
-    //   id: 'density',
-    //   label: 'Density',
-    //   minWidth: 170,
-    //   align: 'right',
-    //   format: (value: number) => value.toFixed(2),
-    // },
-  ];
+  // const columns: Column[] = [
+  //   { id: "description", label: "Description", minWidth: 170 },
+  //   { id: "amount", label: "Amount", minWidth: 170 },
+  //   { id: "budgetId", label: "Budget Id", minWidth: 170 },
+  //   // {
+  //   //   id: 'density',
+  //   //   label: 'Density',
+  //   //   minWidth: 170,
+  //   //   align: 'right',
+  //   //   format: (value: number) => value.toFixed(2),
+  //   // },
+  // ];
 
   return (
     <div className="space-y-6">

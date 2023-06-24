@@ -1,13 +1,12 @@
-import { BiCopyright } from "react-icons/bi";
 import { RiDashboardLine } from "react-icons/ri";
 import { FaCoins, FaMoneyBill } from "react-icons/fa";
 import { useStore } from "../../data/stores/store";
 import { HiLogout } from "react-icons/hi";
 import Drawer from "../../components/Drawer/Drawer";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Navbar, { NavbarCenterMenu, NavbarMenu } from "../Navbar/Navbar";
 import Dropdown from "../../components/Dropdown/Dropdown";
-import { BsGearWide, BsWalletFill } from "react-icons/bs";
+import { BsWalletFill } from "react-icons/bs";
 import { GiDart } from "react-icons/gi";
 import placeHolder from "../../assets/profile-image-placeholder.png";
 import { MdSavings } from "react-icons/md";

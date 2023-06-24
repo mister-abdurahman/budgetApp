@@ -1,19 +1,9 @@
-import { HiSortDescending } from "react-icons/hi";
-import Avatar from "../../components/Avatar";
-import Dropdown from "../../components/Dropdown";
-import List, { ListRow } from "../../components/List/List";
 import { useStore } from "../../data/stores/store";
-import TextInput from "../../components/Form/TextInput";
-import { Form, Formik } from "formik";
-import { BiPlusCircle, BiSearch } from "react-icons/bi";
-import CheckboxGroup from "../../components/CheckboxGroup/CheckboxGroup";
 import { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
-// import AdvisorEdit from "./AdvisorEdit";
 import Modal from "../../components/Modal";
 import Button from "../../components/Button/Button";
 import { BsLink } from "react-icons/bs";
-import UserInfo from "../../components/UserInfo/UserInfo";
 import MUITable, { Column } from "../../components/Table/Table";
 import ExpenseDetails from "./ExpenseDetails";
 import { MdDelete } from "react-icons/md";
@@ -28,7 +18,7 @@ export function Expenses() {
       expenseArrays,
       delete_expense,
     },
-    budgetStore: { load_budgets, budgetArrays },
+    budgetStore: { load_budgets },
   } = useStore();
 
   // const {
@@ -51,7 +41,7 @@ export function Expenses() {
     setIsOpen(true);
   };
 
-  const handleCloseModal = (state: boolean) => {
+  const handleCloseModal = () => {
     // set_budget_modal(state);
     setIsOpen(false);
   };

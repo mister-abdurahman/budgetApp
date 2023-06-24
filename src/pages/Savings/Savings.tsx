@@ -11,14 +11,13 @@ import { BsLink } from "react-icons/bs";
 
 export function Savings() {
   const {
-    authStore: { user },
     savingsStore: {
       load_savings,
       savingsArrays,
       delete_savings,
       select_savings_by_id,
     },
-    budgetStore: { load_budgets, budgetArrays },
+    budgetStore: { load_budgets },
   } = useStore();
 
   const navigation = useNavigate();
