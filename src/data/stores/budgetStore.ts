@@ -14,7 +14,10 @@ export interface IBudget {
   date: string;
   incomes?: IIncome[];
   expenses?: IExpense[];
-  savings?: ISavings[];
+  savings?: ISavings[];  
+  totalIncome?: number,
+  totalExpenses?: number,
+  totalSavings?: number
 }
 
 export interface ITotalBudget {
@@ -23,7 +26,7 @@ export interface ITotalBudget {
   savings: number;
 }
 
-const dummyBudget = [
+const dummyBudget: IBudget[] = [
   {
     id: 1,
     description: "my money",
@@ -104,6 +107,7 @@ export default class BudgetStore {
 
   load_budgets = async (param?: string) => {
     try {
+      this.budgets.clear();
       store.commonStore.setLoading(true);
       const budgets = await apiHandler.Budgets.list(param);
 
@@ -152,6 +156,9 @@ export default class BudgetStore {
 
   select_budget_by_id = (id: number) => {
     this.budget = this.budgets.get(id) || budget;
+    this.incomes = this.budget.incomes!                                                                                               
+    this.expenses = this.budget.expenses!
+    this.savings = this.budget.savings!
   };
 
   get_total_budget = async () => {
