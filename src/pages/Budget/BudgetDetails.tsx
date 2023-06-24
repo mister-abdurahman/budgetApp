@@ -85,7 +85,7 @@ function BudgetEdit({
         ) => {
           console.log(values);
           create_budget(values)
-          .then(() => navigation(0));
+          // .then(() => navigation(0));
           setSubmitting(false);
         }}
       >

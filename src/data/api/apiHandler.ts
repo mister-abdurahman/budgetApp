@@ -3,7 +3,7 @@ import { IUser } from "../stores/userStore";
 import { IIncome } from "../stores/IncomeStore";
 import { IExpense } from "../stores/expenseStore";
 import { ISavings } from "../stores/savingsStore";
-import { IBudget } from "../stores/budgetStore";
+import { IBudget, ITotalBudget } from "../stores/budgetStore";
 
 // axios.defaults.baseURL = "https://localhost:7265/api/v1";
 axios.defaults.baseURL = "https://api-fgbmfi-clone.azurewebsites.net/api/v1";
@@ -53,6 +53,7 @@ const Incomes = {
 const Budgets = {
   list: (param?: string) => request.get<IBudget[]>(`/budgets?${param || ""}`),
   detail: (id: number) => request.get<IBudget>(`/budgets/${id}`),
+  total_budget: () => request.get<ITotalBudget>(`/budgets/total_budget`),
   create: (budget: IBudget) => request.post<IBudget>(`/budgets`, budget),
   update: (id: string, budget: IBudget) =>
     request.post<IBudget>(`/budgets/${id}`, budget),

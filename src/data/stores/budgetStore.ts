@@ -16,6 +16,12 @@ export interface IBudget {
   savings?: ISavings[];
 }
 
+export interface ITotalBudget {
+  incomes: number;
+  expenses: number;
+  savings: number;
+}
+
 const dummyBudget = [
   {
     id: 1,
@@ -36,6 +42,12 @@ const budget: IBudget = {
   description: "",
   amount: 0,
   date: "",
+};
+
+const total_budget: ITotalBudget = {
+  incomes: 0,
+  expenses: 0,
+  savings: 0,
 };
 
 const income: IIncome = {
@@ -59,9 +71,13 @@ const saving: ISavings = {
   date: "",
 };
 
+
+
 export default class BudgetStore {
   budget: IBudget = budget;
   budgets = new Map<number, IBudget>();
+  total_budget: ITotalBudget = total_budget
+
   income: IIncome = income;
   expense: IExpense = expense;
   saving: ISavings = saving;
@@ -113,12 +129,33 @@ export default class BudgetStore {
 
     try {
       store.commonStore.setLoading(true);
-      this.budget = await apiHandler.Incomes.detail(id);
-      this.incomes = this.budget.incomes!                                                                                               
-      this.expenses = this.budget.expenses!
-      this.savings = this.budget.savings!
+      this.budget = await apiHandler.Budgets.detail(id);
+
+      runInAction(() => {
+        this.incomes = this.budget.incomes!                                                                                               
+        this.expenses = this.budget.expenses!
+        this.savings = this.budget.savings!
+        store.commonStore.setLoading(false);
+      })
+      return this.budget;
+
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        store.commonStore.setAlert({ type: "error", message: error.message });
+        store.commonStore.setLoading(false);
+        throw new Error(error.response.data);
+      }
+    }
+  };
+
+  get_total_budget = async () => {
+    try {
+      store.commonStore.setLoading(true);
+      this.total_budget = await apiHandler.Budgets.total_budget();
+      
       store.commonStore.setLoading(false);
       return this.budget;
+      
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         store.commonStore.setAlert({ type: "error", message: error.message });

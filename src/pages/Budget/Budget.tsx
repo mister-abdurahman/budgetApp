@@ -1,12 +1,11 @@
 import { useStore } from "../../data/stores/store";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import Modal from "../../components/Modal";
 import Button from "../../components/Button/Button";
 import MUITable, { Column } from "../../components/Table/Table";
 import BudgetDetails from "./BudgetDetails";
-import { GiCancel } from "react-icons/gi";
-import { MdCancel, MdDelete, MdDeleteForever } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 export function Budget() {

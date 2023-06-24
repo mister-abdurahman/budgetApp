@@ -10,15 +10,16 @@ import { MdSavings, MdWallet } from "react-icons/md";
 import { FaMoneyBill } from "react-icons/fa";
 import LinearProgressWithLabel from "../../components/LinearProgress/LinearProgress";
 import List, { ListRow } from "../../components/List/List";
+import { observer } from "mobx-react-lite";
 
 function Dashboard() {
   const {
     authStore: { user },
-    expenseStore: { load_expenses, expenseArrays }
+    budgetStore: {get_total_budget, total_budget}
   } = useStore()
 
   useEffect(() => {
-    load_expenses();
+    get_total_budget()
     console.log(user);
   }, [user])
 
@@ -56,7 +57,7 @@ function Dashboard() {
             <div className="grid w-12 h-12 text-white rounded-lg bg-neutral place-items-center"><MdSavings size={20} /></div>
             <div className="grow">
               <div className="font-semibold text-gray-500 text-md">Savings</div>
-              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">100,000</h1>
+              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">{total_budget.savings}</h1>
             </div>
           </div>
         </div>
@@ -66,7 +67,7 @@ function Dashboard() {
             <div className="grid w-12 h-12 text-white rounded-lg bg-success place-items-center"><MdSavings size={20} /></div>
             <div className="grow">
               <div className="font-semibold text-gray-500 text-md">Income</div>
-              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">200,000</h1>
+              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">{total_budget.incomes}</h1>
 
             </div>
           </div>
@@ -78,7 +79,7 @@ function Dashboard() {
             <div className="grow">
               <div className="font-semibold text-gray-500 text-md">Expenses</div>
               <div className="text-lg font-semibold text-gray-700"></div>
-              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">150,000</h1>
+              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">{total_budget.expenses}</h1>
             </div>
           </div>
         </div>
@@ -116,4 +117,4 @@ function Dashboard() {
   )
 }
 
-export default Dashboard
+export default observer(Dashboard)
