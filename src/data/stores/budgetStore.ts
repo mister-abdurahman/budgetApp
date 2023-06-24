@@ -6,6 +6,7 @@ import { IIncome } from "./IncomeStore";
 import { IExpense } from "./expenseStore";
 import { ISavings } from "./savingsStore";
 import moment from "moment";
+import { AppInsight } from "../services/openAI";
 
 export interface IBudget {
   id: number;
@@ -91,6 +92,8 @@ export default class BudgetStore {
 
   availableFunds = 0;
   availableFundPercentage = 0
+
+  insight = "";
 
   modal = false;
 
@@ -276,5 +279,10 @@ export default class BudgetStore {
     const budget = { ...this.budgetArrays[0] };
     const available_funds = ((budget.totalIncome || 0) - (budget.totalExpenses || 0))
     this.availableFundPercentage = (available_funds / (budget.totalIncome || 0)) * 100
+  }
+
+  app_insight = async (data: any) => {
+    this.insight = await AppInsight(data) || "";
+    console.log(this.insight);    
   }
 }
