@@ -12,6 +12,9 @@ import { IIncome } from "../../data/stores/IncomeStore";
 import Button from "../../components/Button";
 import { IExpense } from "../../data/stores/expenseStore";
 import { ISavings } from "../../data/stores/savingsStore";
+import Modal from "../../components/Modal";
+import BudgetInsight from "./BudgetInsight";
+import { useState } from "react";
 
 function BudgetEdit({
   handleModal,
@@ -84,6 +87,8 @@ function BudgetEdit({
   };
 
   const validationScheme = Yup.object(validation());
+
+  const [modal, setModal] = useState(false)
 
   return (
     <>
@@ -316,6 +321,14 @@ function BudgetEdit({
               Budget: &#8358;{budget_calculation()}
             </h1>
           </div>
+          <Button onClick={() => setModal(true)}>Optimize Budget Using AI</Button>
+
+          <Modal
+            page={
+              <BudgetInsight handleModal={setModal} />
+            }
+            isOpen={modal}
+          />
 
           <div className="modal-action">
             {/* if there is a button in form, it will close the modal */}
