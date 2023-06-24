@@ -22,7 +22,12 @@ import { useNavigate } from "react-router-dom";
 export function Incomes() {
   const {
     authStore: { user },
-    incomeStore: { load_incomes, incomes, incomeArrays, delete_income },
+    incomeStore: {
+      load_incomes,
+      select_income_by_id,
+      incomeArrays,
+      delete_income,
+    },
     budgetStore: { load_budgets, budgetArrays },
   } = useStore();
   // const {
@@ -38,8 +43,9 @@ export function Incomes() {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleOpenModal = (state: boolean, id?: string) => {
+  const handleOpenModal = (state: boolean, id?: number) => {
     // set_budget_modal(state);
+    select_income_by_id(id || 0);
     setIsOpen(true);
   };
 
@@ -68,12 +74,21 @@ export function Incomes() {
       label: "Action",
       minWidth: 140,
       render: (index, row) => (
-        <Button
-          onClick={() => handleDeleteIncome(row.id)}
-          icon={<MdDelete size={20} />}
-        >
-          Delete
-        </Button>
+        <>
+          <Button
+            className="m-4"
+            onClick={() => handleOpenModal(true, row.id)}
+            icon={<BsLink className="w-5 h-5" />}
+          >
+            View
+          </Button>
+          <Button
+            onClick={() => handleDeleteIncome(row.id)}
+            icon={<MdDelete size={20} />}
+          >
+            Delete
+          </Button>
+        </>
       ),
     },
   ];
@@ -87,7 +102,7 @@ export function Incomes() {
             <span className="capitalize">Incomes</span>{" "}
           </h1>
         </div>
-        <Button onClick={() => handleOpenModal(true, user.id)} className="">
+        <Button onClick={() => handleOpenModal(true)} className="">
           Create Incomes
         </Button>
       </div>
