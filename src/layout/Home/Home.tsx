@@ -15,7 +15,6 @@ import Button from "../../components/Button/Button";
 import Modal from "../../components/Modal";
 import BudgetDetails from "../../pages/Budget/BudgetDetails";
 import { observer } from "mobx-react-lite";
-import { Chart } from "../../components/Chart/Chart";
 
 function Home({ children }: { children: JSX.Element[] | JSX.Element }) {
   const {
