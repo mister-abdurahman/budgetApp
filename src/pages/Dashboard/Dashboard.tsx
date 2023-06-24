@@ -17,12 +17,12 @@ import { Link } from "react-router-dom";
 function Dashboard() {
   const {
     authStore: { user },
-    budgetStore: { load_budgets, get_total_budget, total_budget, budgetArrays },
+    budgetStore: { load_budgets, get_total_budget, total_budget, budgetArrays, available_fund_percentage, availableFundPercentage },
   } = useStore();
 
   useEffect(() => {
     get_total_budget();
-    load_budgets("take=5")
+    load_budgets("take=5").then(() => available_fund_percentage())
   }, [get_total_budget]);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -97,16 +97,16 @@ function Dashboard() {
       <div className="flex flex-wrap gap-4">
         <div className="flex-1 space-y-5">
           <div className="p-2 px-4 text-white rounded-md bg-neutral-700 max-w-96">
-            <h1>Budget Left</h1>
-            <LinearProgressWithLabel value={30} />
+            <h1>Available Funds</h1>
+            <LinearProgressWithLabel value={availableFundPercentage} />
           </div>
 
           <div className="space-y-3">
             <div className="font-semibold text-md">Recent Budget</div>
 
             <List className="w-96">
-              {budgetArrays.map(x => {
-                return(<ListRow className="font-semibold">
+              {budgetArrays.map((x, index)=> {
+                return(<ListRow key={index} className="font-semibold">
                 <BsWalletFill size={20} className="text-neutral" />
                 <div className="grow">
                   <h1 className="capitalize">{x.description}</h1>

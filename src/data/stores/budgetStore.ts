@@ -90,6 +90,7 @@ export default class BudgetStore {
   savings: ISavings[] = [];
 
   availableFunds = 0;
+  availableFundPercentage = 0
 
   modal = false;
 
@@ -260,5 +261,11 @@ export default class BudgetStore {
   budget_calculation = () => {
     const saving = this.savings.reduce((accu, { amount }) => { return accu + amount }, 0)
     return this.available_fund_calculation() - saving;
+  }
+
+  available_fund_percentage = () => {
+    const budget = {...this.budgetArrays[0]};
+    const available_funds = ((budget.totalIncome || 0) - (budget.totalExpenses || 0))
+    this.availableFundPercentage = (available_funds/(budget.totalIncome || 0))*100
   }
 }
