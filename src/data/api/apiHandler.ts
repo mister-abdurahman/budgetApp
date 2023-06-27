@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosHeaders, AxiosRequestHeaders, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosRequestHeaders, AxiosResponse } from "axios";
 import { IUser } from "../stores/userStore";
 import { IIncome } from "../stores/IncomeStore";
 import { IExpense } from "../stores/expenseStore";
