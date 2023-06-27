@@ -20,18 +20,33 @@ export default class CommonStore {
   get alertArrays() {
     return Array.from(this.alerts.values());
   }
-
-  get cookie() {
-    return JSON.parse(localStorage.getItem("cookie")!);
+ 
+  get token() {
+    return JSON.parse(window.localStorage.getItem("token")!);
   }
 
+  get cookie() {
+    return JSON.parse(window.localStorage.getItem("cookie")!);
+  }
+
+
   setAlert = (alert: IAlert) => {
+    let hasMessage = false;
+    
+    this.alertArrays.map((x) => {
+      if (x.message === alert.message) {
+        hasMessage = true
+      }
+    })
+
+    if (hasMessage) return;
+
     alert.id = this.randomString();
     this.alerts.set(alert.id, alert);
-
     setTimeout(() => {
       this.removeAlert(alert.id!);
     }, 10000);
+
   };
 
   setLoading = (status: boolean) => {

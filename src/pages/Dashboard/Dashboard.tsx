@@ -125,7 +125,7 @@ function Dashboard() {
                       <h1 className="capitalize">{x.description}</h1>
                     </div>
                     <h1>
-                      {(x.totalIncome || 0) -
+                    &#8358;{(x.totalIncome || 0) -
                         (x.totalExpenses || 0) -
                         (x.totalSavings || 0)}
                     </h1>

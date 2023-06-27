@@ -1,17 +1,44 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosHeaders, AxiosRequestHeaders, AxiosResponse } from "axios";
 import { IUser } from "../stores/userStore";
 import { IIncome } from "../stores/IncomeStore";
 import { IExpense } from "../stores/expenseStore";
 import { ISavings } from "../stores/savingsStore";
 import { IBudget, ITotalBudget } from "../stores/budgetStore";
+import { store } from "../stores/store";
 
-// axios.defaults.baseURL = "https://localhost:7265/api/v1";
-axios.defaults.baseURL = "https://api-fgbmfi-clone.azurewebsites.net/api/v1";
+axios.defaults.baseURL = "https://localhost:7265/api/v1";
+// axios.defaults.baseURL = "https://api-fgbmfi-clone.azurewebsites.net/api/v1";
+
+axios.interceptors.request.use((config) => {
+  const access_token = store.commonStore.token
+
+  if (access_token) {
+    if (config.headers === undefined) {
+      config.headers = { Authorization: `bearer ${access_token}`} as AxiosRequestHeaders;
+    } 
+    else { config.headers.Authorization = `Bearer ${access_token}` }
+  }
+
+  return config;
+})
+
+axios.interceptors.response.use((response) => response, (error: AxiosError) => {
+  if (error.response?.status == 401) {
+    localStorage.removeItem("cookie");
+    localStorage.removeItem("token");
+    store.commonStore.setAlert({
+      type: "error",
+      message: "session has expired"
+    })
+  }
+  return Promise.reject(error);
+});
 
 const responseBody = (res: AxiosResponse) => res.data;
 
 const request = {
-  get: <T>(url: string) => axios.get<T>(encodeURI(url)).then(responseBody),
+  get: <T>(url: string) =>
+    axios.get<T>(encodeURI(url)).then(responseBody),
   post: <T>(url: string, body: T) =>
     axios.post<T>(encodeURI(url), body).then(responseBody),
   put: <T>(url: string, body: T) =>
@@ -28,11 +55,19 @@ const Users = {
   detail: (id: string) => request.get<IUser>(`/users/${id}`),
   create: (user: IUser) => request.post<IUser>(`/users`, user),
   delete: (id: number) => request.delete<IUser>(`/users/${id}`),
-  login: (username: string, password: string) =>
-    request.post<IUser | null>(
+  login: async (username: string, password: string) => {
+    const data = await request.post<any>(
       `/users/login?username=${username}&password=${password}`,
       null
-    ),
+    )
+
+    window.localStorage.setItem(
+      "token",
+      JSON.stringify(data.access_token)
+    );
+
+    return data
+  }
 };
 
 //////////////////

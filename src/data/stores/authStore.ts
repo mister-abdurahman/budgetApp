@@ -30,7 +30,7 @@ export default class AuthStore {
   }
 
   get cookie() {
-    return JSON.parse(localStorage.getItem("cookie")!);
+    return JSON.parse(window.localStorage.getItem("cookie")!);
   }
 
   handleUserSignIn = async (signIn: ISignIn) => {
@@ -41,12 +41,12 @@ export default class AuthStore {
   login = async (username: string, password: string) => {
     try {
       store.commonStore.setLoading(true);
-      const user = await apiHandler.Users.login(username, password);
+      const result = await apiHandler.Users.login(username, password);
 
       if (user) {
         localStorage.setItem(
           "cookie",
-          JSON.stringify({ user, token: store.commonStore.randomString() })
+          JSON.stringify({ user: result.user, token: result.access_token })
         );
       } else {
         store.commonStore.setAlert({
@@ -64,7 +64,7 @@ export default class AuthStore {
         });
       });
 
-      return user;
+      return result.user;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         store.commonStore.setAlert({ type: "error", message: error.response.data });
@@ -82,6 +82,7 @@ export default class AuthStore {
 
   signOut = async () => {
     localStorage.removeItem("cookie");
+    localStorage.removeItem("token");
     window.location.reload();
   };
 }

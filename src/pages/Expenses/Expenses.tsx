@@ -54,7 +54,7 @@ export function Expenses() {
     },
     {
       id: "budget",
-      label: "BudgetId",
+      label: "Budget",
       minWidth: 180,
       render: (index, data) => {
         console.log(index);
