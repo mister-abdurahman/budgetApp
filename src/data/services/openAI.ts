@@ -12,7 +12,7 @@ export async function AppInsight(data: any) {
     messages: [
       {
         role: "user",
-        content: `Optimize the following budget and Allocate a certain percentage of income to different expense categories: ${JSON.stringify(
+        content: `Optimize the following budget in naira currency and Allocate a certain percentage of income to different expense categories: ${JSON.stringify(
           data
         )}, exclude json data from response`,
       },

@@ -16,9 +16,9 @@ export interface IBudget {
   incomes?: IIncome[];
   expenses?: IExpense[];
   savings?: ISavings[];
-  totalIncome?: number,
-  totalExpenses?: number,
-  totalSavings?: number
+  totalIncome?: number;
+  totalExpenses?: number;
+  totalSavings?: number;
 }
 
 export interface ITotalBudget {
@@ -76,12 +76,10 @@ const saving: ISavings = {
   date: "",
 };
 
-
-
 export default class BudgetStore {
   budget: IBudget = budget;
   budgets = new Map<number, IBudget>();
-  total_budget: ITotalBudget = total_budget
+  total_budget: ITotalBudget = total_budget;
 
   income: IIncome = income;
   expense: IExpense = expense;
@@ -91,7 +89,7 @@ export default class BudgetStore {
   savings: ISavings[] = [];
 
   availableFunds = 0;
-  availableFundPercentage = 0
+  availableFundPercentage = 0;
 
   insight = "";
 
@@ -117,7 +115,7 @@ export default class BudgetStore {
 
       budgets.forEach((budget: IBudget) => {
         runInAction(() => {
-          budget.date = moment(budget.date).format('MMMM Do YYYY');
+          budget.date = moment(budget.date).format("MMMM Do YYYY");
           this.budgets.set(budget.id, budget);
         });
       });
@@ -142,13 +140,12 @@ export default class BudgetStore {
       this.budget = await apiHandler.Budgets.detail(id);
 
       runInAction(() => {
-        this.incomes = this.budget.incomes!
-        this.expenses = this.budget.expenses!
-        this.savings = this.budget.savings!
+        this.incomes = this.budget.incomes!;
+        this.expenses = this.budget.expenses!;
+        this.savings = this.budget.savings!;
         store.commonStore.setLoading(false);
-      })
+      });
       return this.budget;
-
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         store.commonStore.setAlert({ type: "error", message: error.message });
@@ -159,18 +156,16 @@ export default class BudgetStore {
   };
 
   select_budget_by_id = (id: number) => {
-
     if (id == 0) {
-      this.budget = budget
-      this.incomes = []
-      this.expenses = []
-      this.savings = []
-    }
-    else {
+      this.budget = budget;
+      this.incomes = [];
+      this.expenses = [];
+      this.savings = [];
+    } else {
       this.budget = this.budgets.get(id) || budget;
-      this.incomes = this.budget.incomes!
-      this.expenses = this.budget.expenses!
-      this.savings = this.budget.savings!
+      this.incomes = this.budget.incomes!;
+      this.expenses = this.budget.expenses!;
+      this.savings = this.budget.savings!;
     }
   };
 
@@ -181,7 +176,6 @@ export default class BudgetStore {
 
       store.commonStore.setLoading(false);
       return this.budget;
-
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         store.commonStore.setAlert({ type: "error", message: error.message });
@@ -238,58 +232,83 @@ export default class BudgetStore {
 
   set_budget_modal = (state: boolean) => (this.modal = state);
 
-  set_income = (newIncome: IIncome) => { this.income = newIncome }
+  set_income = (newIncome: IIncome) => {
+    this.income = newIncome;
+  };
 
-  add_income = (income: IIncome) => { income.date = new Date().toJSON(); this.incomes.push(income) }
+  add_income = (income: IIncome) => {
+    income.date = new Date().toJSON();
+    this.incomes.push(income);
+  };
 
-  remove_income = (index: any) => this.incomes.splice(index, 1)
+  remove_income = (index: any) => this.incomes.splice(index, 1);
 
-  set_expense = (newExpense: IExpense) => { this.expense = newExpense }
+  set_expense = (newExpense: IExpense) => {
+    this.expense = newExpense;
+  };
 
-  add_expense = (expense: IExpense) => { expense.date = new Date().toJSON(); this.expenses.push(expense) }
+  add_expense = (expense: IExpense) => {
+    expense.date = new Date().toJSON();
+    this.expenses.push(expense);
+  };
 
-  remove_expense = (index: any) => this.expenses.splice(index, 1)
+  remove_expense = (index: any) => this.expenses.splice(index, 1);
 
-  set_saving = (newSaving: any) => { this.saving = newSaving }
+  set_saving = (newSaving: any) => {
+    this.saving = newSaving;
+  };
 
-  add_saving = (saving: any) => { saving.date = new Date().toJSON(); this.savings.push(saving) }
+  add_saving = (saving: any) => {
+    saving.date = new Date().toJSON();
+    this.savings.push(saving);
+  };
 
-  remove_saving = (index: any) => this.savings.splice(index, 1)
+  remove_saving = (index: any) => this.savings.splice(index, 1);
 
   available_fund_calculation = () => {
-    const income = this.incomes.reduce((accu, { amount }) => { return accu + amount }, 0)
-    const expense = this.expenses.reduce((accu, { amount }) => { return accu + amount }, 0)
+    const income = this.incomes.reduce((accu, { amount }) => {
+      return accu + amount;
+    }, 0);
+    const expense = this.expenses.reduce((accu, { amount }) => {
+      return accu + amount;
+    }, 0);
 
-    this.availableFunds = income - expense
+    this.availableFunds = income - expense;
 
     return this.availableFunds;
-  }
+  };
 
   saving_calculation = () => {
-    const saving = this.savings.reduce((accu, { amount }) => { return accu + amount }, 0)
+    const saving = this.savings.reduce((accu, { amount }) => {
+      return accu + amount;
+    }, 0);
     return saving;
-  }
+  };
 
   budget_calculation = () => {
-    const saving = this.savings.reduce((accu, { amount }) => { return accu + amount }, 0)
+    const saving = this.savings.reduce((accu, { amount }) => {
+      return accu + amount;
+    }, 0);
     return this.available_fund_calculation() - saving;
-  }
+  };
 
   available_fund_percentage = () => {
     const budget = { ...this.budgetArrays[0] };
-    const available_funds = ((budget.totalIncome || 0) - (budget.totalExpenses || 0))
-    this.availableFundPercentage = (available_funds / (budget.totalIncome || 0)) * 100
-  }
+    const available_funds =
+      (budget.totalIncome || 0) - (budget.totalExpenses || 0);
+    this.availableFundPercentage =
+      (available_funds / (budget.totalIncome || 0)) * 100;
+  };
 
-  app_insight = async (input: any) => {
+  app_insight = async () => {
     store.commonStore.setLoading(true);
 
     const data = {
-      "income": this.incomes,
-      "expenses": this.expenses,
-      "savings": this.savings
-    }
-    this.insight = await AppInsight(data) || "";
+      income: this.incomes,
+      expenses: this.expenses,
+      savings: this.savings,
+    };
+    this.insight = (await AppInsight(data)) || "";
     store.commonStore.setLoading(false);
-  }
+  };
 }
