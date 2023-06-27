@@ -6,8 +6,8 @@ import { ISavings } from "../stores/savingsStore";
 import { IBudget, ITotalBudget } from "../stores/budgetStore";
 import { store } from "../stores/store";
 
-axios.defaults.baseURL = "https://localhost:7265/api/v1";
-// axios.defaults.baseURL = "https://api-fgbmfi-clone.azurewebsites.net/api/v1";
+// axios.defaults.baseURL = "https://localhost:7265/api/v1";
+axios.defaults.baseURL = "https://api-fgbmfi-clone.azurewebsites.net/api/v1";
 
 axios.interceptors.request.use((config) => {
   const access_token = store.commonStore.token
